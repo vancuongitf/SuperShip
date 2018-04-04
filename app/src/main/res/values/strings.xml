@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">SuperShip</string>
+    <string name="app_name">Super Ship</string>
+    <string name="app_slogan">Bạn chỉ cần mua hàng\nVận chuyển để chúng tôi</string>
     <string name="title_activity_maps">Map</string>
+    <string name="searchTitle">Tìm địa điểm, món ăn</string>
+    <string name="notification_string">Thông báo</string>
+    <string name="turn_on_gps_message">Bật GPS để Super Ship có thể tìm các địa điểm gần bạn.</string>
+    <string name="turn_on_network_message">Super Ship chỉ có thể hoạt động khi có kết nối mạng.</string>
+    <string name="load_more">Xem thêm</string>
+    <string name="not_rate_yet">Chưa có đánh giá nào!</string>
+    <string name="store_rate">%1$s / %2$s đánh giá</string>
 </resources>

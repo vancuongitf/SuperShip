@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MainActivity -->
+    <item name="mainActivityViewPager" type="id" />
+    <item name="mainActivityTabLayout" type="id" />
+
+    <!-- SplashActivity -->
+    <item name="splashActivityTvAppName" type="id" />
+    <item name="splashActivityImgShipperIcon" type="id" />
+    <item name="splashActivityTvAppSlogan" type="id" />
+
+    <!-- HomeFragment -->
+    <item name="homeFragmentViewPager" type="id" />
+
+    <!-- StoreFragment -->
+    <item name="storeFragmentRecyclerViewStores" type="id" />
+    <item name="homeContainer" type="id" />
+
+</resources>
