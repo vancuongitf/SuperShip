@@ -36,6 +36,12 @@ class StoreFragmentUI(storeInfoExpresses: MutableList<StoreInfoExpress>) : AnkoC
                         id = R.id.storeFragmentRecyclerViewStores
                         layoutManager = LinearLayoutManager(context)
                         adapter = storeAdapter
+                        storeAdapter.onItemClicked = {
+                            owner.onStoreItemClick(it)
+                        }
+                        storeAdapter.onItemLoadMoreClick = {
+                            owner.onLoadMoreClick()
+                        }
                         storeAdapter.notifyDataSetChanged()
                     }.lparams(matchParent, matchParent)
                 }

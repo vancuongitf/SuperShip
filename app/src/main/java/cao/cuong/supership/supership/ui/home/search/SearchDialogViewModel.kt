@@ -1,25 +1,34 @@
 package cao.cuong.supership.supership.ui.home.search
 
+import android.content.Context
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
+import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.StoreRepository
+import cao.cuong.supership.supership.data.source.remote.network.CustomCall
+import cao.cuong.supership.supership.data.source.remote.network.CustomCallback
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
+import cao.cuong.supership.supership.extension.observeOnUiThread
 import io.reactivex.Notification
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import retrofit2.Call
+import retrofit2.Response
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 /**
  *
  * @author at-cuongcao.
  */
-class SearchDialogViewModel {
+class SearchDialogViewModel(private val context: Context) {
 
     internal val stores = mutableListOf<StoreInfoExpress>()
     internal val updateListObservable = PublishSubject.create<Notification<Boolean>>()
+    internal var currentQuery = ""
     private val storeRepository = StoreRepository()
+    private val localRepository = LocalRepository(context)
     private var currentPage = 1
     private val searchObservable = PublishSubject.create<String>()
+    private var currentCall: CustomCall<StoreExpressResponse>? = null
 
     init {
         initSearchObservable()
@@ -30,9 +39,9 @@ class SearchDialogViewModel {
         searchObservable.onNext(query)
     }
 
-    internal fun loadMore(query: String) {
+    internal fun loadMore() {
         currentPage++
-        searchObservable.onNext(query)
+        callSearchApi(currentQuery)
     }
 
     private fun initSearchObservable() {
@@ -42,43 +51,60 @@ class SearchDialogViewModel {
                 .distinctUntilChanged()
                 .flatMap {
                     if (it.isBlank()) {
+                        currentCall?.cancel()
                         loadSearchHistory()
                     } else {
-                        callSearchApi(it, currentPage)
+                        currentQuery = it
+                        callSearchApi(it)
                     }
                 }.subscribe({
-                    if (it.isOnError) {
-                        updateListObservable.onNext(Notification.createOnError(it.error
-                                ?: Throwable()))
-                    } else {
-
-                        updateListObservable.onNext(Notification.createOnNext(true))
-                    }
+                    updateListObservable.onNext(it)
+                }, {
+                    updateListObservable.onNext(Notification.createOnError(it))
                 })
     }
 
-    private fun loadSearchHistory(): PublishSubject<Notification<List<StoreInfoExpress>>> {
-        val result = PublishSubject.create<Notification<List<StoreInfoExpress>>>()
-        thread {
-            try {
-                Thread.sleep(500)
-                result.onNext(Notification.createOnNext(mutableListOf()))
-            } catch (e: Exception) {
-
-            }
-        }
+    private fun loadSearchHistory(): PublishSubject<Notification<Boolean>> {
+        val result = PublishSubject.create<Notification<Boolean>>()
+        localRepository.getSearchHistory()
+                .observeOnUiThread()
+                .subscribe({
+                    stores.clear()
+                    stores.addAll(it.storeList)
+                    result.onNext(Notification.createOnNext(false))
+                }, {
+                    result.onError(it)
+                })
         return result
     }
 
-    private fun callSearchApi(query: String, page: Int): PublishSubject<Notification<StoreExpressResponse>> {
-        val result = PublishSubject.create<Notification<StoreExpressResponse>>()
-        storeRepository.searchStore(query, page)
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    result.onNext(Notification.createOnNext(it))
-                }, {
-                    result.onNext(Notification.createOnError(it))
-                })
+    private fun callSearchApi(query: String): PublishSubject<Notification<Boolean>> {
+        if (currentCall != null) {
+            currentCall?.cancel()
+        }
+        val result = PublishSubject.create<Notification<Boolean>>()
+        currentCall = storeRepository.searchStore(query, currentPage)
+        currentCall?.enqueue(object : CustomCallback<StoreExpressResponse> {
+            override fun success(call: Call<StoreExpressResponse>, response: Response<StoreExpressResponse>) {
+                val data = response.body()
+                if (data != null) {
+                    if (currentPage == 1) {
+                        stores.clear()
+                        stores.addAll(data.storeList)
+                    } else {
+                        stores.addAll(data.storeList)
+                    }
+                    result.onNext(Notification.createOnNext(data.nextPageFlag))
+                } else {
+                    result.onNext(Notification.createOnError(Throwable()))
+                }
+            }
+
+            override fun onError(t: Throwable) {
+                result.onNext(Notification.createOnError(t))
+            }
+
+        })
         return result
     }
 }

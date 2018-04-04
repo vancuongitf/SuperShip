@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
+import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 
 /**
@@ -27,11 +29,26 @@ class SearchDialogFragment : BaseFragment() {
         viewModel.search("")
     }
 
+    override fun onBindViewModel() {
+        addDisposables(viewModel.updateListObservable
+                .observeOnUiThread()
+                .subscribe(this::handleUpdateStoreList))
+    }
+
     internal fun handleSearchViewTextChange(query: String) {
+        viewModel.stores.clear()
+        ui.storeAdapter.notifyDataSetChanged()
         viewModel.search(query)
     }
 
-    override fun onBindViewModel() {
-
+    private fun handleUpdateStoreList(notification: Notification<Boolean>) {
+        if (notification.isOnNext) {
+            if (notification.value != null) {
+                ui.storeAdapter.nextPageFlag = notification.value!!
+            } else {
+                ui.storeAdapter.nextPageFlag = false
+            }
+            ui.storeAdapter.notifyDataSetChanged()
+        }
     }
 }

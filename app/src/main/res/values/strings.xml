@@ -9,4 +9,5 @@
     <string name="load_more">Xem thêm</string>
     <string name="not_rate_yet">Chưa có đánh giá nào!</string>
     <string name="store_rate">%1$s / %2$s đánh giá</string>
+    <string name="networkDisconnect">Không có kết nối mạng.</string>
 </resources>

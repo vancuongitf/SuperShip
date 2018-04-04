@@ -9,6 +9,7 @@ import cao.cuong.supership.supership.extension.getDistanceString
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.textResource
 
 /**
@@ -24,6 +25,7 @@ class StoreAdapter(private val storeInfoExpresses: MutableList<StoreInfoExpress>
 
     internal var nextPageFlag = false
     internal var onItemClicked: (item: StoreInfoExpress) -> Unit = {}
+    internal var onItemLoadMoreClick: () -> Unit = {}
 
     override fun getItemCount() = storeInfoExpresses.size
 
@@ -68,7 +70,7 @@ class StoreAdapter(private val storeInfoExpresses: MutableList<StoreInfoExpress>
                 .placeholder(R.drawable.ic_picture)
 
         init {
-            itemView.setOnClickListener {
+            itemView.onClick {
                 onItemClicked(storeInfoExpresses[adapterPosition])
             }
         }
@@ -101,8 +103,12 @@ class StoreAdapter(private val storeInfoExpresses: MutableList<StoreInfoExpress>
                 .placeholder(R.drawable.ic_picture)
 
         init {
-            itemView.setOnClickListener {
+            ui.llMainContent.onClick {
                 onItemClicked(storeInfoExpresses[adapterPosition])
+            }
+
+            ui.tvLoadMore.onClick {
+                onItemLoadMoreClick()
             }
         }
 

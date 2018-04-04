@@ -2,9 +2,9 @@ package cao.cuong.supership.supership.data.source.remote.network
 
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.model.Store
+import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 import io.reactivex.Single
 import retrofit2.http.*
-import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 
 /**
  *
@@ -22,5 +22,5 @@ interface ApiService {
     fun getExpressStore(@Query("advance_param") advanceParam: Int, @Query("page") page: Int, @Query("lat") lat: Double?, @Query("lng") lng: Double?): Single<StoreExpressResponse>
 
     @GET("api/v1/store/search.php")
-    fun search(@Query("query") query: String, @Query("page") page: Int): Single<StoreExpressResponse>
+    fun search(@Query("query") query: String, @Query("page") page: Int): CustomCall<StoreExpressResponse>
 }

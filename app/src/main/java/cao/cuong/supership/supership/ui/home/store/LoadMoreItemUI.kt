@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import cao.cuong.supership.supership.R
 import org.jetbrains.anko.*
@@ -21,11 +22,13 @@ class LoadMoreItemUI : AnkoComponent<ViewGroup> {
     internal lateinit var tvStoreDistance: TextView
     internal lateinit var imgStoreStarIcon: ImageView
     internal lateinit var tvStoreStarRate: TextView
+    internal lateinit var llMainContent: LinearLayout
+    internal lateinit var tvLoadMore: TextView
 
     override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
         verticalLayout {
             lparams(matchParent, wrapContent)
-            linearLayout {
+            llMainContent = linearLayout {
                 padding = dimen(R.dimen.storeItemUIPadding)
 
                 imgStoreIcon = imageView {
@@ -80,16 +83,14 @@ class LoadMoreItemUI : AnkoComponent<ViewGroup> {
                 backgroundColorResource = R.color.colorGrayVeryLight
             }.lparams(matchParent, dip(1))
 
-            textView(R.string.load_more) {
+            tvLoadMore = textView(R.string.load_more) {
                 gravity = Gravity.CENTER
                 backgroundColor = Color.RED
                 verticalPadding = dimen(R.dimen.loadMoreButtonPadding)
                 textColorResource = R.color.colorBlue
                 setTypeface(null, Typeface.BOLD)
                 backgroundColorResource = R.color.colorGrayVeryLight
-            }.lparams(matchParent, wrapContent) {
-
-            }
+            }.lparams(matchParent, wrapContent)
         }
     }
 }

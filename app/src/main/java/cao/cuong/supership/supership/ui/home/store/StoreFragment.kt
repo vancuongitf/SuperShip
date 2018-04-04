@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.support.v4.toast
 
 /**
  *
@@ -50,16 +53,28 @@ class StoreFragment : BaseFragment() {
         viewModel.getExpressesStore()
     }
 
+    internal fun onStoreItemClick(storeInfoExpress: StoreInfoExpress) {
+
+    }
+
+    internal fun onLoadMoreClick() {
+
+    }
+
     private fun handleGetStoreListCompleted(notification: Notification<Boolean>) {
         if (notification.isOnNext) {
             notification.value?.let {
-                ui.storeAdapter.nextPageFlag = true
+                ui.storeAdapter.nextPageFlag = it
                 ui.storeAdapter.notifyDataSetChanged()
             }
             ui.swipeRefreshLayout.isRefreshing = false
         }
         if (notification.isOnError) {
-
+            notification.error.let {
+                if (it?.message != null && it.message == "Network") {
+                    toast(R.string.networkDisconnect)
+                }
+            }
         }
     }
 }

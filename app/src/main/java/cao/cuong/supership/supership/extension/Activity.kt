@@ -1,20 +1,18 @@
 package cao.cuong.supership.supership.extension
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.ConnectivityManager
+import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.WindowManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
-import kotlin.concurrent.thread
 
 
 /**
@@ -45,13 +43,29 @@ internal fun Context.getHeightScreen(): Int {
     return dimension.heightPixels
 }
 
-@SuppressLint("MissingPermission")
 internal fun Context.getLastKnowLocation(): Single<LatLng> {
     val result = SingleSubject.create<LatLng>()
-    thread {
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            result.onError(Throwable())
+        } else {
+            fusedLocationClient.lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    result.onSuccess(LatLng(it.latitude, it.longitude))
+                } else {
+                    result.onError(Throwable())
+                }
+            }
+        }
+    } else {
         fusedLocationClient.lastLocation.addOnSuccessListener {
-            Log.i("tag11", Gson().toJson(it))
+            if (it != null) {
+                result.onSuccess(LatLng(it.latitude, it.longitude))
+            } else {
+                result.onError(Throwable())
+            }
         }
     }
     return result
