@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
+import kotlin.concurrent.thread
 
 
 /**
@@ -47,11 +48,10 @@ internal fun Context.getHeightScreen(): Int {
 @SuppressLint("MissingPermission")
 internal fun Context.getLastKnowLocation(): Single<LatLng> {
     val result = SingleSubject.create<LatLng>()
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-    fusedLocationClient.lastLocation.addOnCompleteListener {
-        if (it.isSuccessful) {
-            Log.i("tag11xx", Gson().toJson(it.result))
+    thread {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient.lastLocation.addOnSuccessListener {
+            Log.i("tag11", Gson().toJson(it))
         }
     }
     return result
