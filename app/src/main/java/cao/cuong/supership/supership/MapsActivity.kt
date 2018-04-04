@@ -55,19 +55,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
                 } else {
-                    Log.i("tag11","xxx")
+                    Log.i("tag11", "xxx")
                     val f = LocationServices.getFusedLocationProviderClient(this)
                     f.lastLocation.addOnSuccessListener {
                         Log.i("tag11xx", Gson().toJson(it))
                     }
                 }
-            }else{
-                Log.i("tag11","xxx")
+            } else {
+                Log.i("tag11", "xxx")
                 val f = LocationServices.getFusedLocationProviderClient(this)
                 f.lastLocation.addOnSuccessListener {
                     Log.i("tag11xx", Gson().toJson(it))
                 }
             }
+
         }
     }
 
