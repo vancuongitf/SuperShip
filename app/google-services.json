@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "168058307329",
+    "project_id": "officialsupership-200017"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168058307329:android:57eae43e3d2e0675",
+        "android_client_info": {
+          "package_name": "cao.cuong.supership.supership"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168058307329-quphhc533qu4vtjujg5oni4r4gshq0f1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cao.cuong.supership.supership",
+            "certificate_hash": "f3dfe2c8da12fb78b138e453050adc6cd50ffe6e"
+          }
+        },
+        {
+          "client_id": "168058307329-0hliv4gehkujmg3dco86ddq7os0qhpeo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3E4PLt5qV4pkKSV8p7TEniwmik4MJGyo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
