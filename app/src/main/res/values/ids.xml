@@ -15,5 +15,6 @@
     <!-- StoreFragment -->
     <item name="storeFragmentRecyclerViewStores" type="id" />
     <item name="homeContainer" type="id" />
+    <item name="accountFragmentRecyclerViewBillAddress" type="id" />
 
 </resources>

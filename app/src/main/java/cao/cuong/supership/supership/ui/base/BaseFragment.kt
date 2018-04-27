@@ -11,14 +11,14 @@ import io.reactivex.disposables.Disposable
 abstract class BaseFragment : Fragment() {
     private val subscription: CompositeDisposable = CompositeDisposable()
 
-    override fun onPause() {
-        super.onPause()
-        subscription.clear()
-    }
-
     override fun onResume() {
         super.onResume()
         onBindViewModel()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        subscription.clear()
     }
 
     protected fun addDisposables(vararg ds: Disposable) {

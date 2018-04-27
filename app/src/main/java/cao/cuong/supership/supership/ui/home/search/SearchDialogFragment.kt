@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import io.reactivex.Notification
@@ -19,7 +20,7 @@ class SearchDialogFragment : BaseFragment() {
     private lateinit var viewModel: SearchDialogViewModel
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = SearchDialogViewModel()
+        viewModel = SearchDialogViewModel(context)
         ui = SearchDialogFragmentUI(viewModel.stores)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
@@ -39,6 +40,10 @@ class SearchDialogFragment : BaseFragment() {
         viewModel.stores.clear()
         ui.storeAdapter.notifyDataSetChanged()
         viewModel.search(query)
+    }
+
+    internal fun onItemClick(item: StoreInfoExpress) {
+        viewModel.saveHistory(item)
     }
 
     private fun handleUpdateStoreList(notification: Notification<Boolean>) {

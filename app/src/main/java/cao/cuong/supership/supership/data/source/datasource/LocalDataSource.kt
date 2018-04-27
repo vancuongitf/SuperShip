@@ -17,4 +17,10 @@ interface LocalDataSource {
     fun saveSearchHistory(storeInfoExpress: StoreInfoExpress)
 
     fun getSearchHistory(): Single<StoreExpressResponse>
+
+    fun saveAccessToken(token: String)
+
+    fun getAccessToken(): String
+
+    fun clearAccessToken()
 }

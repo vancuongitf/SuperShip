@@ -1,9 +1,11 @@
 package cao.cuong.supership.supership.data.source
 
 import android.content.Context
+import android.util.Log
 import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.data.source.datasource.LocalDataSource
+import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 import com.google.gson.Gson
 import io.reactivex.Single
@@ -20,6 +22,7 @@ class LocalRepository(private val context: Context) : LocalDataSource {
     companion object {
         internal const val SHARED_KEY_DISABLE_LOCATION_PERMISSION = "key_location_permission"
         internal const val SHARED_KEY_SEARCH_HISTORY = "key_search_history"
+        internal const val SHARED_KEY_ACCESS_TOKEN = "key_access_token"
     }
 
     private val pref by lazy {
@@ -77,12 +80,29 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         try {
             val gson = Gson()
             val jsonArray = JSONArray(pref.getString(SHARED_KEY_SEARCH_HISTORY, "[]"))
+            Log.i("tag11aa", pref.getString(SHARED_KEY_SEARCH_HISTORY, "[]"))
             (0 until jsonArray.length()).mapTo(result) {
                 gson.fromJson(jsonArray.getJSONObject(it).toString(), StoreInfoExpress::class.java)
             }
         } catch (e: Exception) {
 
         }
+        Log.i("tag11xx", Gson().toJson(result))
         return result
+    }
+
+    override fun saveAccessToken(token: String) {
+        ApiClient.getInstance(null).token = token
+        pref.edit().putString(SHARED_KEY_ACCESS_TOKEN, token).apply()
+    }
+
+    override fun getAccessToken(): String {
+        val token = pref.getString(SHARED_KEY_ACCESS_TOKEN, "") ?: ""
+        ApiClient.getInstance(null).token = token
+        return token
+    }
+
+    override fun clearAccessToken() {
+        pref.edit().putString(SHARED_KEY_ACCESS_TOKEN, "").apply()
     }
 }
