@@ -20,9 +20,11 @@ android {
             switch (variant.getName()) {
                 case "debug":
                     variant.buildConfigField "String", "BASE_API_URL", '"https://vnshipperman.000webhostapp.com/"'
+                    variant.buildConfigField "String", "BASE_GOOGLE_API_URL", '"https://maps.googleapis.com/maps/api/"'
                     break
                 case "staging":
                     variant.buildConfigField "String", "BASE_API_URL", '"https://vnshipperman.000webhostapp.com/"'
+                    variant.buildConfigField "String", "BASE_GOOGLE_API_URL", '"https://maps.googleapis.com/maps/api/"'
                     break
                 case "release":
                     variant.buildConfigField "String", "BASE_API_URL", '"https://"'
@@ -33,10 +35,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.google.android.gms:play-services-maps:12.0.1'
@@ -93,6 +100,13 @@ dependencies {
 
     // SwipeBackLayout
     implementation "me.imid.swipebacklayout.lib:library:1.1.0"
+
+    // Sticky RecyclerView
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3'
+
+    // Crop Image
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
 kotlin {

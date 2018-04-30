@@ -23,4 +23,14 @@
     <dimen name="splashActivityAppNameSize">48dp</dimen>
     <dimen name="splashActivityAppSloganSize">20dp</dimen>
     <dimen name="loadMoreButtonPadding">10dp</dimen>
+
+    <!-- Account Fragment -->
+    <dimen name="accountFragmentLoginPadding">10dp</dimen>
+    <dimen name="signUpTitleSize">24dp</dimen>
+    <dimen name="signUpTitlePadding">20dp</dimen>
+    <dimen name="commonEditTextHieght">24dp</dimen>
+    <dimen name="backButtonSize">24dp</dimen>
+    <dimen name="storeTitleTextSize">24dp</dimen>
+    <dimen name="avatarBoder">5dp</dimen>
+    <dimen name="addressTextSize">16dp</dimen>
 </resources>

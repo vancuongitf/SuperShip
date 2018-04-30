@@ -38,6 +38,11 @@ class MainActivityUI(val mainTabs: List<MainTab>) : AnkoComponent<MainActivity> 
                 weight = 1f
             }
 
+            view {
+                backgroundResource = R.color.colorRed
+                alpha = 0.7f
+            }.lparams(matchParent, dip(1))
+
             tabLayout = tabLayout {
                 id = R.id.mainActivityTabLayout
                 tabMode = TabLayout.MODE_FIXED

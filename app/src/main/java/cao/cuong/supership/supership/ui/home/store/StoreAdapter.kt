@@ -80,7 +80,7 @@ class StoreAdapter(private val storeInfoExpresses: MutableList<StoreInfoExpress>
                 Glide.with(itemView.context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load(storeImage)
+                        .load("https://vnshipperman.000webhostapp.com/uploads/$storeImage")
                         .into(ui.imgStoreIcon)
                 ui.tvStoreName.text = storeName
                 ui.tvStoreAddress.text = storeAddress

@@ -2,6 +2,6 @@ package cao.cuong.supership.supership.data.model
 
 /**
  *
- * @author at-hoavo.
+ * @author at-cuongcao.
  */
 class UnAuthorizeException
