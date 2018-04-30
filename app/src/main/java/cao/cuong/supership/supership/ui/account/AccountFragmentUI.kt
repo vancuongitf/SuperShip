@@ -1,6 +1,5 @@
 package cao.cuong.supership.supership.ui.account
 
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -9,7 +8,6 @@ import cao.cuong.supership.supership.extension.commonEditTextWithEditButton
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.ui.base.widget.CommonEditTextWithEditButton
 import org.jetbrains.anko.*
-import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 /**
@@ -106,7 +104,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
                     enableHighLightWhenClicked()
                     verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
                     onClick {
-                        owner.eventChangePasswordButtonClicked()
+                        owner.logOutClick()
                     }
                 }.lparams(matchParent, wrapContent)
             }.lparams(matchParent, matchParent)

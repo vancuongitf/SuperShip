@@ -20,6 +20,8 @@ interface UserDataSource {
 
     fun login(user: String, pass: String): Single<AccessToken>
 
+    fun changePassword(oldPass: String, newPass: String, token: String): Single<MessageResponse>
+
     fun requestResetPassword(email: String): Single<RequestResetPassResponse>
 
     fun resetPassword(userId: Int, pass: String, otpCode: Int): Single<AccessToken>

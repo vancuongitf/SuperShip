@@ -47,7 +47,7 @@ class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoCompo
                         backgroundDrawable = null
                         backgroundColorResource = R.color.colorWhite
                         singleLine = true
-                        hintResource = R.string.searchTitle
+                        hintResource = R.string.searchAddress
 
                         textChangedListener {
                             afterTextChanged {

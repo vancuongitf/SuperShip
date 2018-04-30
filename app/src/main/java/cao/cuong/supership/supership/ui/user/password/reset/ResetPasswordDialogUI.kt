@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.user.resetpassword
+package cao.cuong.supership.supership.ui.user.password.reset
 
 import android.view.Gravity
 import android.widget.EditText

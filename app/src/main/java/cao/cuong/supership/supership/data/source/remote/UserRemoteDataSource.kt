@@ -1,12 +1,8 @@
 package cao.cuong.supership.supership.data.source.remote
 
-import cao.cuong.supership.supership.data.model.AccessToken
-import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.datasource.UserDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.request.CreateUserBody
-import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
-import io.reactivex.Single
 
 /**
  *
@@ -17,6 +13,8 @@ class UserRemoteDataSource : UserDataSource {
     private val apiService = ApiClient.getInstance(null).service
 
     override fun login(user: String, pass: String) = apiService.login(user, pass)
+
+    override fun changePassword(oldPass: String, newPass: String, token: String) = apiService.changePassword(oldPass, newPass, token)
 
     override fun getUserInfo(token: String) = apiService.getUserInfo(token)
 

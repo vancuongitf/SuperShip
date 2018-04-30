@@ -2,11 +2,9 @@ package cao.cuong.supership.supership.ui.account
 
 import android.content.Context
 import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
-import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.UserRepository
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
-import io.reactivex.Single
 
 /**
  *

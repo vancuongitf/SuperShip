@@ -8,23 +8,11 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
-import cao.cuong.supership.supership.ui.store.add.CreateStoreFragment
+import cao.cuong.supership.supership.ui.store.create.CreateStoreFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 
 class StoreListFragment : BaseFragment() {
-
-    companion object {
-        internal const val KEY_USER_ID = "user_id"
-
-        internal fun getNewInstance(userId: Long): StoreListFragment {
-            val instance = StoreListFragment()
-            instance.arguments = Bundle().apply {
-                putLong(KEY_USER_ID, userId)
-            }
-            return instance
-        }
-    }
 
     private lateinit var ui: StoreListFragmentUI
     private lateinit var viewModel: StoreListFragmentViewModel
@@ -56,6 +44,10 @@ class StoreListFragment : BaseFragment() {
 
     internal fun addStoreClicked() {
         activity.addFragment(R.id.storeActivityContainer, CreateStoreFragment(), {}, CreateStoreFragment::class.java.simpleName)
+    }
+
+    internal fun reloadData(){
+        viewModel.getStoreListOfUser()
     }
 
     private fun handleUpdateList(notification: Notification<Boolean>) {

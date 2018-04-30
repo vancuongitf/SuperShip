@@ -2,6 +2,7 @@ package cao.cuong.supership.supership.data.source.remote
 
 import cao.cuong.supership.supership.data.source.datasource.StoreDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
+import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.unAccent
 import io.reactivex.Single
@@ -29,4 +30,6 @@ class StoreRemoteDataSource : StoreDataSource {
         val requestFileBody = MultipartBody.Part.createFormData("image", file.name, requestBody)
         return apiService.uploadImage(requestFileBody)
     }
+
+    override fun createStore(createStoreBody: CreateStoreBody) = apiService.createStore(createStoreBody)
 }

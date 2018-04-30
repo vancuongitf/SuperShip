@@ -10,12 +10,12 @@ import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
-import cao.cuong.supership.supership.ui.store.list.StoreListFragment
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.store.activity.StoreActivity
-import cao.cuong.supership.supership.ui.user.forgotpassword.ForgotDialog
 import cao.cuong.supership.supership.ui.user.login.LoginDialog
-import cao.cuong.supership.supership.ui.user.resetpassword.ResetPasswordDialog
+import cao.cuong.supership.supership.ui.user.password.change.ChangePasswordDialog
+import cao.cuong.supership.supership.ui.user.password.forgot.ForgotDialog
+import cao.cuong.supership.supership.ui.user.password.reset.ResetPasswordDialog
 import cao.cuong.supership.supership.ui.user.signup.SignUpDialog
 import org.jetbrains.anko.AnkoContext
 
@@ -30,6 +30,7 @@ class AccountFragment : BaseFragment() {
     private val loginDialog = LoginDialog()
     private val forgotDialog = ForgotDialog()
     private val signUpDialog = SignUpDialog()
+    private val changePasswordDialog = ChangePasswordDialog()
     private var resetPasswordDialog: ResetPasswordDialog? = null
     private val billAddresses = mutableListOf<BillAddress>()
     private var userId = -1L
@@ -90,36 +91,37 @@ class AccountFragment : BaseFragment() {
                     .observeOnUiThread()
                     .subscribe(this::handleGetUserInfo, this::handleApiGetInfoError)
         } else {
+            if (changePasswordDialog.isVisible) {
+                changePasswordDialog.dismiss()
+            }
             ui.llNonLogin.visibility = View.VISIBLE
             ui.llLogin.visibility = View.GONE
         }
     }
 
-    fun logOutClick() {
+    internal fun logOutClick() {
         viewModel.logOut()
     }
 
-    fun eventChangeFullNameClick() {
+    internal fun eventChangeFullNameClick() {
     }
 
-    fun eventChangePhoneNumberClick() {
+    internal fun eventChangePhoneNumberClick() {
     }
 
-    fun eventChangeEmailClick() {
+    internal fun eventChangeEmailClick() {
 
     }
 
     fun eventStoreListClicked() {
         val intent = Intent(activity, StoreActivity::class.java)
-        val bundle = Bundle().apply {
-            putLong(StoreListFragment.KEY_USER_ID, userId)
-        }
-        intent.putExtras(bundle)
         activity.startActivity(intent)
     }
 
     fun eventChangePasswordButtonClicked() {
-
+        if (!changePasswordDialog.isVisible) {
+            changePasswordDialog.show(childFragmentManager, null)
+        }
     }
 
     private fun handleGetUserInfo(userInfo: UserInfo) {

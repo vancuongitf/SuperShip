@@ -45,6 +45,7 @@ class StoreItemUI : AnkoComponent<ViewGroup> {
                         tvStoreAddress = textView {
                             textSizeDimen = R.dimen.secondaryTextSize
                             textColorResource = R.color.colorGray
+                            maxLines = 2
                         }.lparams(0, wrapContent) {
                             weight = 1f
                             rightMargin = dimen(R.dimen.storeItemUIPadding)
@@ -70,7 +71,6 @@ class StoreItemUI : AnkoComponent<ViewGroup> {
                         tvStoreStarRate = textView {
                             textSizeDimen = R.dimen.secondaryTextSize
                             textColorResource = R.color.colorBlue
-                            text = "4.5 / 51 Đánh giá"
                         }
                     }.lparams(matchParent, wrapContent)
                 }.lparams(matchParent, matchParent)

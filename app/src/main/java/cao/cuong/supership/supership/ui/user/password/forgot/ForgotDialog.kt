@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.user.forgotpassword
+package cao.cuong.supership.supership.ui.user.password.forgot
 
 import android.os.Bundle
 import android.view.LayoutInflater

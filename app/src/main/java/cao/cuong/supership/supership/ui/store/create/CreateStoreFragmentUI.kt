@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.store.add
+package cao.cuong.supership.supership.ui.store.create
 
 import android.view.Gravity
 import android.view.View
@@ -14,19 +14,13 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
 
+    internal val checkBoxlist = mutableListOf<CheckBox>()
     internal lateinit var imgAvatar: ImageView
     internal lateinit var rlAvatar: RelativeLayout
     internal lateinit var edtName: EditText
     internal lateinit var tvAddress: TextView
     internal lateinit var edtPhone: EditText
     internal lateinit var edtEmail: EditText
-    internal lateinit var checkBox0: CheckBox
-    internal lateinit var checkBox1: CheckBox
-    internal lateinit var checkBox2: CheckBox
-    internal lateinit var checkBox3: CheckBox
-    internal lateinit var checkBox4: CheckBox
-    internal lateinit var checkBox5: CheckBox
-    internal lateinit var checkBox6: CheckBox
     internal lateinit var tvOpenTime: TextView
     internal lateinit var tvCloseTime: TextView
 
@@ -139,45 +133,57 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
 
                         backgroundColorResource = R.color.colorWhite
 
-                        checkBox0 = checkBox("T2") {
-
+                        checkBox("T2") {
+                            checkBoxlist.add(this)
                         }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f
                         }
 
-                        checkBox1 = checkBox("T3")
+                        checkBox("T3") {
+                            checkBoxlist.add(this)
+                        }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f
                         }
 
-                        checkBox2 = checkBox("T4")
+                        checkBox("T4") {
+                            checkBoxlist.add(this)
+                        }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f
                         }
 
-                        checkBox3 = checkBox("T5")
+                        checkBox("T5") {
+                            checkBoxlist.add(this)
+                        }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f
                         }
 
-                        checkBox4 = checkBox("T6")
+                        checkBox("T6") {
+                            checkBoxlist.add(this)
+                        }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f
                         }
 
-                        checkBox5 = checkBox("T7")
+                        checkBox("T7") {
+                            checkBoxlist.add(this)
+                        }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f
                         }
 
-                        checkBox6 = checkBox("CN")
+                        checkBox("CN") {
+                            checkBoxlist.add(this)
+                        }
 
                         view { }.lparams(0, wrapContent) {
                             weight = 1f

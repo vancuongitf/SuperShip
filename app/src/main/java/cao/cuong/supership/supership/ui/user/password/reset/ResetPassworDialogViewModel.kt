@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.user.resetpassword
+package cao.cuong.supership.supership.ui.user.password.reset
 
 import cao.cuong.supership.supership.data.source.UserRepository
 

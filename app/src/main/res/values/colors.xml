@@ -15,4 +15,5 @@
     <color name="colorCommonEditTextWithEditButtonBackGround">#22BBBBBB</color>
     <color name="colorPink">#F06292</color>
     <color name="colorCyan">#4DD0E1</color>
+    <color name="colorYellowLight">#FFF59D</color>
 </resources>

@@ -18,11 +18,7 @@ class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : A
 
     internal lateinit var tvNonStore: TextView
     internal lateinit var recyclerView: RecyclerView
-    internal lateinit var storeAdapter: StoreAdapter
-
-    init {
-        storeAdapter = StoreAdapter(stores)
-    }
+    internal var storeAdapter = StoreAdapter(stores)
 
     override fun createView(ui: AnkoContext<StoreListFragment>) = with(ui) {
 
