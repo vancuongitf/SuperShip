@@ -41,4 +41,15 @@
     <string name="changePassword">Đổi mật khẩu</string>
     <string name="logOut">Đăng xuất</string>
     <string name="billAddresses">Địa chỉ giao hàng</string>
+    <string name="yourStore">Cửa hàng của bạn</string>
+    <string name="nonStore">Bạn chưa có cửa hàng nào</string>
+    <string name="addStore">Thêm cửa hàng mới</string>
+    <string name="createStore">Tạo mới cửa hàng</string>
+    <string name="chooseAvatar">Chọn Avatar</string>
+    <string name="storeName">Tên cửa hàng</string>
+    <string name="openTime">Thời gian mở cửa</string>
+    <string name="closeTime">Thời gian đóng cửa</string>
+    <string name="currentLocation">Vị trí của bạn</string>
+    <string name="chooseOnMap">Chọn từ bản đồ</string>
+    <string name="confirmLocation">Xác nhận địa chỉ</string>
 </resources>

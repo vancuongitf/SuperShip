@@ -6,12 +6,17 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Build
+import android.support.annotation.IdRes
 import android.support.annotation.StringRes
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
+import cao.cuong.supership.supership.ui.base.BaseFragment
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Single
@@ -24,6 +29,32 @@ import org.jetbrains.anko.okButton
  *
  * @author at-cuongcao.
  */
+internal fun FragmentActivity.replaceFragment(@IdRes containerId: Int, fragment: Fragment,
+                                              isAddBackStack: Boolean = false) {
+    if (supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(containerId, fragment, fragment.javaClass.simpleName)
+        if (isAddBackStack) {
+            transaction.addToBackStack(fragment.javaClass.simpleName)
+        }
+        transaction.commit()
+    }
+}
+
+internal fun FragmentActivity.addFragment(@IdRes containerId: Int, fragment: BaseFragment,
+                                          t: (transaction: FragmentTransaction) -> Unit = {}, backStackString: String? = null) {
+    if (supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null) {
+        val transaction = supportFragmentManager.beginTransaction()
+        t.invoke(transaction)
+        transaction.add(containerId, fragment, fragment.javaClass.simpleName)
+        if (backStackString != null) {
+            transaction.addToBackStack(backStackString)
+        }
+        transaction.commit()
+        supportFragmentManager.executePendingTransactions()
+    }
+}
+
 internal fun Context.isNetworkConnection(): Boolean {
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
     return cm?.activeNetworkInfo != null

@@ -1,13 +1,18 @@
 package cao.cuong.supership.supership.ui.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.data.model.BillAddress
 import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
+import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
+import cao.cuong.supership.supership.extension.observeOnUiThread
+import cao.cuong.supership.supership.ui.store.list.StoreListFragment
 import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.store.activity.StoreActivity
 import cao.cuong.supership.supership.ui.user.forgotpassword.ForgotDialog
 import cao.cuong.supership.supership.ui.user.login.LoginDialog
 import cao.cuong.supership.supership.ui.user.resetpassword.ResetPasswordDialog
@@ -27,7 +32,7 @@ class AccountFragment : BaseFragment() {
     private val signUpDialog = SignUpDialog()
     private var resetPasswordDialog: ResetPasswordDialog? = null
     private val billAddresses = mutableListOf<BillAddress>()
-
+    private var userId = -1L
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = AccountFragmentUI()
@@ -81,8 +86,9 @@ class AccountFragment : BaseFragment() {
 
     private fun updateUI(event: UpdateAccountUI) {
         if (viewModel.isLogin()) {
-            ui.llNonLogin.visibility = View.GONE
-            ui.llLogin.visibility = View.VISIBLE
+            viewModel.getUserInfo()
+                    .observeOnUiThread()
+                    .subscribe(this::handleGetUserInfo, this::handleApiGetInfoError)
         } else {
             ui.llNonLogin.visibility = View.VISIBLE
             ui.llLogin.visibility = View.GONE
@@ -103,7 +109,31 @@ class AccountFragment : BaseFragment() {
 
     }
 
+    fun eventStoreListClicked() {
+        val intent = Intent(activity, StoreActivity::class.java)
+        val bundle = Bundle().apply {
+            putLong(StoreListFragment.KEY_USER_ID, userId)
+        }
+        intent.putExtras(bundle)
+        activity.startActivity(intent)
+    }
+
     fun eventChangePasswordButtonClicked() {
 
+    }
+
+    private fun handleGetUserInfo(userInfo: UserInfo) {
+        userId = userInfo.id
+        ui.edtFullName.editText.setText(userInfo.fullName)
+        ui.edtEmail.editText.setText(userInfo.email)
+        ui.edtPhoneNumber.editText.setText(userInfo.phoneNumber)
+        ui.llNonLogin.visibility = View.GONE
+        ui.llLogin.visibility = View.VISIBLE
+    }
+
+    private fun handleApiGetInfoError(throwable: Throwable){
+        handleApiError(throwable)
+        ui.llNonLogin.visibility = View.VISIBLE
+        ui.llLogin.visibility = View.GONE
     }
 }

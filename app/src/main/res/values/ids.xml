@@ -16,5 +16,16 @@
     <item name="storeFragmentRecyclerViewStores" type="id" />
     <item name="homeContainer" type="id" />
     <item name="accountFragmentRecyclerViewBillAddress" type="id" />
+    <item name="orderActivityContainer" type="id" />
+    <item name="recyclerViewStoreInfo" type="id" />
+    <item name="recyclerViewStoreList" type="id" />
+    <item name="storeActivityContainer" type="id" />
+    <item name="searchLocationContainer" type="id" />
+    <item name="imgCurrentLocation" type="id" />
+    <item name="imgChooseOnMap" type="id" />
+    <item name="tvMainText" type="id" />
+    <item name="recyclerViewLocation" type="id" />
+    <item name="tvSecondaryText" type="id" />
+    <item name="rlMapContainer" type="id" />
 
 </resources>

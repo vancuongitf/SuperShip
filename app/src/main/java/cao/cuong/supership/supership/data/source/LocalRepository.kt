@@ -1,16 +1,27 @@
 package cao.cuong.supership.supership.data.source
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.util.Log
 import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.data.source.datasource.LocalDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
 import org.json.JSONArray
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import kotlin.concurrent.thread
 
 /**
@@ -75,22 +86,6 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         return result
     }
 
-    private fun getHistoryList(): MutableList<StoreInfoExpress> {
-        val result = mutableListOf<StoreInfoExpress>()
-        try {
-            val gson = Gson()
-            val jsonArray = JSONArray(pref.getString(SHARED_KEY_SEARCH_HISTORY, "[]"))
-            Log.i("tag11aa", pref.getString(SHARED_KEY_SEARCH_HISTORY, "[]"))
-            (0 until jsonArray.length()).mapTo(result) {
-                gson.fromJson(jsonArray.getJSONObject(it).toString(), StoreInfoExpress::class.java)
-            }
-        } catch (e: Exception) {
-
-        }
-        Log.i("tag11xx", Gson().toJson(result))
-        return result
-    }
-
     override fun saveAccessToken(token: String) {
         ApiClient.getInstance(null).token = token
         pref.edit().putString(SHARED_KEY_ACCESS_TOKEN, token).apply()
@@ -103,6 +98,21 @@ class LocalRepository(private val context: Context) : LocalDataSource {
     }
 
     override fun clearAccessToken() {
+        Log.i("tag11","clear")
         pref.edit().putString(SHARED_KEY_ACCESS_TOKEN, "").apply()
+    }
+
+    private fun getHistoryList(): MutableList<StoreInfoExpress> {
+        val result = mutableListOf<StoreInfoExpress>()
+        try {
+            val gson = Gson()
+            val jsonArray = JSONArray(pref.getString(SHARED_KEY_SEARCH_HISTORY, "[]"))
+            (0 until jsonArray.length()).mapTo(result) {
+                gson.fromJson(jsonArray.getJSONObject(it).toString(), StoreInfoExpress::class.java)
+            }
+        } catch (e: Exception) {
+
+        }
+        return result
     }
 }

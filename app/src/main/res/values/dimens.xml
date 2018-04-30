@@ -29,4 +29,8 @@
     <dimen name="signUpTitleSize">24dp</dimen>
     <dimen name="signUpTitlePadding">20dp</dimen>
     <dimen name="commonEditTextHieght">24dp</dimen>
+    <dimen name="backButtonSize">24dp</dimen>
+    <dimen name="storeTitleTextSize">24dp</dimen>
+    <dimen name="avatarBoder">5dp</dimen>
+    <dimen name="addressTextSize">16dp</dimen>
 </resources>

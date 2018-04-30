@@ -2,6 +2,7 @@ package cao.cuong.supership.supership.ui.account
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
+import android.view.View
 import android.widget.LinearLayout
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.commonEditTextWithEditButton
@@ -33,6 +34,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
             llNonLogin = verticalLayout {
                 lparams(matchParent, matchParent)
                 gravity = Gravity.CENTER
+                visibility = View.GONE
 
                 textView(R.string.pleaseLogin) {
                     verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
@@ -53,7 +55,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
             }
 
             llLogin = verticalLayout {
-
+                visibility = View.GONE
                 edtFullName = commonEditTextWithEditButton(R.drawable.ic_user, {
                     owner.eventChangeFullNameClick()
                 }) {}.lparams(matchParent, wrapContent) {
@@ -72,39 +74,18 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
                     topMargin = dimen(R.dimen.accountFragmentLoginPadding)
                 }
 
-                linearLayout {
-
-                    gravity = Gravity.CENTER_VERTICAL
-
-                    textView(R.string.billAddresses) {
-                        textColorResource = R.color.colorBlack
-                    }.lparams(0, wrapContent) {
-                        weight = 1f
-                    }
-
-                    imageView {
-                        backgroundResource = R.drawable.ic_add
-
-                        onClick {
-                        }
-                    }.lparams(dimen(R.dimen.commonEditTextHieght), dimen(R.dimen.commonEditTextHieght)) {
-                        margin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
-                }.lparams(matchParent, wrapContent)
-
-                view {
-                    backgroundResource = R.color.colorRed
-                    alpha = 0.7f
-                }.lparams(matchParent, dip(1)) {
-                    bottomMargin = dip(2)
+                view { }.lparams(matchParent, 0) {
+                    weight = 1f
                 }
 
-                recyclerView {
-                    id = R.id.accountFragmentRecyclerViewBillAddress
-                    layoutManager = LinearLayoutManager(ctx)
-                    adapter = billAddressAdapter
-                }.lparams(matchParent, 0) {
-                    weight = 1f
+                textView(R.string.yourStore) {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                    backgroundColorResource = R.color.colorCyan
+                    verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                    enableHighLightWhenClicked()
+                    onClick {
+                        owner.eventStoreListClicked()
+                    }
                 }
 
                 textView(R.string.changePassword) {
@@ -121,7 +102,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
 
                 textView(R.string.logOut) {
                     gravity = Gravity.CENTER_HORIZONTAL
-                    backgroundColorResource = R.color.colorCyan
+                    backgroundColorResource = R.color.colorGrayLight
                     enableHighLightWhenClicked()
                     verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
                     onClick {
