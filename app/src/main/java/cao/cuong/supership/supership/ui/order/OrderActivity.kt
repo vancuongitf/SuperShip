@@ -4,7 +4,7 @@ import android.os.Bundle
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.replaceFragment
 import cao.cuong.supership.supership.ui.base.BaseActivity
-import cao.cuong.supership.supership.ui.store.info.StoreFragment
+import cao.cuong.supership.supership.ui.store.info.StoreInfoFragment
 import org.jetbrains.anko.setContentView
 
 class OrderActivity : BaseActivity() {
@@ -15,7 +15,7 @@ class OrderActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         ui = OrderActivityUI()
         ui.setContentView(this)
-        replaceFragment(R.id.orderActivityContainer, StoreFragment())
+        replaceFragment(R.id.orderActivityContainer, StoreInfoFragment())
     }
 
     override fun onBindViewModel() {

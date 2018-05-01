@@ -12,7 +12,7 @@
     <!-- HomeFragment -->
     <item name="homeFragmentViewPager" type="id" />
 
-    <!-- StoreFragment -->
+    <!-- StoreInfoFragment -->
     <item name="storeFragmentRecyclerViewStores" type="id" />
     <item name="homeContainer" type="id" />
     <item name="accountFragmentRecyclerViewBillAddress" type="id" />
@@ -27,5 +27,7 @@
     <item name="recyclerViewLocation" type="id" />
     <item name="tvSecondaryText" type="id" />
     <item name="rlMapContainer" type="id" />
+    <item name="storeInfoContainer" type="id" />
+    <item name="recyclerViewDrink" type="id" />
 
 </resources>

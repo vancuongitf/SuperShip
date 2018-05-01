@@ -33,4 +33,8 @@
     <dimen name="storeTitleTextSize">24dp</dimen>
     <dimen name="avatarBoder">5dp</dimen>
     <dimen name="addressTextSize">16dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="menuTextSize">16dp</dimen>
 </resources>
