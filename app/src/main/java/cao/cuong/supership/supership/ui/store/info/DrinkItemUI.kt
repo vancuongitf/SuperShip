@@ -5,14 +5,15 @@ import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import org.jetbrains.anko.*
 
-class MenuHeaderItemUI : AnkoComponent<ViewGroup> {
+class DrinkItemUI:AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
         relativeLayout {
-            lparams(matchParent, dimen(R.dimen.toolBarHeight))
-            backgroundColorResource  = R.color.colorRed
+            lparams(matchParent, wrapContent)
 
-            textView {
-                text = "hello"
+            textView(R.string.notification){
+
+            }.lparams{
+                centerInParent()
             }
         }
     }

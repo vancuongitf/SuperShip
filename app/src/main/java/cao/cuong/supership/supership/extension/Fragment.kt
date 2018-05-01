@@ -55,3 +55,7 @@ internal fun Fragment.replaceChildFragment(@IdRes containerId: Int, fragment: Ba
 internal fun FragmentTransaction.animBotToTop() {
     setCustomAnimations(R.anim.slide_bot_to_top, 0, 0, R.anim.slide_top_to_bot)
 }
+
+internal fun FragmentTransaction.animRightToLeft() {
+    setCustomAnimations(R.anim.slide_in_right, 0, 0, R.anim.slide_out_right)
+}

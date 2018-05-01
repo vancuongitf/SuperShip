@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.extension.addFragment
+import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.store.create.CreateStoreFragment
+import cao.cuong.supership.supership.ui.store.info.StoreInfoFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 
@@ -20,6 +23,7 @@ class StoreListFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = StoreListFragmentViewModel(context)
         ui = StoreListFragmentUI(viewModel.stores)
+        ui.storeAdapter.onItemClicked = this::storeAdapterItemClicked
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -71,5 +75,9 @@ class StoreListFragment : BaseFragment() {
         } else {
             progressDialog.dismiss()
         }
+    }
+
+    private fun storeAdapterItemClicked(storeInfoExpress: StoreInfoExpress) {
+        activity.addFragment(R.id.storeActivityContainer, StoreInfoFragment.getNewInstance(storeInfoExpress.storeId), { it.animRightToLeft() }, StoreInfoFragment::class.java.simpleName)
     }
 }
