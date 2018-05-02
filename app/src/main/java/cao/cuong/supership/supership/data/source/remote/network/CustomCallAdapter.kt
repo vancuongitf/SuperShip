@@ -1,6 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote.network
 
-import cao.cuong.supership.supership.data.model.UnAuthorizeException
+import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
 import okhttp3.Request
 import okhttp3.ResponseBody
 import retrofit2.*

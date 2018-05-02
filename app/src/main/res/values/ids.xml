@@ -29,5 +29,7 @@
     <item name="rlMapContainer" type="id" />
     <item name="storeInfoContainer" type="id" />
     <item name="recyclerViewDrink" type="id" />
+    <item name="drinkItemImage" type="id" />
+    <item name="recyclerViewDrinkOption" type="id" />
 
 </resources>

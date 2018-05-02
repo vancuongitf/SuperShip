@@ -67,7 +67,7 @@ class StoreAdapter(private val storeInfoExpresses: MutableList<StoreInfoExpress>
 
     inner class StoreHolder(val ui: StoreItemUI, itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val option = RequestOptions()
-                .placeholder(R.drawable.ic_picture)
+                .placeholder(R.drawable.glide_place_holder)
 
         init {
             itemView.onClick {

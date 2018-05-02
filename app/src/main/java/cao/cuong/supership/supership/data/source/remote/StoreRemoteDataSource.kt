@@ -2,6 +2,7 @@ package cao.cuong.supership.supership.data.source.remote
 
 import cao.cuong.supership.supership.data.source.datasource.StoreDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
+import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.unAccent
@@ -32,4 +33,6 @@ class StoreRemoteDataSource : StoreDataSource {
     }
 
     override fun createStore(createStoreBody: CreateStoreBody) = apiService.createStore(createStoreBody)
+
+    override fun createDrink(drinkBody: CreateDrinkBody) = apiService.createDrink(drinkBody)
 }

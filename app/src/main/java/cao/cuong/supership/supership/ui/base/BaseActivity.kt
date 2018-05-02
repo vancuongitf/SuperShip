@@ -3,7 +3,7 @@ package cao.cuong.supership.supership.ui.base
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
-import cao.cuong.supership.supership.data.model.UnAuthorizeException
+import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import io.reactivex.disposables.CompositeDisposable

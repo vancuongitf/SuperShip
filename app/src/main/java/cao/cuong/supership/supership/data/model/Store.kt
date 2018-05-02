@@ -17,5 +17,5 @@ data class Store(@SerializedName("store_id") var id: Long,
                  @SerializedName("store_image") var image: String,
                  @SerializedName("store_open_time") var openHour: OpenHour,
                  @SerializedName("store_rate") var rate: StoreRate,
-                 @SerializedName("menu") var menu: Menu,
+                 @SerializedName("menu") var menu: MutableList<Drink>,
                  @SerializedName("options") var options: MutableList<DrinkOption>)

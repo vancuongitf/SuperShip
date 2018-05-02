@@ -48,6 +48,9 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val x = mutableSetOf<Long>(1,4,5,2)
+
         ui = SplashActivityUI()
         ui.setContentView(this)
         viewModel = SplashActivityViewModel(LocalRepository(this))

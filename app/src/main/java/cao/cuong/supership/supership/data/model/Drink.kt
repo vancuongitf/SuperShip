@@ -1,6 +1,7 @@
 package cao.cuong.supership.supership.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  *
@@ -11,4 +12,4 @@ data class Drink(@SerializedName("drink_id") var id: Long,
                  @SerializedName("drink_name") var name: String,
                  @SerializedName("drink_price") var price: Int,
                  @SerializedName("drink_image") var image: String,
-                 @SerializedName("drink_options") var options: MutableList<DrinkOption>)
+                 @SerializedName("drink_options") var options: MutableList<DrinkOption>) : Serializable

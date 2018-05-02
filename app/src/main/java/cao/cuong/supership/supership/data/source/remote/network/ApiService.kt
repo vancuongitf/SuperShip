@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.data.source.remote.network
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.model.UserInfo
+import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateUserBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
@@ -60,4 +61,7 @@ interface ApiService {
 
     @POST("api/v1/store/create/create.php")
     fun createStore(@Body createStoreBody: CreateStoreBody): Single<MessageResponse>
+
+    @POST("api/v1/store/drink/create.php")
+    fun createDrink(@Body drinkBody: CreateDrinkBody): Single<MessageResponse>
 }

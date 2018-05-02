@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.ui.home.store
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.order.OrderActivity
+import cao.cuong.supership.supership.ui.store.info.StoreInfoFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.support.v4.toast
@@ -54,7 +57,11 @@ class StoreFragment : BaseFragment() {
     }
 
     internal fun onStoreItemClick(storeInfoExpress: StoreInfoExpress) {
-
+        val intent = Intent(context, OrderActivity::class.java)
+        intent.putExtras(Bundle().apply {
+            putLong(StoreInfoFragment.KEY_STORE_ID, storeInfoExpress.storeId)
+        })
+        context.startActivity(intent)
     }
 
     internal fun onLoadMoreClick() {

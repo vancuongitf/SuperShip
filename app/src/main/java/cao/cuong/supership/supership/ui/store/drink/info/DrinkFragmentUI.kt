@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.store.info
+package cao.cuong.supership.supership.ui.store.drink.info
 
 import android.graphics.Typeface
 import android.support.design.widget.AppBarLayout
@@ -8,10 +8,10 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import cao.cuong.supership.supership.R
-import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getWidthScreen
 import org.jetbrains.anko.*
@@ -27,18 +27,20 @@ import org.jetbrains.anko.support.v4.nestedScrollView
  *
  * @author at-cuongcao.
  */
-class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boolean = false) : AnkoComponent<StoreInfoFragment> {
+class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<DrinkFragment> {
 
-    internal lateinit var imgStoreAvatar: ImageView
-    internal lateinit var tvStoreNameTitle: TextView
-    internal lateinit var tvStoreName: TextView
-    internal lateinit var tvAddress: TextView
-    internal lateinit var tvStarRate: TextView
-    internal lateinit var tvCartCount: TextView
-    internal lateinit var imgCart: ImageView
-    internal val drinkAdapter = DrinkAdapter(drinks)
+    internal lateinit var imgDrinkImage: ImageView
+    internal lateinit var tvDrinkTitle: TextView
+    internal lateinit var tvDrinkName: TextView
+    internal lateinit var tvPrice: TextView
+    internal lateinit var tvTotalPrice: TextView
+    internal lateinit var tvBillCount: TextView
+    internal lateinit var imgMinus: ImageView
+    internal lateinit var imgAdd: ImageView
+    internal lateinit var tvDrinkCount: TextView
+    internal lateinit var edtNote: EditText
 
-    override fun createView(ui: AnkoContext<StoreInfoFragment>) = with(ui) {
+    override fun createView(ui: AnkoContext<DrinkFragment>) = with(ui) {
         coordinatorLayout {
             lparams(matchParent, matchParent)
             backgroundColorResource = R.color.colorWhite
@@ -51,34 +53,91 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                 collapsingToolbarLayout {
 
                     verticalLayout {
-                        imgStoreAvatar = imageView {
+                        imgDrinkImage = imageView {
                             scaleType = ImageView.ScaleType.CENTER_CROP
                         }.lparams(ctx.getWidthScreen(), ctx.getWidthScreen())
 
                         verticalLayout {
                             padding = dimen(R.dimen.accountFragmentLoginPadding)
 
-                            tvStoreName = textView {
-                                setTypeface(null, Typeface.BOLD)
-                                textColorResource = R.color.colorBlack
-                            }
+                            linearLayout {
 
-                            tvAddress = textView {
-                                textSizeDimen = R.dimen.secondaryTextSize
-                                textColorResource = R.color.colorGray
-                                maxLines = 2
-                            }.lparams {
-                                verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                gravity = Gravity.CENTER_VERTICAL
+
+                                tvDrinkName = textView {
+                                    setTypeface(null, Typeface.BOLD)
+                                    textColorResource = R.color.colorBlack
+                                    singleLine = true
+                                }.lparams(0, wrapContent) {
+                                    weight = 1f
+                                }
+
+                                linearLayout {
+
+                                    visibility = if (orderCase) {
+                                        View.VISIBLE
+                                    } else {
+                                        View.GONE
+                                    }
+
+                                    imgMinus = imageView(R.drawable.ic_minus_black) {
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.onMinusDrinkClicked()
+                                        }
+                                    }.lparams(dimen(R.dimen.addDrinkButtonSize), dimen(R.dimen.addDrinkButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+
+                                    tvDrinkCount = textView {
+                                        textColorResource = R.color.colorBlack
+                                        setTypeface(null, Typeface.BOLD)
+                                    }.lparams {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+
+                                    imgAdd = imageView(R.drawable.ic_add_black) {
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.onAddDrinkClicked()
+                                        }
+                                    }.lparams(dimen(R.dimen.addDrinkButtonSize), dimen(R.dimen.addDrinkButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }
+
+                            }.lparams(matchParent, wrapContent)
+
+                            relativeLayout {
+                                gravity = Gravity.CENTER_VERTICAL
+
+                                tvPrice = textView {
+                                    textSizeDimen = R.dimen.secondaryTextSize
+                                    textColorResource = R.color.colorBlack
+                                    singleLine = true
+                                }.lparams {
+                                    verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    alignParentLeft()
+                                }
+
+                                tvTotalPrice = textView {
+                                    textSizeDimen = R.dimen.secondaryTextSize
+                                    textColorResource = R.color.colorRed
+                                    singleLine = true
+                                }.lparams {
+                                    verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    alignParentRight()
+                                }
                             }
 
                             linearLayout {
                                 gravity = Gravity.CENTER_VERTICAL
-                                imageView(R.drawable.ic_star_gold)
+                                imageView(R.drawable.ic_cart)
                                         .lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
                                             rightMargin = dimen(R.dimen.storeItemUITvAddressTopMargin)
                                         }
 
-                                tvStarRate = textView {
+                                tvBillCount = textView {
                                     textSizeDimen = R.dimen.secondaryTextSize
                                     textColorResource = R.color.colorBlue
                                 }
@@ -109,9 +168,10 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                                     horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                 }
 
-                                tvStoreNameTitle = textView {
+                                tvDrinkTitle = textView {
                                     textSizeDimen = R.dimen.storeTitleTextSize
                                     textColorResource = R.color.colorBlack
+                                    singleLine = true
                                 }.lparams(0, wrapContent) {
                                     weight = 1f
                                 }
@@ -121,28 +181,13 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                                     padding = dimen(R.dimen.accountFragmentLoginPadding)
                                     enableHighLightWhenClicked()
                                     onClick {
-                                        owner.onCartClicked()
+                                        owner.onCheckClicked()
                                     }
 
-                                    visibility = if (orderCase) {
-                                        View.VISIBLE
-                                    } else {
-                                        View.GONE
-                                    }
-
-                                    imgCart = imageView(R.drawable.ic_cart) {
+                                    imageView(R.drawable.ic_check_button) {
 
                                     }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
                                         centerInParent()
-                                    }
-
-                                    tvCartCount = textView {
-                                        textSizeDimen = R.dimen.cartCountTextSize
-                                        setTypeface(null, Typeface.BOLD)
-                                        textColorResource = R.color.colorRed
-                                    }.lparams {
-                                        alignParentRight()
-                                        alignParentTop()
                                     }
                                 }.lparams(dimen(R.dimen.toolBarHeight), dimen(R.dimen.toolBarHeight))
 
@@ -167,12 +212,35 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
 
             nestedScrollView {
 
-                recyclerView {
+                verticalLayout {
+
                     topPadding = dimen(R.dimen.toolBarHeight)
-                    id = R.id.recyclerViewDrink
-                    layoutManager = LinearLayoutManager(ctx)
-                    adapter = drinkAdapter
-                }.lparams(matchParent, matchParent)
+                    horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+
+                    textView(R.string.note) {
+                        textColorResource = R.color.colorBlack
+                        bottomPadding = dip(2)
+                    }
+
+                    edtNote = editText {
+                        backgroundColorResource = R.color.colorGrayVeryLight
+                        textColorResource = R.color.colorBlack
+                        verticalPadding = dip(5)
+                        singleLine = true
+                    }.lparams(matchParent, wrapContent)
+
+                    view {
+                        backgroundResource = R.color.colorRed
+                        alpha = 0.7f
+                    }.lparams(matchParent, dip(1)) {
+                        bottomMargin = dip(2)
+                    }
+
+                    recyclerView {
+                        id = R.id.recyclerViewDrinkOption
+                        layoutManager = LinearLayoutManager(ctx)
+                    }.lparams(matchParent, matchParent)
+                }.lparams(matchParent, wrapContent)
 
             }.lparams(matchParent, wrapContent) {
                 behavior = AppBarLayout.ScrollingViewBehavior()
@@ -183,7 +251,7 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                 backgroundColorResource = R.color.colorGrayVeryLight
                 gravity = Gravity.CENTER_VERTICAL
 
-                textView(R.string.menu) {
+                textView(R.string.optional) {
                     horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
                     textColorResource = R.color.colorBlack
                     backgroundColorResource = R.color.colorWhite
@@ -193,22 +261,6 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                 }.lparams(0, matchParent) {
                     weight = 1f
                 }
-
-                relativeLayout {
-                    gravity = Gravity.CENTER_VERTICAL
-                    backgroundColorResource = R.color.colorWhite
-                    horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    if (orderCase) {
-                        visibility = View.GONE
-                    } else {
-                        visibility = View.VISIBLE
-                    }
-                    onClick {
-                        owner.addDrinkClicked()
-                    }
-                    imageView(R.drawable.ic_add_button) {
-                    }
-                }.lparams(wrapContent, matchParent)
 
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight)) {
                 behavior = AppBarLayout.ScrollingViewBehavior()
