@@ -7,9 +7,11 @@ import android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROL
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getWidthScreen
 import org.jetbrains.anko.*
@@ -25,13 +27,16 @@ import org.jetbrains.anko.support.v4.nestedScrollView
  *
  * @author at-cuongcao.
  */
-class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
+class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boolean = false) : AnkoComponent<StoreInfoFragment> {
 
     internal lateinit var imgStoreAvatar: ImageView
     internal lateinit var tvStoreNameTitle: TextView
     internal lateinit var tvStoreName: TextView
     internal lateinit var tvAddress: TextView
     internal lateinit var tvStarRate: TextView
+    internal lateinit var tvCartCount: TextView
+    internal lateinit var imgCart: ImageView
+    internal val drinkAdapter = DrinkAdapter(drinks)
 
     override fun createView(ui: AnkoContext<StoreInfoFragment>) = with(ui) {
         coordinatorLayout {
@@ -47,7 +52,6 @@ class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
 
                     verticalLayout {
                         imgStoreAvatar = imageView {
-                            backgroundResource = R.mipmap.ic_launcher_round
                             scaleType = ImageView.ScaleType.CENTER_CROP
                         }.lparams(ctx.getWidthScreen(), ctx.getWidthScreen())
 
@@ -96,7 +100,7 @@ class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
 
                                 gravity = Gravity.CENTER_VERTICAL
 
-                                imageView(R.drawable.ic_back) {
+                                imageView(R.drawable.ic_back_button) {
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.onBackClicked()
@@ -108,8 +112,40 @@ class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
                                 tvStoreNameTitle = textView {
                                     textSizeDimen = R.dimen.storeTitleTextSize
                                     textColorResource = R.color.colorBlue
-                                    setTypeface(null, Typeface.BOLD)
+                                }.lparams(0, wrapContent) {
+                                    weight = 1f
                                 }
+
+                                relativeLayout {
+
+                                    padding = dimen(R.dimen.accountFragmentLoginPadding)
+                                    enableHighLightWhenClicked()
+                                    onClick {
+                                        owner.onCartClicked()
+                                    }
+
+                                    visibility = if (orderCase) {
+                                        View.VISIBLE
+                                    } else {
+                                        View.GONE
+                                    }
+
+                                    imgCart = imageView(R.drawable.ic_cart) {
+
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        centerInParent()
+                                    }
+
+                                    tvCartCount = textView {
+                                        textSizeDimen = R.dimen.cartCountTextSize
+                                        setTypeface(null, Typeface.BOLD)
+                                        textColorResource = R.color.colorRed
+                                    }.lparams {
+                                        alignParentRight()
+                                        alignParentTop()
+                                    }
+                                }.lparams(dimen(R.dimen.toolBarHeight), dimen(R.dimen.toolBarHeight))
+
                             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 
                             view {
@@ -135,7 +171,6 @@ class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
                     topPadding = dimen(R.dimen.toolBarHeight)
                     id = R.id.recyclerViewDrink
                     layoutManager = LinearLayoutManager(ctx)
-                    val drinkAdapter = DrinkAdapter(mutableListOf())
                     adapter = drinkAdapter
                 }.lparams(matchParent, matchParent)
 
@@ -143,9 +178,10 @@ class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
                 behavior = AppBarLayout.ScrollingViewBehavior()
             }
 
-            verticalLayout {
+            linearLayout {
                 verticalPadding = dip(1)
                 backgroundColorResource = R.color.colorGrayVeryLight
+                gravity = Gravity.CENTER_VERTICAL
 
                 textView(R.string.menu) {
                     horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
@@ -154,7 +190,41 @@ class StoreInfoFragmentUI : AnkoComponent<StoreInfoFragment> {
                     setTypeface(null, Typeface.BOLD)
                     gravity = Gravity.CENTER_VERTICAL
                     textSizeDimen = R.dimen.menuTextSize
-                }.lparams(matchParent, matchParent)
+                }.lparams(0, matchParent) {
+                    weight = 1f
+                }
+
+                linearLayout {
+                    gravity = Gravity.CENTER_VERTICAL
+                    backgroundColorResource = R.color.colorWhite
+                    visibility = if (orderCase) {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
+                    }
+
+                    relativeLayout {
+                        onClick {
+                            owner.optionalButtonClick()
+                        }
+                        enableHighLightWhenClicked()
+                        imageView(R.drawable.ic_optional_list) {
+                        }.lparams {
+                            horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }
+
+                    relativeLayout {
+                        onClick {
+                            owner.addDrinkClicked()
+                        }
+                        enableHighLightWhenClicked()
+                        imageView(R.drawable.ic_add_button) {
+                        }.lparams {
+                            horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }
+                }.lparams(wrapContent, matchParent)
 
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight)) {
                 behavior = AppBarLayout.ScrollingViewBehavior()

@@ -2,7 +2,11 @@ package cao.cuong.supership.supership.data.source.datasource
 
 import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
+import cao.cuong.supership.supership.data.source.remote.request.AddDrinkOptionItemBody
+import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
+import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkOptionBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
+import cao.cuong.supership.supership.data.source.remote.response.CreateDrinkOptionResponse
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 import io.reactivex.Single
@@ -23,4 +27,10 @@ interface StoreDataSource {
     fun uploadImage(file: File): Single<MessageResponse>
 
     fun createStore(createStoreBody: CreateStoreBody): Single<MessageResponse>
+
+    fun createDrink(drinkBody: CreateDrinkBody): Single<MessageResponse>
+
+    fun createDrinkOption(createOptionBody: CreateDrinkOptionBody): Single<CreateDrinkOptionResponse>
+
+    fun addDrinkItemOption(body: AddDrinkOptionItemBody): Single<MessageResponse>
 }

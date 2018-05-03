@@ -61,8 +61,7 @@ class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : A
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 
             view {
-                backgroundResource = R.color.colorGray
-                alpha = 0.7f
+                backgroundResource = R.color.colorGrayVeryLight
             }.lparams(matchParent, dip(1)) {
                 bottomMargin = dip(2)
             }

@@ -30,11 +30,24 @@
     <dimen name="signUpTitlePadding">20dp</dimen>
     <dimen name="commonEditTextHieght">24dp</dimen>
     <dimen name="backButtonSize">24dp</dimen>
-    <dimen name="storeTitleTextSize">24dp</dimen>
+    <dimen name="storeTitleTextSize">20dp</dimen>
     <dimen name="avatarBoder">5dp</dimen>
     <dimen name="addressTextSize">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="menuTextSize">16dp</dimen>
+    <dimen name="drinkItemUIhight">100dp</dimen>
+    <dimen name="drinkItemUIPadding">10dp</dimen>
+    <dimen name="drinkItemUIImageSize">80dp</dimen>
+    <dimen name="drinkItemMainTextSize">14dp</dimen>
+    <dimen name="drinkItemCartSize">14dp</dimen>
+    <dimen name="drinkItemSecondaryTextSize">12dp</dimen>
+    <dimen name="cartCountTextSize">10dp</dimen>
+    <dimen name="addDrinkButtonSize">20dp</dimen>
+    <dimen name="addDrinkOptionUIPadding">10dp</dimen>
+    <dimen name="addDrinkOptionItemHight">24dp</dimen>
+    <dimen name="deleteIconSize">14dp</dimen>
+    <dimen name="drinkOptionItemPadding">10dp</dimen>
+    <dimen name="drinkOptionItemButton">20dp</dimen>
 </resources>

@@ -149,4 +149,18 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="menu">Menu</string>
+    <string name="createDrink">Thêm đồ uống mới</string>
+    <string name="drinkName">Tên đồ uống</string>
+    <string name="drinkPrice">Giá: %d VND</string>
+    <string name="note">Ghi chú</string>
+    <string name="notOrderYet">Chưa được đặt lần nào.</string>
+    <string name="drinkTotalPrice">Tổng cộng: %d VND</string>
+    <string name="optional">Tuỳ chọn</string>
+    <string name="price">Giá</string>
+    <string name="addDrinkOptional">Thêm tùy chọn</string>
+    <string name="optionName">Tên tùy chọn</string>
+    <string name="multiChoose">Chọn nhiều</string>
+    <string name="optionList">Danh sách tùy chọn</string>
+    <string name="optionals">Danh sách tùy chọn</string>
+    <string name="reload">Thử lại</string>
 </resources>

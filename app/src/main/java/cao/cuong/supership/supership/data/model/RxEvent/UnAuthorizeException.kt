@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.data.model
+package cao.cuong.supership.supership.data.model.RxEvent
 
 /**
  *

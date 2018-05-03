@@ -116,8 +116,8 @@ internal fun Context.showOkAlert(@StringRes title: Int, message: String, okOnCli
         isCancelable = false
 
         okButton {
-            okOnClicked()
             it.dismiss()
+            okOnClicked()
         }
     }.show()
 }
@@ -129,8 +129,8 @@ internal fun Context.showOkAlert(@StringRes title: Int, @StringRes message: Int,
         isCancelable = false
 
         okButton {
-            okOnClicked()
             it.dismiss()
+            okOnClicked()
         }
     }.show()
 }
@@ -145,8 +145,8 @@ internal fun Context.showOkAlert(throwable: Throwable, okOnClicked: () -> Unit =
         }
         isCancelable = false
         okButton {
-            okOnClicked()
             it.dismiss()
+            okOnClicked()
         }
     }.show()
 }

@@ -2,6 +2,9 @@ package cao.cuong.supership.supership.data.source
 
 import cao.cuong.supership.supership.data.source.datasource.StoreDataSource
 import cao.cuong.supership.supership.data.source.remote.StoreRemoteDataSource
+import cao.cuong.supership.supership.data.source.remote.request.AddDrinkOptionItemBody
+import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
+import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkOptionBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
 import java.io.File
 
@@ -22,4 +25,10 @@ class StoreRepository : StoreDataSource {
     override fun uploadImage(file: File) = storeRemoteDataSource.uploadImage(file)
 
     override fun createStore(createStoreBody: CreateStoreBody) = storeRemoteDataSource.createStore(createStoreBody)
+
+    override fun createDrink(drinkBody: CreateDrinkBody) = storeRemoteDataSource.createDrink(drinkBody)
+
+    override fun createDrinkOption(createOptionBody: CreateDrinkOptionBody) = storeRemoteDataSource.createDrinkOption(createOptionBody)
+
+    override fun addDrinkItemOption(body: AddDrinkOptionItemBody) = storeRemoteDataSource.addDrinkItemOption(body)
 }

@@ -54,4 +54,5 @@ abstract class BaseFragment : Fragment() {
      * This function is used to define subscription
      */
     abstract fun onBindViewModel()
+
 }

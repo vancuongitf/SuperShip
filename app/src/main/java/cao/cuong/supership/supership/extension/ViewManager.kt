@@ -5,10 +5,7 @@ import android.support.annotation.DimenRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import android.view.ViewManager
-import cao.cuong.supership.supership.ui.base.widget.CommonButton
-import cao.cuong.supership.supership.ui.base.widget.CommonEditText
-import cao.cuong.supership.supership.ui.base.widget.CommonEditTextWithEditButton
-import cao.cuong.supership.supership.ui.base.widget.CommonTextView
+import cao.cuong.supership.supership.ui.base.widget.*
 import com.google.android.gms.maps.MapView
 import org.jetbrains.anko.custom.ankoView
 
@@ -28,5 +25,11 @@ internal fun ViewManager.commonButton(@StringRes title: Int, @ColorRes backGroun
 
 internal fun ViewManager.commonEditTextWithEditButton(@DrawableRes title: Int, onClicked: () -> Unit = {}, init: CommonEditTextWithEditButton.() -> Unit): CommonEditTextWithEditButton =
         ankoView({ CommonEditTextWithEditButton(it, title, onClicked) }, 0, init)
+
+internal fun ViewManager.commonCheckBox(init: CommonCheckBox.() -> Unit): CommonCheckBox =
+        ankoView({ CommonCheckBox(it) }, 0, init)
+
+internal fun ViewManager.commonRadioButton(init: CommonRadioButton.() -> Unit): CommonRadioButton =
+        ankoView({ CommonRadioButton(it) }, 0, init)
 
 internal fun ViewManager.mapView(init: MapView.() -> Unit) = ankoView({ MapView(it) }, 0, init)

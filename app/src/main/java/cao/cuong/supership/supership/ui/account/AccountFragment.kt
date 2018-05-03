@@ -88,6 +88,11 @@ class AccountFragment : BaseFragment() {
     private fun updateUI(event: UpdateAccountUI) {
         if (viewModel.isLogin()) {
             viewModel.getUserInfo()
+                    .doOnSubscribe {
+                        ui.llNonLogin.visibility = View.GONE
+                        ui.llLogin.visibility = View.GONE
+                        ui.tvReload.visibility = View.GONE
+                    }
                     .observeOnUiThread()
                     .subscribe(this::handleGetUserInfo, this::handleApiGetInfoError)
         } else {
@@ -124,6 +129,27 @@ class AccountFragment : BaseFragment() {
         }
     }
 
+    fun eventReloadClicked() {
+        ui.llNonLogin.visibility = View.GONE
+        ui.llLogin.visibility = View.GONE
+        ui.tvReload.visibility = View.GONE
+        if (viewModel.isLogin()) {
+            ui.llNonLogin.visibility = View.GONE
+            ui.llLogin.visibility = View.GONE
+            ui.tvReload.visibility = View.GONE
+            viewModel.getUserInfo()
+                    .observeOnUiThread()
+                    .subscribe(this::handleGetUserInfo, this::handleApiGetInfoError)
+        } else {
+            if (changePasswordDialog.isVisible) {
+                changePasswordDialog.dismiss()
+            }
+            ui.llNonLogin.visibility = View.VISIBLE
+            ui.llLogin.visibility = View.GONE
+            ui.tvReload.visibility = View.GONE
+        }
+    }
+
     private fun handleGetUserInfo(userInfo: UserInfo) {
         userId = userInfo.id
         ui.edtFullName.editText.setText(userInfo.fullName)
@@ -131,11 +157,11 @@ class AccountFragment : BaseFragment() {
         ui.edtPhoneNumber.editText.setText(userInfo.phoneNumber)
         ui.llNonLogin.visibility = View.GONE
         ui.llLogin.visibility = View.VISIBLE
+        ui.tvReload.visibility = View.GONE
     }
 
     private fun handleApiGetInfoError(throwable: Throwable){
         handleApiError(throwable)
-        ui.llNonLogin.visibility = View.VISIBLE
-        ui.llLogin.visibility = View.GONE
+//        updateUI(UpdateAccountUI())
     }
 }

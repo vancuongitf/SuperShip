@@ -46,6 +46,7 @@
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.location.LocationActivity" />
         <activity android:name=".ui.store.activity.StoreActivity" />
+        <activity android:name=".ui.order.OrderActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
