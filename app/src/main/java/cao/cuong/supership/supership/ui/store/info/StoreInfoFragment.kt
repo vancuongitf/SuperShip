@@ -12,6 +12,7 @@ import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.order.OrderActivity
+import cao.cuong.supership.supership.ui.store.BaseStoreInfoActivity
 import cao.cuong.supership.supership.ui.store.activity.StoreActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -54,7 +55,7 @@ class StoreInfoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getStoreInfo().subscribe(this::handleGetStoreInfoSuccess, this::handleApiError)
+        loadData()
         RxBus.listen(UpdateCartStatus::class.java)
                 .observeOnUiThread()
                 .subscribe(this::handleUpdateCartStatus)
@@ -96,16 +97,27 @@ class StoreInfoFragment : BaseFragment() {
         } else {
             ui.tvStarRate.text = context.getString(R.string.store_rate, store.rate.rate.toString(), store.rate.rateCount.toString())
         }
+
+        (activity as? BaseStoreInfoActivity)?.setDrinkOption(store.options)
     }
 
     internal fun onCartClicked() {
+
+    }
+
+    internal fun optionalButtonClick() {
+        (activity as? StoreActivity)?.openDrinkOptionFragment(storeId)
+    }
+
+    internal fun reloadData() {
+        loadData()
     }
 
     private fun drinkAdapterOnItemClicked(drink: Drink) {
         if (orderCase) {
             (activity as? OrderActivity)?.openDrinkOrderFragment(drink)
         } else {
-            // TODO: Hanlde later
+            (activity as? StoreActivity)?.openDrinkFragment(drink)
         }
     }
 
@@ -123,5 +135,9 @@ class StoreInfoFragment : BaseFragment() {
         } else {
             ui.imgCart.setImageResource(R.drawable.ic_cart)
         }
+    }
+
+    private fun loadData() {
+        viewModel.getStoreInfo().subscribe(this::handleGetStoreInfoSuccess, this::handleApiError)
     }
 }

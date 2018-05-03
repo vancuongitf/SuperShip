@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote.network
 
+import android.util.Log
 import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
 import okhttp3.ResponseBody
 import retrofit2.*
@@ -27,6 +28,7 @@ class RxCallAdapterWrapper<R>(type: Type, retrofit: Retrofit, wrapped: CallAdapt
                 }
 
                 HttpsURLConnection.HTTP_UNAUTHORIZED -> response.errorBody()?.let {
+                    Log.i("tag11xxzy", "401")
                     RxBus.publish(UnAuthorizeException())
                     return result
                 }

@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote.network
 
+import android.util.Log
 import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
 import okhttp3.Request
 import okhttp3.ResponseBody
@@ -84,6 +85,7 @@ internal class CustomCallAdapter<T>(private val call: Call<T>, private val retro
                         HttpURLConnection.HTTP_OK -> callback.success(call, response)
 
                         HttpURLConnection.HTTP_UNAUTHORIZED -> {
+                            Log.i("tag11xxz", "401")
                             RxBus.publish(UnAuthorizeException())
                             callback.onError(ApiException(HttpURLConnection.HTTP_UNAUTHORIZED, "Internal server error."))
                         }

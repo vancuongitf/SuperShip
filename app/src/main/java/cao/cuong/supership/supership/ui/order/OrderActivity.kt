@@ -9,12 +9,12 @@ import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.replaceFragment
-import cao.cuong.supership.supership.ui.base.BaseActivity
+import cao.cuong.supership.supership.ui.store.BaseStoreInfoActivity
 import cao.cuong.supership.supership.ui.store.drink.info.DrinkFragment
 import cao.cuong.supership.supership.ui.store.info.StoreInfoFragment
 import org.jetbrains.anko.setContentView
 
-class OrderActivity : BaseActivity() {
+class OrderActivity : BaseStoreInfoActivity() {
 
     private lateinit var ui: OrderActivityUI
     private val cart = mutableListOf<OrderDrink>()
@@ -27,9 +27,7 @@ class OrderActivity : BaseActivity() {
         replaceFragment(R.id.orderActivityContainer, StoreInfoFragment.getNewInstance(storeId))
     }
 
-    override fun onBindViewModel() {
-
-    }
+    override fun onBindViewModel() = Unit
 
     internal fun openDrinkOrderFragment(drink: Drink) {
         addFragment(R.id.orderActivityContainer, DrinkFragment.getNewInstance(drink), { it.animRightToLeft() }, DrinkFragment::class.java.simpleName)

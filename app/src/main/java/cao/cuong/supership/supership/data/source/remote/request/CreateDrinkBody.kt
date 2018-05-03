@@ -7,4 +7,5 @@ data class CreateDrinkBody(@SerializedName("token") var token: String?,
                            @SerializedName("name") var name: String,
                            @SerializedName("un_accent_name") var unAccentName: String,
                            @SerializedName("price") var price: Int,
-                           @SerializedName("image") var image: String)
+                           @SerializedName("image") var image: String,
+                           @SerializedName("options") val options: Set<Long>)

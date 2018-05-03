@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.base
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
@@ -17,8 +18,8 @@ abstract class BaseActivity : AppCompatActivity() {
     private val subscription: CompositeDisposable = CompositeDisposable()
     private lateinit var viewModel: BaseActivityViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         viewModel = BaseActivityViewModel(this)
         RxBus.listen(UnAuthorizeException::class.java)
                 .observeOnUiThread()

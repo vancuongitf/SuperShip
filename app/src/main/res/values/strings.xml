@@ -157,4 +157,10 @@
     <string name="drinkTotalPrice">Tổng cộng: %d VND</string>
     <string name="optional">Tuỳ chọn</string>
     <string name="price">Giá</string>
+    <string name="addDrinkOptional">Thêm tùy chọn</string>
+    <string name="optionName">Tên tùy chọn</string>
+    <string name="multiChoose">Chọn nhiều</string>
+    <string name="optionList">Danh sách tùy chọn</string>
+    <string name="optionals">Danh sách tùy chọn</string>
+    <string name="reload">Thử lại</string>
 </resources>

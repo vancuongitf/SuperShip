@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.account
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.commonEditTextWithEditButton
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
@@ -22,6 +23,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
     internal lateinit var edtPhoneNumber: CommonEditTextWithEditButton
     internal lateinit var edtEmail: CommonEditTextWithEditButton
     internal lateinit var billAddressAdapter: BillAddressAdapter
+    internal lateinit var tvReload: TextView
 
     override fun createView(ui: AnkoContext<AccountFragment>) = with(ui) {
         relativeLayout {
@@ -29,8 +31,24 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
             backgroundResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
 
+            tvReload = textView(R.string.reload) {
+                visibility = View.GONE
+                gravity = Gravity.CENTER
+                backgroundColorResource = R.color.colorBlue
+                enableHighLightWhenClicked()
+                verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+
+                onClick {
+                    owner.eventReloadClicked()
+                }
+            }.lparams(matchParent, wrapContent) {
+                centerInParent()
+            }
+
             llNonLogin = verticalLayout {
                 lparams(matchParent, matchParent)
+                isClickable = true
+                backgroundColorResource = R.color.colorWhite
                 gravity = Gravity.CENTER
                 visibility = View.GONE
 
@@ -54,6 +72,8 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
 
             llLogin = verticalLayout {
                 visibility = View.GONE
+                isClickable = true
+                backgroundColorResource = R.color.colorWhite
                 edtFullName = commonEditTextWithEditButton(R.drawable.ic_user, {
                     owner.eventChangeFullNameClick()
                 }) {}.lparams(matchParent, wrapContent) {

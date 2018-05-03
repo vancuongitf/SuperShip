@@ -7,4 +7,12 @@ class CartFragment:BaseFragment(){
 
     }
 
+    internal fun onBackClicked() {
+
+    }
+
+    internal fun onCheckClicked() {
+
+    }
+
 }

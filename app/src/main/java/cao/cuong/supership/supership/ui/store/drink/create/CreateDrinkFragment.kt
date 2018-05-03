@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.isValidateFullName
@@ -38,11 +39,15 @@ class CreateDrinkFragment : BaseFragment() {
     internal lateinit var viewModel: CreateDrinkFragmentViewModel
     private var storeId = -1L
     private var uri: Uri? = null
+    private val options = mutableListOf<DrinkOption>()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         storeId = arguments.getLong(StoreInfoFragment.KEY_STORE_ID)
+        (activity as? StoreActivity)?.getDrinkOptions()?.let {
+            options.addAll(it)
+        }
         viewModel = CreateDrinkFragmentViewModel(context)
-        ui = CreateDrinkFragmentUI()
+        ui = CreateDrinkFragmentUI(options)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -87,9 +92,19 @@ class CreateDrinkFragment : BaseFragment() {
             if (name.isValidateFullName()) {
                 try {
                     val price = priceString.toInt()
-                    viewModel.createDrink(uri!!, CreateDrinkBody(null, storeId, name, name.unAccent(), price, ""))
-                            .observeOnUiThread()
-                            .subscribe(this::handleCreateDrinkSuccess, this::handleApiError)
+                    if (price > 0) {
+                        val set = mutableSetOf<Long>()
+                        options.forEach {
+                            if (it.isSelected) {
+                                set.add(it.id)
+                            }
+                        }
+                        viewModel.createDrink(uri!!, CreateDrinkBody(null, storeId, name, name.unAccent(), price, "", set))
+                                .observeOnUiThread()
+                                .subscribe(this::handleCreateDrinkSuccess, this::handleApiError)
+                    } else {
+                        message = "Giá phải là một số nguyên dương."
+                    }
                 } catch (e: NumberFormatException) {
                     message = "Vui lòng nhập giá đúng định dạng."
                 }

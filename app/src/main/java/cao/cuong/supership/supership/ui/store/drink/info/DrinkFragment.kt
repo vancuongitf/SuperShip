@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
+import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.data.model.OrderDrink
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.order.OrderActivity
+import cao.cuong.supership.supership.ui.store.BaseStoreInfoActivity
 import cao.cuong.supership.supership.ui.store.activity.StoreActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -30,27 +32,30 @@ class DrinkFragment : BaseFragment() {
 
     internal lateinit var ui: DrinkFragmentUI
     internal lateinit var viewModel: DrinkFragmentViewModel
-    internal var drink: Drink? = null
+    internal lateinit var drink: Drink
     private lateinit var orderInfo: OrderDrink
     private var orderCase = false
+    private val drinkOptions = mutableListOf<DrinkOption>()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        drink = arguments.getSerializable(KEY_DRINK) as? Drink
-        drink?.let {
-            orderInfo = OrderDrink(it.id, 0, mutableSetOf(), "")
+        try {
+            drink = arguments.getSerializable(KEY_DRINK) as Drink
+            orderInfo = OrderDrink(drink.id, 0, mutableSetOf(), "")
+        } catch (e: ClassCastException) {
+            activity.onBackPressed()
         }
+        getDrinkOption()
         viewModel = DrinkFragmentViewModel(context)
         checkOrderCase()
-        ui = DrinkFragmentUI(orderCase)
+        ui = DrinkFragmentUI(drinkOptions, orderCase)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        drink?.let {
             with(ui) {
-                tvDrinkTitle.text = it.name
-                tvDrinkName.text = it.name
+                tvDrinkTitle.text = drink.name
+                tvDrinkName.text = drink.name
                 // TODO: tvBillCount
                 tvBillCount.text = getString(R.string.notOrderYet)
                 updateDrinkPrice()
@@ -59,11 +64,9 @@ class DrinkFragment : BaseFragment() {
                 Glide.with(context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/${it.image}")
+                        .load("https://vnshipperman.000webhostapp.com/uploads/${drink.image}")
                         .into(imgDrinkImage)
             }
-
-        }
     }
 
     override fun onBindViewModel() {
@@ -102,11 +105,24 @@ class DrinkFragment : BaseFragment() {
         }
     }
 
-    private fun updateDrinkPrice() {
-        drink?.let {
-            ui.tvPrice.text = context.getString(R.string.drinkPrice, it.price)
-            ui.tvDrinkCount.text = orderInfo.count.toString()
-            ui.tvTotalPrice.text = context.getString(R.string.drinkTotalPrice, orderInfo.count * it.price)
+    internal fun updateDrinkPrice() {
+        ui.tvPrice.text = context.getString(R.string.drinkPrice, drink.price)
+        ui.tvDrinkCount.text = orderInfo.count.toString()
+        var totalOptionPrice = 0
+        drinkOptions.forEach {
+            it.items.forEach {
+                if (it.isSelected) {
+                    totalOptionPrice += it.price
+                }
+            }
+        }
+        ui.tvTotalPrice.text = context.getString(R.string.drinkTotalPrice, orderInfo.count * (drink.price + totalOptionPrice))
+    }
+
+    private fun getDrinkOption() {
+        (activity as? BaseStoreInfoActivity)?.getDrinkOptions(drink.options)?.let {
+            drinkOptions.clear()
+            drinkOptions.addAll(it)
         }
     }
 }

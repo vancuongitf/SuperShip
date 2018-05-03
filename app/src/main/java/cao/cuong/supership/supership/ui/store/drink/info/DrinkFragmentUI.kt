@@ -12,8 +12,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getWidthScreen
+import cao.cuong.supership.supership.ui.store.optional.adapter.OptionalAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout
@@ -27,7 +29,7 @@ import org.jetbrains.anko.support.v4.nestedScrollView
  *
  * @author at-cuongcao.
  */
-class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<DrinkFragment> {
+class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder: Boolean = false) : AnkoComponent<DrinkFragment> {
 
     internal lateinit var imgDrinkImage: ImageView
     internal lateinit var tvDrinkTitle: TextView
@@ -39,6 +41,7 @@ class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<Dr
     internal lateinit var imgAdd: ImageView
     internal lateinit var tvDrinkCount: TextView
     internal lateinit var edtNote: EditText
+    internal val drinkOptionAdapter = OptionalAdapter(options, OptionalAdapter.AdapterType.ORDER)
 
     override fun createView(ui: AnkoContext<DrinkFragment>) = with(ui) {
         coordinatorLayout {
@@ -74,7 +77,7 @@ class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<Dr
 
                                 linearLayout {
 
-                                    visibility = if (orderCase) {
+                                    visibility = if (isFromOrder) {
                                         View.VISIBLE
                                     } else {
                                         View.GONE
@@ -159,7 +162,7 @@ class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<Dr
 
                                 gravity = Gravity.CENTER_VERTICAL
 
-                                imageView(R.drawable.ic_back) {
+                                imageView(R.drawable.ic_back_button) {
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.onBackClicked()
@@ -170,7 +173,7 @@ class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<Dr
 
                                 tvDrinkTitle = textView {
                                     textSizeDimen = R.dimen.storeTitleTextSize
-                                    textColorResource = R.color.colorBlack
+                                    textColorResource = R.color.colorBlue
                                     singleLine = true
                                 }.lparams(0, wrapContent) {
                                     weight = 1f
@@ -217,28 +220,40 @@ class DrinkFragmentUI(private val orderCase: Boolean = false) : AnkoComponent<Dr
                     topPadding = dimen(R.dimen.toolBarHeight)
                     horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
 
-                    textView(R.string.note) {
-                        textColorResource = R.color.colorBlack
-                        bottomPadding = dip(2)
-                    }
+                    verticalLayout {
+                        visibility = if (isFromOrder) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
 
-                    edtNote = editText {
-                        backgroundColorResource = R.color.colorGrayVeryLight
-                        textColorResource = R.color.colorBlack
-                        verticalPadding = dip(5)
-                        singleLine = true
+                        textView(R.string.note) {
+                            textColorResource = R.color.colorBlack
+                            bottomPadding = dip(2)
+                        }
+
+                        edtNote = editText {
+                            backgroundColorResource = R.color.colorGrayVeryLight
+                            textColorResource = R.color.colorBlack
+                            verticalPadding = dip(5)
+                            singleLine = true
+                        }.lparams(matchParent, wrapContent)
+
+                        view {
+                            backgroundResource = R.color.colorRed
+                            alpha = 0.7f
+                        }.lparams(matchParent, dip(1)) {
+                            bottomMargin = dip(2)
+                        }
                     }.lparams(matchParent, wrapContent)
-
-                    view {
-                        backgroundResource = R.color.colorRed
-                        alpha = 0.7f
-                    }.lparams(matchParent, dip(1)) {
-                        bottomMargin = dip(2)
-                    }
 
                     recyclerView {
                         id = R.id.recyclerViewDrinkOption
                         layoutManager = LinearLayoutManager(ctx)
+                        if (isFromOrder) {
+                            drinkOptionAdapter.onOptionSelectedChange = owner::updateDrinkPrice
+                        }
+                        adapter = drinkOptionAdapter
                     }.lparams(matchParent, matchParent)
                 }.lparams(matchParent, wrapContent)
 

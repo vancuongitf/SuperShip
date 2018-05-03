@@ -31,5 +31,14 @@
     <item name="recyclerViewDrink" type="id" />
     <item name="drinkItemImage" type="id" />
     <item name="recyclerViewDrinkOption" type="id" />
+    <item name="recyclerViewOrderDrink" type="id" />
+    <item name="recyclerViewAddDrinkOption" type="id" />
+    <item name="recyclerOptionItemList" type="id" />
+    <item name="addDrinkOptionItemName" type="id" />
+    <item name="imgEditDrinkOption" type="id" />
+    <item name="imgDeleteDrinkOption" type="id" />
+    <item name="imgApplyDrinkOption" type="id" />
+    <item name="imgClearCancelOption" type="id" />
+    <item name="createDrinkDrinkOptions" type="id" />
 
 </resources>

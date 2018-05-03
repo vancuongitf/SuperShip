@@ -100,7 +100,7 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
 
                                 gravity = Gravity.CENTER_VERTICAL
 
-                                imageView(R.drawable.ic_back) {
+                                imageView(R.drawable.ic_back_button) {
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.onBackClicked()
@@ -111,7 +111,7 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
 
                                 tvStoreNameTitle = textView {
                                     textSizeDimen = R.dimen.storeTitleTextSize
-                                    textColorResource = R.color.colorBlack
+                                    textColorResource = R.color.colorBlue
                                 }.lparams(0, wrapContent) {
                                     weight = 1f
                                 }
@@ -194,19 +194,35 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                     weight = 1f
                 }
 
-                relativeLayout {
+                linearLayout {
                     gravity = Gravity.CENTER_VERTICAL
                     backgroundColorResource = R.color.colorWhite
-                    horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    if (orderCase) {
-                        visibility = View.GONE
+                    visibility = if (orderCase) {
+                        View.GONE
                     } else {
-                        visibility = View.VISIBLE
+                        View.VISIBLE
                     }
-                    onClick {
-                        owner.addDrinkClicked()
+
+                    relativeLayout {
+                        onClick {
+                            owner.optionalButtonClick()
+                        }
+                        enableHighLightWhenClicked()
+                        imageView(R.drawable.ic_optional_list) {
+                        }.lparams {
+                            horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
                     }
-                    imageView(R.drawable.ic_add_button) {
+
+                    relativeLayout {
+                        onClick {
+                            owner.addDrinkClicked()
+                        }
+                        enableHighLightWhenClicked()
+                        imageView(R.drawable.ic_add_button) {
+                        }.lparams {
+                            horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
                     }
                 }.lparams(wrapContent, matchParent)
 

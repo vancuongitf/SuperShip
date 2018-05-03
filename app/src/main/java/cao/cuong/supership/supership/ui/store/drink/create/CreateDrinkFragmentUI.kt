@@ -1,6 +1,7 @@
 package cao.cuong.supership.supership.ui.store.drink.create
 
 import android.graphics.Typeface
+import android.support.v7.widget.LinearLayoutManager
 import android.text.InputType
 import android.view.Gravity
 import android.view.View
@@ -8,18 +9,22 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.extension.commonEditText
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getWidthScreen
+import cao.cuong.supership.supership.ui.store.optional.adapter.OptionalAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class CreateDrinkFragmentUI : AnkoComponent<CreateDrinkFragment> {
+class CreateDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<CreateDrinkFragment> {
     internal lateinit var imgAvatar: ImageView
     internal lateinit var rlAvatar: RelativeLayout
     internal lateinit var edtName: EditText
     internal lateinit var edtPrice: EditText
+    internal val optionsAdapter = OptionalAdapter(options, OptionalAdapter.AdapterType.CREATE_DRINK)
 
     override fun createView(ui: AnkoContext<CreateDrinkFragment>) = with(ui) {
         scrollView {
@@ -111,6 +116,27 @@ class CreateDrinkFragmentUI : AnkoComponent<CreateDrinkFragment> {
 
                     }.lparams(matchParent, wrapContent) {
                         topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    textView(R.string.optionList) {
+                        textColorResource = R.color.colorWhite
+                        bottomPadding = dip(2)
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    view {
+                        backgroundResource = R.color.colorRed
+                        alpha = 0.7f
+                    }.lparams(matchParent, dip(1)) {
+                        bottomMargin = dip(2)
+                    }
+
+                    recyclerView {
+                        id = R.id.createDrinkDrinkOptions
+                        layoutManager = LinearLayoutManager(ctx)
+                        backgroundColorResource = R.color.colorWhiteLight
+                        adapter = optionsAdapter
                     }
                 }.lparams(matchParent, wrapContent)
 
