@@ -79,6 +79,7 @@ class StoreInfoFragment : BaseFragment() {
     }
 
     private fun handleGetStoreInfoSuccess(store: Store) {
+        (activity as? BaseStoreInfoActivity)?.updateStore(store)
         val option = RequestOptions()
                 .placeholder(R.drawable.glide_place_holder)
         Glide.with(context)
@@ -97,12 +98,10 @@ class StoreInfoFragment : BaseFragment() {
         } else {
             ui.tvStarRate.text = context.getString(R.string.store_rate, store.rate.rate.toString(), store.rate.rateCount.toString())
         }
-
-        (activity as? BaseStoreInfoActivity)?.setDrinkOption(store.options)
     }
 
     internal fun onCartClicked() {
-
+        (activity as? OrderActivity)?.openCartFragment()
     }
 
     internal fun optionalButtonClick() {

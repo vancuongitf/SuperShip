@@ -50,4 +50,5 @@
     <dimen name="deleteIconSize">14dp</dimen>
     <dimen name="drinkOptionItemPadding">10dp</dimen>
     <dimen name="drinkOptionItemButton">20dp</dimen>
+    <dimen name="orderedDrinkTextSize">14dp</dimen>
 </resources>

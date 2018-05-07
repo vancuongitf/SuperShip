@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
-import cao.cuong.supership.supership.data.model.Drink
-import cao.cuong.supership.supership.data.model.DrinkOption
-import cao.cuong.supership.supership.data.model.OrderDrink
+import cao.cuong.supership.supership.data.model.*
+import cao.cuong.supership.supership.extension.getOrderedOption
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.order.OrderActivity
 import cao.cuong.supership.supership.ui.store.BaseStoreInfoActivity
@@ -36,6 +35,7 @@ class DrinkFragment : BaseFragment() {
     private lateinit var orderInfo: OrderDrink
     private var orderCase = false
     private val drinkOptions = mutableListOf<DrinkOption>()
+    private val orderedOption = mutableListOf<DrinkOption>()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         try {
@@ -80,7 +80,15 @@ class DrinkFragment : BaseFragment() {
     internal fun onCheckClicked() {
         orderInfo.note = ui.edtNote.text.toString().trim()
         (activity as? OrderActivity)?.let {
-            it.drinkOrder(orderInfo)
+            if (orderInfo.count > 0) {
+                var price = drink.price
+                orderedOption.forEach {
+                    it.items.forEach {
+                        price += it.price
+                    }
+                }
+                it.drinkOrder(orderInfo)
+            }
             it.onBackPressed()
         }
     }
@@ -109,11 +117,18 @@ class DrinkFragment : BaseFragment() {
         ui.tvPrice.text = context.getString(R.string.drinkPrice, drink.price)
         ui.tvDrinkCount.text = orderInfo.count.toString()
         var totalOptionPrice = 0
+        orderInfo.optionals.clear()
+        orderedOption.clear()
         drinkOptions.forEach {
+            val orderedItems = mutableSetOf<Long>()
             it.items.forEach {
                 if (it.isSelected) {
+                    orderedItems.add(it.id)
                     totalOptionPrice += it.price
                 }
+            }
+            if (orderedItems.isNotEmpty()) {
+                orderInfo.optionals.add(OptionalBody(it.id, orderedItems))
             }
         }
         ui.tvTotalPrice.text = context.getString(R.string.drinkTotalPrice, orderInfo.count * (drink.price + totalOptionPrice))

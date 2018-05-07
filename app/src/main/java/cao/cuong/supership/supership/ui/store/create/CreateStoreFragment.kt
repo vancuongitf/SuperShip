@@ -16,6 +16,7 @@ import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.location.LocationActivity
+import cao.cuong.supership.supership.ui.location.LocationActivity.Companion.REQUEST_CODE_SEARCH_LOCATION
 import cao.cuong.supership.supership.ui.store.activity.StoreActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -24,10 +25,6 @@ import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 
 class CreateStoreFragment : BaseFragment() {
-
-    companion object {
-        private const val REQUEST_CODE_SEARCH_LOCATION = 22
-    }
 
     private lateinit var ui: CreateStoreFragmentUI
     private var uri: Uri? = null

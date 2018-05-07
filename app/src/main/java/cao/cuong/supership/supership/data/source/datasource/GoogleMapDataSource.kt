@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.datasource
 
+import cao.cuong.supership.supership.data.model.google.Direction
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.response.google.AutoCompleteResponse
 import cao.cuong.supership.supership.data.source.remote.response.google.GeoCodingResponse
@@ -14,4 +15,6 @@ interface GoogleMapDataSource {
     fun searchLocation(input: String): CustomCall<AutoCompleteResponse>
 
     fun getPlaceDetail(placeId: String): Single<PlaceDetailResponse>
+
+    fun getDirection(from: LatLng, to: LatLng): Single<Direction>
 }

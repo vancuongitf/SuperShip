@@ -163,4 +163,15 @@
     <string name="optionList">Danh sách tùy chọn</string>
     <string name="optionals">Danh sách tùy chọn</string>
     <string name="reload">Thử lại</string>
+    <string name="customerName">Họ tên khách hàng</string>
+    <string name="customerInfo">Thông tin khách hàng</string>
+    <string name="orderInfo">Thông tin đơn hàng</string>
+    <string name="orderCost">Giá trị đơn hàng</string>
+    <string name="shipCost">Phí giao hàng</string>
+    <string name="totalCost">Tổng cộng</string>
+    <string name="count">Số lượng: </string>
+    <string name="orderedDrinkList">Danh sách đồ uống</string>
+    <string name="minOrderCount">Phải có ít nhất một đơn vị.</string>
+    <string name="billPrice">%d VND</string>
+    <string name="yourCart">Giỏ hàng của bạn</string>
 </resources>

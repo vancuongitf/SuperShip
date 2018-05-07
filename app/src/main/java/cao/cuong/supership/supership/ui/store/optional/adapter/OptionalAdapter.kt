@@ -89,6 +89,16 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                         onItemAction(ui.imgEdit, options[adapterPosition])
                     }
                 }
+
+                AdapterType.BILL -> {
+                    ui.imgEdit.visibility = View.GONE
+                    ui.imgDelete.visibility = View.GONE
+                    ui.imgApply.visibility = View.GONE
+                    ui.imgClear.visibility = View.GONE
+                    ui.checkBoxes.forEach {
+                        it.checkBox.isEnabled = false
+                    }
+                }
             }
         }
 
@@ -134,7 +144,7 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
             }
 
             when (adapterType) {
-                AdapterType.ORDER -> {
+                AdapterType.ORDER, AdapterType.BILL -> {
                     ui.imgEdit.visibility = View.GONE
                     ui.imgDelete.visibility = View.GONE
                     ui.imgApply.visibility = View.GONE
@@ -192,6 +202,7 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
     enum class AdapterType {
         ORDER,
         CREATE_OPTION,
-        CREATE_DRINK
+        CREATE_DRINK,
+        BILL
     }
 }

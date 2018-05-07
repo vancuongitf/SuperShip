@@ -158,6 +158,7 @@ class AccountFragment : BaseFragment() {
         ui.llNonLogin.visibility = View.GONE
         ui.llLogin.visibility = View.VISIBLE
         ui.tvReload.visibility = View.GONE
+        viewModel.saveUserInfo(userInfo)
     }
 
     private fun handleApiGetInfoError(throwable: Throwable){
