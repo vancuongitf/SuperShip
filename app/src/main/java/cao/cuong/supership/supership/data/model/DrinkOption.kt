@@ -41,9 +41,10 @@ data class DrinkOption(@SerializedName("drink_option_id") var id: Long,
             if (items.contains(it.id)) {
                 val drinkOptionItem = it.copy()
                 drinkOptionItem.isSelected = true
-                result.items.add(it.copy())
+                result.items.add(drinkOptionItem)
             }
         }
+        result.isSelected = true
         return result
     }
 
@@ -55,13 +56,4 @@ data class DrinkOption(@SerializedName("drink_option_id") var id: Long,
         }
         return false
     }
-
-//    internal fun getOrderedDrinkOption(drinkOptionItemId: Long): DrinkOption? {
-//        if (containDrinkOptionItem(drinkOptionItemId)) {
-//            items.forEach {
-//                if ()
-//            }
-//        }
-//        return null
-//    }
 }

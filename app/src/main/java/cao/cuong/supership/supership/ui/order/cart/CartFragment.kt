@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.order.cart
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import cao.cuong.supership.supership.extension.isValidatePhoneNumber
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.location.LocationActivity
 import cao.cuong.supership.supership.ui.order.OrderActivity
+import com.google.gson.Gson
 import org.jetbrains.anko.AnkoContext
 
 class CartFragment:BaseFragment(){
@@ -69,6 +71,7 @@ class CartFragment:BaseFragment(){
                 if (userName.isValidateFullName()) {
                     if (phone.isValidatePhoneNumber()) {
                         val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), orderActivity.cart)
+                        Log.i("tag11", Gson().toJson(orderActivity.orderedDrinks))
                         viewModel.submitOrder(billBody)
                     } else {
                         message = "Vui lòng điền số điện thoại hợp lệ"

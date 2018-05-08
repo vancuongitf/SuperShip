@@ -20,10 +20,10 @@ class OrderActivity : BaseStoreInfoActivity() {
 
     internal lateinit var billBody: BillBody
     internal val cart = mutableListOf<OrderDrink>()
+    internal val orderedDrinks = mutableListOf<OrderedDrink>()
 
     private lateinit var ui: OrderActivityUI
     private lateinit var viewModel: OrderActivityViewModel
-    private val orderedDrinks = mutableListOf<OrderedDrink>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

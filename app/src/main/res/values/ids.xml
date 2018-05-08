@@ -41,5 +41,6 @@
     <item name="imgClearCancelOption" type="id" />
     <item name="createDrinkDrinkOptions" type="id" />
     <item name="viewPagerOrderedDrinks" type="id" />
+    <item name="userActivityContainer" type="id" />
 
 </resources>
