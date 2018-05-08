@@ -8,13 +8,13 @@ import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class ChangePasswordDialogUI : AnkoComponent<ChangePasswordDialog> {
+class ChangePasswordFragmentUI : AnkoComponent<ChangePasswordFragment> {
 
     internal lateinit var edtOldPassword: EditText
     internal lateinit var edtNewPassword: EditText
     internal lateinit var edtConfirmPassword: EditText
 
-    override fun createView(ui: AnkoContext<ChangePasswordDialog>) = with(ui) {
+    override fun createView(ui: AnkoContext<ChangePasswordFragment>) = with(ui) {
         verticalLayout {
             lparams(matchParent, matchParent)
             backgroundResource = R.drawable.bg_login_image

@@ -17,4 +17,6 @@ class CartFragmentViewModel(context: Context) {
         Log.i("tag11", Gson().toJson(billBody).toString())
         return SingleSubject.create()
     }
+
+    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
 }

@@ -174,4 +174,5 @@
     <string name="minOrderCount">Phải có ít nhất một đơn vị.</string>
     <string name="billPrice">%d VND</string>
     <string name="yourCart">Giỏ hàng của bạn</string>
+    <string name="requestLogin">Bạn chưa đăng nhập. Vui lòng đăng nhập để tiếp tục.</string>
 </resources>

@@ -1,12 +1,19 @@
 package cao.cuong.supership.supership.ui.base
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.extension.showOkAlert
+import cao.cuong.supership.supership.ui.user.UserActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import org.jetbrains.anko.cancelButton
+import org.jetbrains.anko.okButton
+import org.jetbrains.anko.support.v4.alert
+import javax.net.ssl.HttpsURLConnection
 
 /**
  *
@@ -39,7 +46,25 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun handleApiError(throwable: Throwable?) {
-        context.showOkAlert(throwable ?: Throwable("Xãy ra lỗi! Vui lòng thử lại sau."))
+        if (throwable is ApiException) {
+            if (throwable.code == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                alert {
+                    this.message = throwable.message ?: "Phiên đăng nhậo đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
+                    this.isCancelable = false
+                    this.okButton {
+                        val intent = Intent(context, UserActivity::class.java)
+                        startActivity(intent)
+                        it.dismiss()
+                    }
+
+                    this.cancelButton {
+                        it.dismiss()
+                    }
+                }
+            }
+        } else {
+            context.showOkAlert(throwable ?: Throwable("Xãy ra lỗi! Vui lòng thử lại sau."))
+        }
     }
 
     protected fun handleUpdateProgressDialogStatus(status: Boolean) {

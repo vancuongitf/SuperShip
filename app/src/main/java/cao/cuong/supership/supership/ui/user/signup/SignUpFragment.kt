@@ -8,22 +8,20 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.source.remote.request.CreateUserBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.*
-import cao.cuong.supership.supership.ui.base.BaseBottomSheetDialog
+import cao.cuong.supership.supership.ui.base.BaseFragment
 import org.jetbrains.anko.AnkoContext
 
 /**
  *
  * @author at-cuongcao.
  */
-class SignUpDialog : BaseBottomSheetDialog() {
+class SignUpFragment : BaseFragment() {
 
-    internal var onCreateUserSuccess: () -> Unit = {}
-
-    private lateinit var ui: SignUpDialogUI
+    private lateinit var ui: SignUpFragmentUI
     private var viewModel = SignUpFragmentViewModel()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ui = SignUpDialogUI()
+        ui = SignUpFragmentUI()
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -47,10 +45,10 @@ class SignUpDialog : BaseBottomSheetDialog() {
                                 viewModel.createUser(userBody)
                                         .observeOnUiThread()
                                         .doOnSubscribe {
-                                            handleUpdateProgressStatus(true)
+                                            handleUpdateProgressDialogStatus(true)
                                         }
                                         .doFinally {
-                                            handleUpdateProgressStatus(false)
+                                            handleUpdateProgressDialogStatus(false)
                                         }
                                         .subscribe(this::handleCreateUserSuccess, this::handleApiError)
                             } else {
@@ -75,7 +73,7 @@ class SignUpDialog : BaseBottomSheetDialog() {
 
     private fun handleCreateUserSuccess(messageResponse: MessageResponse) {
         context.showOkAlert(R.string.notification, messageResponse.message) {
-            onCreateUserSuccess()
+            activity.onBackPressed()
         }
     }
 }

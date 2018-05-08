@@ -14,7 +14,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  *
  * @author at-cuongcao.
  */
-class SignUpDialogUI : AnkoComponent<SignUpDialog> {
+class SignUpFragmentUI : AnkoComponent<SignUpFragment> {
 
     internal lateinit var edtUserName: EditText
     internal lateinit var edtFullName: EditText
@@ -23,7 +23,7 @@ class SignUpDialogUI : AnkoComponent<SignUpDialog> {
     internal lateinit var edtPhoneNumber: EditText
     internal lateinit var edtEmail: EditText
 
-    override fun createView(ui: AnkoContext<SignUpDialog>) = with(ui) {
+    override fun createView(ui: AnkoContext<SignUpFragment>) = with(ui) {
         scrollView {
             lparams(context.getWidthScreen(), context.getHeightScreen())
             backgroundResource = R.drawable.bg_login_image

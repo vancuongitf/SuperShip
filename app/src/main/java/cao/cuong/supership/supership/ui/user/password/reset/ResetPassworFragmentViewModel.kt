@@ -6,7 +6,7 @@ import cao.cuong.supership.supership.data.source.UserRepository
  *
  * @author at-cuongcao.
  */
-class ResetPassworDialogViewModel {
+class ResetPassworFragmentViewModel {
 
     private val userRepository = UserRepository()
 

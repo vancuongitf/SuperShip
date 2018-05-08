@@ -3,21 +3,23 @@ package cao.cuong.supership.supership.ui.order.cart
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
 import cao.cuong.supership.supership.data.model.ShipAddress
 import cao.cuong.supership.supership.data.model.google.StoreAddress
+import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.request.BillBody
 import cao.cuong.supership.supership.extension.getShipFee
 import cao.cuong.supership.supership.extension.isValidateFullName
 import cao.cuong.supership.supership.extension.isValidatePhoneNumber
+import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.location.LocationActivity
 import cao.cuong.supership.supership.ui.order.OrderActivity
-import com.google.gson.Gson
+import cao.cuong.supership.supership.ui.user.UserActivity
 import org.jetbrains.anko.AnkoContext
 
 class CartFragment:BaseFragment(){
@@ -49,6 +51,10 @@ class CartFragment:BaseFragment(){
                         }
                     }
                 }
+
+                UserActivity.USER_ACTIVITY_REQUEST_CODE -> {
+                    RxBus.publish(UpdateAccountUI())
+                }
             }
         }
     }
@@ -71,8 +77,14 @@ class CartFragment:BaseFragment(){
                 if (userName.isValidateFullName()) {
                     if (phone.isValidatePhoneNumber()) {
                         val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), orderActivity.cart)
-                        Log.i("tag11", Gson().toJson(orderActivity.orderedDrinks))
-                        viewModel.submitOrder(billBody)
+                        if (viewModel.isLogin()) {
+                            viewModel.submitOrder(billBody)
+                        } else {
+                            context.showOkAlert(R.string.notification, R.string.requestLogin) {
+                                val intent = Intent(context, UserActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
                     } else {
                         message = "Vui lòng điền số điện thoại hợp lệ"
                     }

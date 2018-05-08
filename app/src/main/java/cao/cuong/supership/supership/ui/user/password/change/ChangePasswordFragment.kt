@@ -10,24 +10,24 @@ import cao.cuong.supership.supership.extension.isValidatePassWord
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.extension.sha1
 import cao.cuong.supership.supership.extension.showOkAlert
-import cao.cuong.supership.supership.ui.base.BaseBottomSheetDialog
+import cao.cuong.supership.supership.ui.base.BaseFragment
 import org.jetbrains.anko.AnkoContext
 
-class ChangePasswordDialog : BaseBottomSheetDialog() {
+class ChangePasswordFragment : BaseFragment() {
 
-    internal lateinit var ui: ChangePasswordDialogUI
-    internal lateinit var viewModel: ChangePasswordDialogViewModel
+    internal lateinit var ui: ChangePasswordFragmentUI
+    internal lateinit var viewModel: ChangePasswordFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ui = ChangePasswordDialogUI()
-        viewModel = ChangePasswordDialogViewModel(context)
+        ui = ChangePasswordFragmentUI()
+        viewModel = ChangePasswordFragmentViewModel(context)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
     override fun onBindViewModel() {
         addDisposables(viewModel.progressDialogStatusObservable
                 .observeOnUiThread()
-                .subscribe(this::handleUpdateProgressStatus))
+                .subscribe(this::handleUpdateProgressDialogStatus))
     }
 
     internal fun eventChangePasswordClicked() {
@@ -52,12 +52,12 @@ class ChangePasswordDialog : BaseBottomSheetDialog() {
     }
 
     internal fun eventCancelClicked() {
-        dismiss()
+        activity.finish()
     }
 
     private fun handleChangePasswordSuccess(messageResponse: MessageResponse) {
         context.showOkAlert(R.string.notification, messageResponse.message) {
-            dismiss()
+            activity.finish()
         }
     }
 }

@@ -9,23 +9,24 @@ import cao.cuong.supership.supership.data.source.remote.response.RequestResetPas
 import cao.cuong.supership.supership.extension.isValidateEmail
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.extension.showOkAlert
-import cao.cuong.supership.supership.ui.base.BaseBottomSheetDialog
+import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.user.UserActivity
 import org.jetbrains.anko.AnkoContext
 
 /**
  *
  * @author at-cuongcao.
  */
-class ForgotDialog : BaseBottomSheetDialog() {
+class ForgotPasswordFragment : BaseFragment() {
 
-    internal lateinit var ui: ForgotDialogUI
+    internal lateinit var ui: ForgotPasswordFragmentUI
     internal lateinit var eventRequestResetSuccess: (response: RequestResetPassResponse) -> Unit
 
-    private lateinit var viewModel: ForgotDialogViewModel
+    private lateinit var viewModel: ForgotPasswordFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ForgotDialogViewModel()
-        ui = ForgotDialogUI()
+        viewModel = ForgotPasswordFragmentViewModel()
+        ui = ForgotPasswordFragmentUI()
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -38,10 +39,10 @@ class ForgotDialog : BaseBottomSheetDialog() {
             viewModel.requestResetPassword(email)
                     .observeOnUiThread()
                     .doOnSubscribe({
-                        handleUpdateProgressStatus(true)
+                        handleUpdateProgressDialogStatus(true)
                     })
                     .doFinally {
-                        handleUpdateProgressStatus(false)
+                        handleUpdateProgressDialogStatus(false)
                     }
                     .subscribe(this::handleRequestSuccess, this::handleApiError)
         } else {
@@ -51,7 +52,7 @@ class ForgotDialog : BaseBottomSheetDialog() {
 
     private fun handleRequestSuccess(response: RequestResetPassResponse) {
         context.showOkAlert(R.string.notification, context.getString(R.string.requestResetSuccess, ui.edtEmail.text.toString())) {
-            eventRequestResetSuccess(response)
+            (activity as? UserActivity)?.openResetPasswordFragment()
         }
     }
 }

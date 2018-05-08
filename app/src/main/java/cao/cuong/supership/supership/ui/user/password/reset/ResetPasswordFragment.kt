@@ -7,22 +7,22 @@ import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.extension.*
-import cao.cuong.supership.supership.ui.base.BaseBottomSheetDialog
+import cao.cuong.supership.supership.ui.base.BaseFragment
 import org.jetbrains.anko.AnkoContext
 
 /**
  *
  * @author at-cuongcao.
  */
-class ResetPasswordDialog : BaseBottomSheetDialog() {
+class ResetPasswordFragment : BaseFragment() {
 
     companion object {
 
         private const val KEY_USER_ID = "user_id"
         private const val KEY_USER_NAME = "user_name"
 
-        internal fun getNewInstance(userId: Int, userName: String): ResetPasswordDialog {
-            val instance = ResetPasswordDialog()
+        internal fun getNewInstance(userId: Int, userName: String): ResetPasswordFragment {
+            val instance = ResetPasswordFragment()
             instance.arguments = Bundle().apply {
                 putInt(KEY_USER_ID, userId)
                 putString(KEY_USER_NAME, userName)
@@ -33,13 +33,13 @@ class ResetPasswordDialog : BaseBottomSheetDialog() {
 
     internal var onResetSuccess: (accessToken: AccessToken) -> Unit = {}
 
-    private lateinit var ui: ResetPasswordDialogUI
-    private lateinit var viewModel: ResetPassworDialogViewModel
+    private lateinit var ui: ResetPasswordFragmentUI
+    private lateinit var viewModel: ResetPassworFragmentViewModel
     private var userId: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ResetPassworDialogViewModel()
-        ui = ResetPasswordDialogUI(arguments.getString(KEY_USER_NAME))
+        viewModel = ResetPassworFragmentViewModel()
+        ui = ResetPasswordFragmentUI(arguments.getString(KEY_USER_NAME))
         userId = arguments.getInt(KEY_USER_ID)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
@@ -56,10 +56,10 @@ class ResetPasswordDialog : BaseBottomSheetDialog() {
             viewModel.resetPassword(userId, pass, otp.toInt())
                     .observeOnUiThread()
                     .doOnSubscribe {
-                        handleUpdateProgressStatus(true)
+                        handleUpdateProgressDialogStatus(true)
                     }
                     .doFinally {
-                        handleUpdateProgressStatus(false)
+                        handleUpdateProgressDialogStatus(false)
                     }
                     .subscribe(this::handleResetSuccess, this::handleApiError)
         } else {
@@ -70,7 +70,6 @@ class ResetPasswordDialog : BaseBottomSheetDialog() {
     private fun handleResetSuccess(accessToken: AccessToken) {
         context.showOkAlert(R.string.notification, R.string.resetPasswordSuccess) {
             onResetSuccess(accessToken)
-            dismiss()
         }
     }
 }

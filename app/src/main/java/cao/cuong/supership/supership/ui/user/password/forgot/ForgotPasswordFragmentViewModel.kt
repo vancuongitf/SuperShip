@@ -6,7 +6,7 @@ import cao.cuong.supership.supership.data.source.UserRepository
  *
  * @author at-cuongcao.
  */
-class ForgotDialogViewModel {
+class ForgotPasswordFragmentViewModel {
     private val userRepository = UserRepository()
 
     internal fun requestResetPassword(email: String) = userRepository.requestResetPassword(email)

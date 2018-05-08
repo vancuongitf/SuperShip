@@ -6,7 +6,7 @@ import cao.cuong.supership.supership.data.source.UserRepository
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import io.reactivex.subjects.BehaviorSubject
 
-class ChangePasswordDialogViewModel(context: Context) {
+class ChangePasswordFragmentViewModel(context: Context) {
 
     internal val progressDialogStatusObservable = BehaviorSubject.create<Boolean>()
 

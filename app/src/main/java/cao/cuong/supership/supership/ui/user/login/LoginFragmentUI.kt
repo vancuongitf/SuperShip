@@ -17,13 +17,13 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  *
  * @author at-cuongcao.
  */
-class LoginDialogUI : AnkoComponent<LoginDialog> {
+class LoginFragmentUI : AnkoComponent<LoginFragment> {
 
     internal lateinit var edtUserName: EditText
     internal lateinit var edtPassword: EditText
 
     @SuppressLint("RtlHardcoded")
-    override fun createView(ui: AnkoContext<LoginDialog>) = with(ui) {
+    override fun createView(ui: AnkoContext<LoginFragment>) = with(ui) {
         verticalLayout {
             lparams(context.getWidthScreen(), context.getHeightScreen())
             backgroundResource = R.drawable.bg_login_image

@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.user.password.reset
+package cao.cuong.supership.supership.ui.user.password.forgot
 
 import android.view.Gravity
 import android.widget.EditText
@@ -14,14 +14,11 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  *
  * @author at-cuongcao.
  */
-class ResetPasswordDialogUI(private val userName: String) : AnkoComponent<ResetPasswordDialog> {
+class ForgotPasswordFragmentUI : AnkoComponent<ForgotPasswordFragment> {
 
-    internal lateinit var edtUSerName: EditText
-    internal lateinit var edtPassword: EditText
-    internal lateinit var edtRetypePassword: EditText
-    internal lateinit var edtOTPCode: EditText
+    internal lateinit var edtEmail: EditText
 
-    override fun createView(ui: AnkoContext<ResetPasswordDialog>) = with(ui) {
+    override fun createView(ui: AnkoContext<ForgotPasswordFragment>) = with(ui) {
         verticalLayout {
             lparams(context.getWidthScreen(), context.getHeightScreen())
             backgroundResource = R.drawable.bg_login_image
@@ -31,7 +28,7 @@ class ResetPasswordDialogUI(private val userName: String) : AnkoComponent<ResetP
                 gravity = Gravity.CENTER
 
                 textView(R.string.app_name) {
-                    textColorResource = R.color.colorRed
+                    textColorResource = R.color.colorPink
                     gravity = Gravity.CENTER
                     textSizeDimen = R.dimen.splashActivityAppNameSize
                 }
@@ -40,29 +37,9 @@ class ResetPasswordDialogUI(private val userName: String) : AnkoComponent<ResetP
                 weight = 1f
             }
 
-            commonEditText(R.string.userName) {
-                editText.isEnabled = false
-                edtUSerName = editText
-                edtUSerName.setText(userName)
+            commonEditText(R.string.email) {
+                edtEmail = editText
             }.lparams(matchParent, wrapContent)
-
-            commonEditText(R.string.password, true) {
-                edtPassword = editText
-            }.lparams(matchParent, wrapContent) {
-                topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-            }
-
-            commonEditText(R.string.retypePassword, true) {
-                edtRetypePassword = editText
-            }.lparams(matchParent, wrapContent) {
-                topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-            }
-
-            commonEditText(R.string.otpCode) {
-                edtOTPCode = editText
-            }.lparams(matchParent, wrapContent) {
-                topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-            }
 
             textView(R.string.resetPassword) {
                 gravity = Gravity.CENTER_HORIZONTAL
@@ -81,4 +58,5 @@ class ResetPasswordDialogUI(private val userName: String) : AnkoComponent<ResetP
             }
         }
     }
+
 }

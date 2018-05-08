@@ -13,7 +13,7 @@ import io.reactivex.subjects.PublishSubject
  *
  * @author at-cuongcao.
  */
-class LoginDialogViewModel(private val context: Context) {
+class LoginFragmentViewModel(private val context: Context) {
 
     private val localRepository = LocalRepository(context)
     private val userRepository = UserRepository()

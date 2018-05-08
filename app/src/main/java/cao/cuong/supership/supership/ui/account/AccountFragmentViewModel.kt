@@ -11,17 +11,12 @@ import cao.cuong.supership.supership.data.source.remote.network.RxBus
  *
  * @author at-cuongcao.
  */
-class AccountFragmentViewModel(private val context: Context) {
+class AccountFragmentViewModel(context: Context) {
 
     private val localRepository = LocalRepository(context)
     private val userRepository = UserRepository()
 
-    internal fun isLogin(): Boolean {
-        if (localRepository.getAccessToken().isNotEmpty()) {
-            return true
-        }
-        return false
-    }
+    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
 
     internal fun getUserInfo() = userRepository.getUserInfo(localRepository.getAccessToken())
 

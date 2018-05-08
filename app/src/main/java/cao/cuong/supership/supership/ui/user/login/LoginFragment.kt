@@ -1,15 +1,15 @@
 package cao.cuong.supership.supership.ui.user.login
 
+import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.AccessToken
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
-import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.*
-import cao.cuong.supership.supership.ui.base.BaseBottomSheetDialog
+import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.user.UserActivity
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 
@@ -18,18 +18,16 @@ import org.jetbrains.anko.AnkoContext
  * @author at-cuongcao.
  */
 
-class LoginDialog : BaseBottomSheetDialog() {
+class LoginFragment : BaseFragment() {
 
-    internal lateinit var signUpButtonClick: () -> Unit
-    internal lateinit var forgotPasswordClick: () -> Unit
-    internal lateinit var viewModel: LoginDialogViewModel
+    internal lateinit var viewModel: LoginFragmentViewModel
 
 
-    private lateinit var ui: LoginDialogUI
+    private lateinit var ui: LoginFragmentUI
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        ui = LoginDialogUI()
-        viewModel = LoginDialogViewModel(context)
+        ui = LoginFragmentUI()
+        viewModel = LoginFragmentViewModel(context)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -41,7 +39,7 @@ class LoginDialog : BaseBottomSheetDialog() {
                         .subscribe(this::handleLoginStatus),
                 viewModel.updateProgressStatus
                         .observeOnUiThread()
-                        .subscribe(this::handleUpdateProgressStatus))
+                        .subscribe(this::handleUpdateProgressDialogStatus))
     }
 
     internal fun eventLoginButtonClicked() {
@@ -55,17 +53,19 @@ class LoginDialog : BaseBottomSheetDialog() {
     }
 
     internal fun eventSignUpButtonClicked() {
-        signUpButtonClick()
+        (activity as? UserActivity)?.openSignUpFragment()
     }
 
     internal fun eventForgotPasswordClicked() {
-        forgotPasswordClick()
+        (activity as? UserActivity)?.openForgotPasswordFragment()
     }
 
     private fun handleLoginStatus(notification: Notification<AccessToken>) {
         if (notification.isOnNext) {
-            RxBus.publish(UpdateAccountUI())
-            dismiss()
+            (activity as? UserActivity)?.let {
+                it.setResult(RESULT_OK)
+                it.finish()
+            }
         } else if (notification.isOnError) {
             val value = notification.error
             handleApiError(value)
