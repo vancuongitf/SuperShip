@@ -14,6 +14,7 @@ import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
+import cao.cuong.supership.supership.extension.getHeightScreen
 import cao.cuong.supership.supership.extension.getWidthScreen
 import cao.cuong.supership.supership.ui.store.optional.adapter.OptionalAdapter
 import org.jetbrains.anko.*
@@ -127,6 +128,11 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
                                     textSizeDimen = R.dimen.secondaryTextSize
                                     textColorResource = R.color.colorRed
                                     singleLine = true
+                                    if (isFromOrder) {
+                                        visibility = View.VISIBLE
+                                    } else {
+                                        visibility = View.GONE
+                                    }
                                 }.lparams {
                                     verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                     alignParentRight()
@@ -184,11 +190,19 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
                                     padding = dimen(R.dimen.accountFragmentLoginPadding)
                                     enableHighLightWhenClicked()
                                     onClick {
-                                        owner.onCheckClicked()
+                                        if (isFromOrder) {
+                                            owner.onCheckClicked()
+                                        } else {
+                                            owner.onEditClicked()
+                                        }
                                     }
 
-                                    imageView(R.drawable.ic_check_button) {
-
+                                    imageView {
+                                        if (isFromOrder) {
+                                            backgroundResource = R.drawable.ic_check_button
+                                        } else {
+                                            backgroundResource = R.drawable.ic_edit_24dp
+                                        }
                                     }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
                                         centerInParent()
                                     }
@@ -254,7 +268,7 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
                             drinkOptionAdapter.onOptionSelectedChange = owner::updateDrinkPrice
                         }
                         adapter = drinkOptionAdapter
-                    }.lparams(matchParent, matchParent)
+                    }.lparams(matchParent, ctx.getHeightScreen())
                 }.lparams(matchParent, wrapContent)
 
             }.lparams(matchParent, wrapContent) {

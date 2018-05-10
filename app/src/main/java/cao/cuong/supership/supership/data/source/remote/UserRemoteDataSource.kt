@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote
 
+import cao.cuong.supership.supership.data.model.paypal.VerifyPaymentBody
 import cao.cuong.supership.supership.data.source.datasource.UserDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.request.CreateUserBody
@@ -26,4 +27,9 @@ class UserRemoteDataSource : UserDataSource {
 
     override fun getStoreList(token: String, page: Int) = apiService.getStoreListOfUser(token, page)
 
+    override fun getOrders(token: String, page: Int) = apiService.getOrdersOfUser(token, page)
+
+    override fun getBillInfo(token: String, id: Long) = apiService.getOrderInfo(token, id)
+
+    override fun verifyPayment(verifyPaymentBody: VerifyPaymentBody) = apiService.verifyPayment(verifyPaymentBody)
 }

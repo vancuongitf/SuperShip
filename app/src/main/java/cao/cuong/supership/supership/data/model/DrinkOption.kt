@@ -33,4 +33,27 @@ data class DrinkOption(@SerializedName("drink_option_id") var id: Long,
         result.isSelected = isSelected
         return result
     }
+
+    internal fun getOrderedOption(items: MutableSet<Long>): DrinkOption {
+        val result = copy()
+        result.items.clear()
+        this.items.forEach {
+            if (items.contains(it.id)) {
+                val drinkOptionItem = it.copy()
+                drinkOptionItem.isSelected = true
+                result.items.add(drinkOptionItem)
+            }
+        }
+        result.isSelected = true
+        return result
+    }
+
+    internal fun containDrinkOptionItem(drinkOptionItemId: Long): Boolean {
+        items.forEach {
+            if (it.id == drinkOptionItemId) {
+                return true
+            }
+        }
+        return false
+    }
 }

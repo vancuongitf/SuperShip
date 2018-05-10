@@ -14,8 +14,10 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
+import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
@@ -149,4 +151,12 @@ internal fun Context.showOkAlert(throwable: Throwable, okOnClicked: () -> Unit =
             okOnClicked()
         }
     }.show()
+}
+
+internal fun BaseActivity.hideKeyBoard() {
+    val view = currentFocus
+    if (view != null) {
+        val imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

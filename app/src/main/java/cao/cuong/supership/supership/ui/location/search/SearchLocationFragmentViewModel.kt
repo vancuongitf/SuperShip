@@ -1,9 +1,11 @@
 package cao.cuong.supership.supership.ui.location.search
 
+import cao.cuong.supership.supership.data.model.RxEvent.UpdateConfirmAddressEvent
 import cao.cuong.supership.supership.data.model.google.AutoComplete
 import cao.cuong.supership.supership.data.source.GoogleMapRepository
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.network.CustomCallback
+import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.response.google.AutoCompleteResponse
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import com.google.android.gms.maps.model.LatLng
@@ -32,6 +34,7 @@ class SearchLocationFragmentViewModel {
             .observeOnUiThread()
             .doOnSubscribe {
                 updateProgressDialogStatus.onNext(true)
+                RxBus.publish(UpdateConfirmAddressEvent())
             }
             .doFinally {
                 updateProgressDialogStatus.onNext(false)
@@ -41,9 +44,16 @@ class SearchLocationFragmentViewModel {
             .observeOnUiThread()
             .doOnSubscribe {
                 updateProgressDialogStatus.onNext(true)
+                RxBus.publish(UpdateConfirmAddressEvent())
             }
             .doFinally {
                 updateProgressDialogStatus.onNext(false)
+            }
+
+    internal fun getDirection(from: LatLng, to: LatLng) = googleMapRepository.getDirection(from, to)
+            .observeOnUiThread()
+            .doOnSubscribe {
+                RxBus.publish(UpdateConfirmAddressEvent())
             }
 
     private fun initSearchObservable() {

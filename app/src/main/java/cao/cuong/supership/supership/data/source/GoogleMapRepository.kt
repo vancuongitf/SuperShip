@@ -13,4 +13,6 @@ class GoogleMapRepository : GoogleMapDataSource {
     override fun searchLocation(input: String) = googleMapRemoteDataSource.searchLocation(input)
 
     override fun getPlaceDetail(placeId: String) = googleMapRemoteDataSource.getPlaceDetail(placeId)
+
+    override fun getDirection(from: LatLng, to: LatLng) = googleMapRemoteDataSource.getDirection(from, to)
 }

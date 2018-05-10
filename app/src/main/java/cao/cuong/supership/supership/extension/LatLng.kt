@@ -15,4 +15,6 @@ internal fun LatLng.distanceTo(latLng: LatLng): Long {
     return Math.ceil(earthRadius * c).toLong()
 }
 
+internal fun LatLng.toRequestString() = "$latitude,$longitude"
+
 private fun degreeToRadian(degree: Double) = degree * Math.PI / 180

@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote.network.google
 
+import cao.cuong.supership.supership.data.model.google.Direction
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.response.google.AutoCompleteResponse
 import cao.cuong.supership.supership.data.source.remote.response.google.GeoCodingResponse
@@ -21,4 +22,8 @@ interface GoogleApiService {
     @GET("place/details/json")
     fun getPlaceDetail(@Query("place_id") placeId: String,
                        @Query("key") key: String = "AIzaSyDcXFSC2I6ZqxQeAbUMFvJKMrA98217H9U"): Single<PlaceDetailResponse>
+
+    @GET("directions/json")
+    fun direction(@Query("origin") from: String,
+                  @Query("destination") to: String): Single<Direction>
 }

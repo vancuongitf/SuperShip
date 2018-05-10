@@ -82,11 +82,21 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                     ui.imgClear.visibility = View.VISIBLE
 
                     ui.imgApply.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgApply, options[adapterPosition])
                     }
 
                     ui.imgClear.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgClear, options[adapterPosition])
+                    }
+                }
+
+                AdapterType.BILL -> {
+                    ui.imgEdit.visibility = View.GONE
+                    ui.imgDelete.visibility = View.GONE
+                    ui.imgApply.visibility = View.GONE
+                    ui.imgClear.visibility = View.GONE
+                    ui.checkBoxes.forEach {
+                        it.checkBox.isEnabled = false
                     }
                 }
             }
@@ -134,7 +144,7 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
             }
 
             when (adapterType) {
-                AdapterType.ORDER -> {
+                AdapterType.ORDER, AdapterType.BILL -> {
                     ui.imgEdit.visibility = View.GONE
                     ui.imgDelete.visibility = View.GONE
                     ui.imgApply.visibility = View.GONE
@@ -163,17 +173,28 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                     ui.imgClear.visibility = View.VISIBLE
 
                     ui.imgApply.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgApply, options[adapterPosition])
                     }
 
                     ui.imgClear.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgClear, options[adapterPosition])
                     }
                 }
             }
         }
 
         internal fun onBind() {
+            when (adapterType) {
+                AdapterType.CREATE_DRINK -> {
+                    if (options[adapterPosition].isSelected) {
+                        ui.imgClear.visibility = View.VISIBLE
+                        ui.imgApply.visibility = View.GONE
+                    } else {
+                        ui.imgClear.visibility = View.GONE
+                        ui.imgApply.visibility = View.VISIBLE
+                    }
+                }
+            }
             ui.tvOptionName.text = options[adapterPosition].name
             ui.radios.withIndex().forEach {
                 if (it.index < options[adapterPosition].items.size) {
@@ -192,6 +213,7 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
     enum class AdapterType {
         ORDER,
         CREATE_OPTION,
-        CREATE_DRINK
+        CREATE_DRINK,
+        BILL
     }
 }

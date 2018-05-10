@@ -10,7 +10,10 @@ import org.jetbrains.anko.setContentView
 class LocationActivity : BaseActivity() {
 
     companion object {
-        const val KEY_ADDRESS_RESULT = "address_result"
+        internal const val REQUEST_CODE_SEARCH_LOCATION = 22
+        internal const val KEY_ADDRESS_RESULT = "address_result"
+        internal const val KEY_STORE_ADDRESS = "store_address"
+        internal const val KEY_SHIP_ROAD = "ship_road"
     }
 
     private lateinit var ui: LocationActivityUI
@@ -19,7 +22,11 @@ class LocationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         ui = LocationActivityUI()
         ui.setContentView(this)
-        replaceFragment(R.id.searchLocationContainer, SearchLocationFragment())
+        if (intent.extras != null) {
+            replaceFragment(R.id.searchLocationContainer, SearchLocationFragment.getNewInstance(intent.extras.getParcelable(KEY_STORE_ADDRESS)))
+        } else {
+            replaceFragment(R.id.searchLocationContainer, SearchLocationFragment.getNewInstance(null))
+        }
     }
 
     override fun onBindViewModel() {

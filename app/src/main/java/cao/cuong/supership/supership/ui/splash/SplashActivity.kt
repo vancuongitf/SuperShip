@@ -6,8 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
-import android.util.Log
-import android.util.Patterns
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
@@ -25,7 +23,6 @@ import org.jetbrains.anko.noButton
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.yesButton
 import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
 
 
 /**
@@ -48,9 +45,6 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val x = mutableSetOf<Long>(1,4,5,2)
-
         ui = SplashActivityUI()
         ui.setContentView(this)
         viewModel = SplashActivityViewModel(LocalRepository(this))

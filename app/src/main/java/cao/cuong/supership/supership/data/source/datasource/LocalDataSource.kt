@@ -1,6 +1,7 @@
 package cao.cuong.supership.supership.data.source.datasource
 
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
+import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 import io.reactivex.Single
 
@@ -23,4 +24,8 @@ interface LocalDataSource {
     fun getAccessToken(): String
 
     fun clearAccessToken()
+
+    fun saveUserInfo(userInfo: UserInfo)
+
+    fun getUserInfo(): UserInfo?
 }

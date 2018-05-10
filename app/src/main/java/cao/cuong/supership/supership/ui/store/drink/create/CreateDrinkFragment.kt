@@ -11,10 +11,8 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
-import cao.cuong.supership.supership.extension.isValidateFullName
-import cao.cuong.supership.supership.extension.observeOnUiThread
-import cao.cuong.supership.supership.extension.showOkAlert
-import cao.cuong.supership.supership.extension.unAccent
+import cao.cuong.supership.supership.extension.*
+import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.store.activity.StoreActivity
 import cao.cuong.supership.supership.ui.store.info.StoreInfoFragment
@@ -48,6 +46,19 @@ class CreateDrinkFragment : BaseFragment() {
         }
         viewModel = CreateDrinkFragmentViewModel(context)
         ui = CreateDrinkFragmentUI(options)
+        ui.optionsAdapter.onItemAction = { view, drinkOption ->
+            when (view.id) {
+                R.id.imgCancelOption -> {
+                    drinkOption.isSelected = false
+                    ui.optionsAdapter.notifyDataSetChanged()
+                }
+
+                R.id.imgApplyDrinkOption -> {
+                    drinkOption.isSelected = true
+                    ui.optionsAdapter.notifyDataSetChanged()
+                }
+            }
+        }
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -85,6 +96,7 @@ class CreateDrinkFragment : BaseFragment() {
     }
 
     internal fun addDrinkClicked() {
+        (activity as? BaseActivity)?.hideKeyBoard()
         val name = ui.edtName.text.toString().trim()
         val priceString = ui.edtPrice.text.toString()
         var message = ""

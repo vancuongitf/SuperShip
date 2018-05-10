@@ -1,8 +1,11 @@
 package cao.cuong.supership.supership.data.source.datasource
 
 import cao.cuong.supership.supership.data.model.AccessToken
+import cao.cuong.supership.supership.data.model.BillInfo
 import cao.cuong.supership.supership.data.model.UserInfo
+import cao.cuong.supership.supership.data.model.paypal.VerifyPaymentBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateUserBody
+import cao.cuong.supership.supership.data.source.remote.response.BillExpressResponse
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.data.source.remote.response.RequestResetPassResponse
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
@@ -27,4 +30,10 @@ interface UserDataSource {
     fun resetPassword(userId: Int, pass: String, otpCode: Int): Single<AccessToken>
 
     fun getStoreList(token: String, page: Int): Single<StoreExpressResponse>
+
+    fun getOrders(token: String, page: Int): Single<BillExpressResponse>
+
+    fun getBillInfo(token: String, id: Long): Single<BillInfo>
+
+    fun verifyPayment(verifyPaymentBody: VerifyPaymentBody): Single<MessageResponse>
 }

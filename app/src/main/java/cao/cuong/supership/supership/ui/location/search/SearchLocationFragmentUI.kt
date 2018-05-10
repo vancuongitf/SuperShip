@@ -25,6 +25,7 @@ class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoCompo
     internal lateinit var mapView: MapView
     internal lateinit var llConfirmAddress: LinearLayout
     internal lateinit var tvAddress: TextView
+    internal lateinit var tvDistance: TextView
 
     override fun createView(ui: AnkoContext<SearchLocationFragment>) = with(ui) {
         verticalLayout {
@@ -144,6 +145,11 @@ class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoCompo
                     backgroundColorResource = R.color.colorWhite
 
                     tvAddress = textView {
+                        textColorResource = R.color.colorBlack
+                        textSizeDimen = R.dimen.addressTextSize
+                    }
+
+                    tvDistance = textView {
                         textColorResource = R.color.colorBlack
                         textSizeDimen = R.dimen.addressTextSize
                     }
