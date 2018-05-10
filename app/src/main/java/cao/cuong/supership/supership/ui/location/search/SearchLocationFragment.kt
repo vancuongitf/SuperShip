@@ -13,10 +13,8 @@ import cao.cuong.supership.supership.data.model.google.Direction
 import cao.cuong.supership.supership.data.model.google.StoreAddress
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.response.google.GeoCodingResponse
-import cao.cuong.supership.supership.extension.getDistanceShipString
-import cao.cuong.supership.supership.extension.getLastKnowLocation
-import cao.cuong.supership.supership.extension.getShipFee
-import cao.cuong.supership.supership.extension.observeOnUiThread
+import cao.cuong.supership.supership.extension.*
+import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.location.LocationActivity
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -54,6 +52,7 @@ class SearchLocationFragment : BaseFragment() {
     private var address = ""
     private var action: Action = Action.SEARCH
     private var distance = 0L
+    private var shipRoad = ""
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (arguments.containsKey(KEY_ACTION)) {
@@ -72,6 +71,7 @@ class SearchLocationFragment : BaseFragment() {
         ui.mapView.getMapAsync({
             googleMap = it
             googleMap?.setOnMapClickListener {
+                (activity as? BaseActivity)?.hideKeyBoard()
                 if (ui.recyclerView.visibility == View.VISIBLE) {
                     ui.recyclerView.visibility = View.GONE
                 } else {
@@ -116,6 +116,7 @@ class SearchLocationFragment : BaseFragment() {
     }
 
     internal fun currentLocationClicked() {
+        (activity as? BaseActivity)?.hideKeyBoard()
         if (action == Action.SEARCH) {
             context.getLastKnowLocation()
                     .doOnSubscribe {
@@ -145,6 +146,7 @@ class SearchLocationFragment : BaseFragment() {
         if (ui.recyclerView.visibility == View.VISIBLE) {
             ui.recyclerView.visibility = View.GONE
         }
+        (activity as? BaseActivity)?.hideKeyBoard()
         updateConfirmViewUIStatus(null, "")
     }
 
@@ -156,7 +158,7 @@ class SearchLocationFragment : BaseFragment() {
                 if (action == Action.SEARCH) {
                     putParcelable(LocationActivity.KEY_ADDRESS_RESULT, address)
                 } else {
-                    putParcelable(LocationActivity.KEY_ADDRESS_RESULT, ShipAddress(latLng!!, this@SearchLocationFragment.address, distance))
+                    putParcelable(LocationActivity.KEY_ADDRESS_RESULT, ShipAddress(latLng!!, this@SearchLocationFragment.address, distance, shipRoad))
                 }
             })
             (activity as? LocationActivity)?.apply {
@@ -169,6 +171,7 @@ class SearchLocationFragment : BaseFragment() {
     }
 
     private fun adapterOnItemClicked(autoComplete: AutoComplete) {
+        (activity as? BaseActivity)?.hideKeyBoard()
         viewModel.getPlaceDetail(autoComplete)
                 .subscribe({
                     ui.recyclerView.visibility = View.GONE
@@ -253,6 +256,7 @@ class SearchLocationFragment : BaseFragment() {
                 if (this.polyLine.points.isNotEmpty()) {
                     val options = com.google.android.gms.maps.model.PolylineOptions().width(5f).color(android.graphics.Color.BLUE).geodesic(true)
                     options.add(storeAddress.latLng)
+                    shipRoad = this.polyLine.points
                     this.polyLine.decodePoly().forEach {
                         options.add(it)
                     }

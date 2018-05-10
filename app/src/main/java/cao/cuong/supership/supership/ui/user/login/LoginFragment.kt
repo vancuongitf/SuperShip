@@ -1,12 +1,13 @@
 package cao.cuong.supership.supership.ui.user.login
 
-import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.AccessToken
+import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
+import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.user.UserActivity
@@ -63,7 +64,7 @@ class LoginFragment : BaseFragment() {
     private fun handleLoginStatus(notification: Notification<AccessToken>) {
         if (notification.isOnNext) {
             (activity as? UserActivity)?.let {
-                it.setResult(RESULT_OK)
+                RxBus.publish(UpdateAccountUI())
                 it.finish()
             }
         } else if (notification.isOnError) {

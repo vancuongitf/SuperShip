@@ -1,6 +1,8 @@
 package cao.cuong.supership.supership.extension
 
 import cao.cuong.supership.supership.BuildConfig
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  *
@@ -28,4 +30,10 @@ internal fun Long.getShipFee(): Long {
         shipFee = BuildConfig.MIN_SHIP_FEE
     }
     return shipFee
+}
+
+internal fun Long.getDateTimeFormat(): String {
+    val simpleDateTimeFormat = "HH:mm:ss yyyy-MM-dd"
+    val df = SimpleDateFormat(simpleDateTimeFormat, Locale.US)
+    return df.format(this)
 }

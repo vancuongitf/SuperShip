@@ -82,11 +82,11 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                     ui.imgClear.visibility = View.VISIBLE
 
                     ui.imgApply.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgApply, options[adapterPosition])
                     }
 
                     ui.imgClear.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgClear, options[adapterPosition])
                     }
                 }
 
@@ -173,17 +173,28 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                     ui.imgClear.visibility = View.VISIBLE
 
                     ui.imgApply.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgApply, options[adapterPosition])
                     }
 
                     ui.imgClear.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgClear, options[adapterPosition])
                     }
                 }
             }
         }
 
         internal fun onBind() {
+            when (adapterType) {
+                AdapterType.CREATE_DRINK -> {
+                    if (options[adapterPosition].isSelected) {
+                        ui.imgClear.visibility = View.VISIBLE
+                        ui.imgApply.visibility = View.GONE
+                    } else {
+                        ui.imgClear.visibility = View.GONE
+                        ui.imgApply.visibility = View.VISIBLE
+                    }
+                }
+            }
             ui.tvOptionName.text = options[adapterPosition].name
             ui.radios.withIndex().forEach {
                 if (it.index < options[adapterPosition].items.size) {

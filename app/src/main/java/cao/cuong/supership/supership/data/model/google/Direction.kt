@@ -24,7 +24,7 @@ data class Polyline(@SerializedName("points") var points: String) {
         var lat = 0
         var lng = 0
 
-        while (index < len) {
+        while (index < len - 1) {
             var b: Int
             var shift = 0
             var result = 0

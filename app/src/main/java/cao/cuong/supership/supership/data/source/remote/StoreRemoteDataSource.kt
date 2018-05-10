@@ -2,10 +2,7 @@ package cao.cuong.supership.supership.data.source.remote
 
 import cao.cuong.supership.supership.data.source.datasource.StoreDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
-import cao.cuong.supership.supership.data.source.remote.request.AddDrinkOptionItemBody
-import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkBody
-import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkOptionBody
-import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
+import cao.cuong.supership.supership.data.source.remote.request.*
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.unAccent
 import io.reactivex.Single
@@ -41,4 +38,6 @@ class StoreRemoteDataSource : StoreDataSource {
     override fun createDrinkOption(createOptionBody: CreateDrinkOptionBody) = apiService.createDrinkOption(createOptionBody)
 
     override fun addDrinkItemOption(body: AddDrinkOptionItemBody) = apiService.addDrinkItemOption(body)
+
+    override fun orderDrink(billBody: BillBody) = apiService.orderDrink(billBody)
 }

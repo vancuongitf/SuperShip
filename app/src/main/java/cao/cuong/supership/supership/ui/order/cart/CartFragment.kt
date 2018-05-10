@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
+import cao.cuong.supership.supership.data.model.OrderedDrink
+import cao.cuong.supership.supership.data.model.RxEvent.UpdateOrderUI
 import cao.cuong.supership.supership.data.model.ShipAddress
 import cao.cuong.supership.supership.data.model.google.StoreAddress
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.request.BillBody
-import cao.cuong.supership.supership.extension.getShipFee
-import cao.cuong.supership.supership.extension.isValidateFullName
-import cao.cuong.supership.supership.extension.isValidatePhoneNumber
-import cao.cuong.supership.supership.extension.showOkAlert
+import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
+import cao.cuong.supership.supership.extension.*
+import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.location.LocationActivity
 import cao.cuong.supership.supership.ui.order.OrderActivity
-import cao.cuong.supership.supership.ui.user.UserActivity
 import org.jetbrains.anko.AnkoContext
 
 class CartFragment:BaseFragment(){
@@ -27,15 +26,20 @@ class CartFragment:BaseFragment(){
     private lateinit var ui: CartFragmentUI
     private lateinit var viewModel: CartFragmentViewModel
     private var shipAddress: ShipAddress? = null
+    private val orderedDrinks = mutableListOf<OrderedDrink>()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = CartFragmentViewModel(context)
-        ui = CartFragmentUI()
+        ui = CartFragmentUI(orderedDrinks)
+        ui.orderedDrinkAdapter.onDrinkCountChange = this::updateBillInfo
         return ui.createView(AnkoContext.create(context, this))
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.progressDialogStatusObservable
+                .observeOnUiThread()
+                .subscribe(this::handleUpdateProgressDialogStatus)
         updateUI()
     }
 
@@ -50,10 +54,6 @@ class CartFragment:BaseFragment(){
                             updateUI()
                         }
                     }
-                }
-
-                UserActivity.USER_ACTIVITY_REQUEST_CODE -> {
-                    RxBus.publish(UpdateAccountUI())
                 }
             }
         }
@@ -76,13 +76,13 @@ class CartFragment:BaseFragment(){
             if (shipAddress != null) {
                 if (userName.isValidateFullName()) {
                     if (phone.isValidatePhoneNumber()) {
-                        val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), orderActivity.cart)
+                        val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), shipAddress!!.shipRoad, orderActivity.orderedDrinks)
                         if (viewModel.isLogin()) {
                             viewModel.submitOrder(billBody)
+                                    .subscribe(this::handleOrderSuccess, this::handleApiError)
                         } else {
                             context.showOkAlert(R.string.notification, R.string.requestLogin) {
-                                val intent = Intent(context, UserActivity::class.java)
-                                startActivity(intent)
+                                (activity as? BaseActivity)?.startUserActivity()
                             }
                         }
                     } else {
@@ -117,18 +117,37 @@ class CartFragment:BaseFragment(){
     private fun updateUI() {
         (activity as? OrderActivity)?.let {
             val activity = it
+            orderedDrinks.clear()
+            orderedDrinks.addAll(it.orderedDrinks)
             ui.tvStoreName.text = it.store.name
             ui.tvBillCost.text = context.getString(R.string.billPrice, it.getCartPrice())
             if (ui.edtCustomerName.text.isEmpty()) {
-                ui.edtCustomerName.setText(it.billBody.userName)
+                ui.edtCustomerName.setText(viewModel.getUserInfo()?.fullName ?: "")
             }
             if (ui.edtPhone.text.isEmpty()) {
-                ui.edtPhone.setText(it.billBody.phone)
+                ui.edtPhone.setText(viewModel.getUserInfo()?.phoneNumber ?: "")
             }
             shipAddress?.let {
                 ui.tvAddress.text = it.address
                 ui.tvBillShipCost.text = "${it.distance.getShipFee()} VND"
                 ui.tvTotalCost.text = "${activity.getCartPrice() + it.distance.getShipFee()} VND"
+            }
+        }
+    }
+
+    private fun handleOrderSuccess(messageResponse: MessageResponse) {
+        context.showOkAlert(R.string.notification, messageResponse.message) {
+            RxBus.publish(UpdateOrderUI())
+            activity.finish()
+        }
+    }
+
+    private fun updateBillInfo() {
+        (activity as? OrderActivity)?.let {
+            val cartPrice = it.getCartPrice()
+            ui.tvBillCost.text = context.getString(R.string.billPrice, cartPrice)
+            shipAddress?.let {
+                ui.tvTotalCost.text = "${cartPrice + it.distance.getShipFee()} VND"
             }
         }
     }

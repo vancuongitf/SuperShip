@@ -28,9 +28,7 @@ class TestActivity : BaseActivity() {
         ui.setContentView(this)
 
         val intent = Intent(this, PayPalService::class.java)
-
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paymentConfig)
-
         startService(intent)
     }
 
@@ -78,11 +76,11 @@ class TestActivity : BaseActivity() {
 //        }
 //    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             Log.i("paymentExample", "xxxx")
-            Log.i("paymentExample", data.extras.toString())
-            val confirm = data.getParcelableExtra<PaymentConfirmation>(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
+            Log.i("paymentExample", data?.extras.toString())
+            val confirm = data?.getParcelableExtra<PaymentConfirmation>(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
             if (confirm != null) {
                 try {
                     Log.i("paymentExample", confirm.toJSONObject().toString(4))

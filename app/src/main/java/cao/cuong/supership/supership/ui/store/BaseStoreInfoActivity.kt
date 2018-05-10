@@ -32,33 +32,4 @@ open class BaseStoreInfoActivity : BaseActivity() {
         }
         return result
     }
-//
-//    internal fun setDrinkOption(drinkOptions: MutableList<DrinkOption>) {
-//        options.clear()
-//        options.addAll(drinkOptions)
-//    }
-//
-
-//
-//    internal fun setDrinks(newDrinks: MutableList<Drink>) {
-//        drinks.clear()
-//        drinks.addAll(newDrinks)
-//    }
-//
-////    internal fun getOrderedDrink(orderedDrink: OrderDrink): Drink? {
-////        val orderedDrink = drinks.filter {
-////            it.id == orderedDrink.drinkId
-////        }
-////        orderedDrink.forEach {
-////
-////        }
-////    }
-////
-////    internal fun getOrderedDrinkOption(itemId: Long): DrinkOption? {
-////        options.forEach {
-////            if (it.containDrinkOptionItem(itemId)) {
-////
-////            }
-////        }
-////    }
 }

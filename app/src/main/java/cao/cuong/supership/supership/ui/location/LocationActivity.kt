@@ -13,6 +13,7 @@ class LocationActivity : BaseActivity() {
         internal const val REQUEST_CODE_SEARCH_LOCATION = 22
         internal const val KEY_ADDRESS_RESULT = "address_result"
         internal const val KEY_STORE_ADDRESS = "store_address"
+        internal const val KEY_SHIP_ROAD = "ship_road"
     }
 
     private lateinit var ui: LocationActivityUI

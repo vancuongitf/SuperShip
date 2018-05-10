@@ -7,3 +7,13 @@ internal fun Int.numberToString(): String {
         this.toString()
     }
 }
+
+internal fun Int.getBillStatus() = when (this) {
+    0 -> "Đang chờ xác nhận"
+
+    1 -> "Đã đặt hàng"
+
+    2 -> "Đang vận chuyển"
+
+    else -> "Đã giao hàng"
+}

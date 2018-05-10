@@ -61,7 +61,7 @@ class SingleChooseItemUI : AnkoComponent<ViewGroup> {
                 }.lparams(dimen(R.dimen.drinkOptionItemButton), dimen(R.dimen.drinkOptionItemButton))
 
                 imgClear = imageView(R.drawable.ic_delete) {
-                    id = R.id.imgClearCancelOption
+                    id = R.id.imgCancelOption
                     enableHighLightWhenClicked()
                 }.lparams(dimen(R.dimen.drinkOptionItemButton), dimen(R.dimen.drinkOptionItemButton))
 

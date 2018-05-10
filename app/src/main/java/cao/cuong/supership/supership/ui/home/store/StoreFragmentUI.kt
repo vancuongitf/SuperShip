@@ -39,9 +39,6 @@ class StoreFragmentUI(storeInfoExpresses: MutableList<StoreInfoExpress>) : AnkoC
                         storeAdapter.onItemClicked = {
                             owner.onStoreItemClick(it)
                         }
-                        storeAdapter.onItemLoadMoreClick = {
-                            owner.onLoadMoreClick()
-                        }
                         storeAdapter.notifyDataSetChanged()
                     }.lparams(matchParent, matchParent)
                 }

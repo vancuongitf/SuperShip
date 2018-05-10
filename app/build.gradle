@@ -21,8 +21,10 @@ android {
                 case "debug":
                     variant.buildConfigField "String", "BASE_API_URL", '"https://vnshipperman.000webhostapp.com/"'
                     variant.buildConfigField "String", "BASE_GOOGLE_API_URL", '"https://maps.googleapis.com/maps/api/"'
+                    variant.buildConfigField "String", "BASE_PAY_PAL_API_URL", '"https://api.sandbox.paypal.com/"'
                     variant.buildConfigField "int", "SHIP_FEE", '10000'
                     variant.buildConfigField "long", "MIN_SHIP_FEE", '15000'
+                    variant.buildConfigField "int", "USD_EXCHANGE_RATE", '22000'
                     break
                 case "staging":
                     variant.buildConfigField "String", "BASE_API_URL", '"https://vnshipperman.000webhostapp.com/"'

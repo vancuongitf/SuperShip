@@ -18,7 +18,6 @@ class StoreItemUI : AnkoComponent<ViewGroup> {
     internal lateinit var tvStoreName: TextView
     internal lateinit var tvStoreAddress: TextView
     internal lateinit var tvStoreDistance: TextView
-    internal lateinit var imgStoreStarIcon: ImageView
     internal lateinit var tvStoreStarRate: TextView
 
     override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
@@ -63,10 +62,9 @@ class StoreItemUI : AnkoComponent<ViewGroup> {
 
                     linearLayout {
                         gravity = Gravity.CENTER_VERTICAL
-                        imgStoreStarIcon = imageView(R.drawable.ic_star_gold)
-                                .lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
-                                    rightMargin = dimen(R.dimen.storeItemUITvAddressTopMargin)
-                                }
+                        imageView(R.drawable.ic_star_gold).lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
+                            rightMargin = dimen(R.dimen.storeItemUITvAddressTopMargin)
+                        }
 
                         tvStoreStarRate = textView {
                             textSizeDimen = R.dimen.secondaryTextSize

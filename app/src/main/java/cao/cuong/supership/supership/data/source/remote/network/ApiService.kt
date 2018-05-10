@@ -1,13 +1,12 @@
 package cao.cuong.supership.supership.data.source.remote.network
 
 import cao.cuong.supership.supership.data.model.AccessToken
+import cao.cuong.supership.supership.data.model.BillInfo
 import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.model.UserInfo
+import cao.cuong.supership.supership.data.model.paypal.VerifyPaymentBody
 import cao.cuong.supership.supership.data.source.remote.request.*
-import cao.cuong.supership.supership.data.source.remote.response.CreateDrinkOptionResponse
-import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
-import cao.cuong.supership.supership.data.source.remote.response.RequestResetPassResponse
-import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
+import cao.cuong.supership.supership.data.source.remote.response.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import retrofit2.http.*
@@ -69,4 +68,16 @@ interface ApiService {
 
     @POST("api/v1/store/option/addoptionitem.php")
     fun addDrinkItemOption(@Body body: AddDrinkOptionItemBody): Single<MessageResponse>
+
+    @POST("/api/v1/store/drink/order.php")
+    fun orderDrink(@Body billBody: BillBody): Single<MessageResponse>
+
+    @GET("api/v1/store/order/userorders.php")
+    fun getOrdersOfUser(@Query("token") token: String, @Query("page") page: Int): Single<BillExpressResponse>
+
+    @GET("api/v1/store/order/order.php")
+    fun getOrderInfo(@Query("token") token: String, @Query("id") id: Long): Single<BillInfo>
+
+    @POST("api/v1/user/payment/verify.php")
+    fun verifyPayment(@Body paymentBody: VerifyPaymentBody): Single<MessageResponse>
 }

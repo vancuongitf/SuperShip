@@ -113,9 +113,9 @@ class AccountFragment : BaseFragment() {
     }
 
     private fun handleApiGetInfoError(throwable: Throwable){
-        handleApiError(throwable)
         ui.llNonLogin.visibility = View.GONE
         ui.llLogin.visibility = View.GONE
         ui.tvReload.visibility = View.VISIBLE
+        handleApiError(throwable)
     }
 }

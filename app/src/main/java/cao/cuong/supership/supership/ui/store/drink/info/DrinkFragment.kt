@@ -5,8 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
-import cao.cuong.supership.supership.data.model.*
-import cao.cuong.supership.supership.extension.getOrderedOption
+import cao.cuong.supership.supership.data.model.Drink
+import cao.cuong.supership.supership.data.model.DrinkOption
+import cao.cuong.supership.supership.data.model.OptionalBody
+import cao.cuong.supership.supership.data.model.OrderedDrink
+import cao.cuong.supership.supership.extension.getOrderedOptions
+import cao.cuong.supership.supership.extension.hideKeyBoard
+import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.order.OrderActivity
 import cao.cuong.supership.supership.ui.store.BaseStoreInfoActivity
@@ -32,15 +37,16 @@ class DrinkFragment : BaseFragment() {
     internal lateinit var ui: DrinkFragmentUI
     internal lateinit var viewModel: DrinkFragmentViewModel
     internal lateinit var drink: Drink
-    private lateinit var orderInfo: OrderDrink
     private var orderCase = false
     private val drinkOptions = mutableListOf<DrinkOption>()
     private val orderedOption = mutableListOf<DrinkOption>()
+    private val optionalBodies = mutableSetOf<OptionalBody>()
+    private var drinkTotalPrice = 0
+    private var count = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         try {
             drink = arguments.getSerializable(KEY_DRINK) as Drink
-            orderInfo = OrderDrink(drink.id, 0, mutableSetOf(), "")
         } catch (e: ClassCastException) {
             activity.onBackPressed()
         }
@@ -56,7 +62,6 @@ class DrinkFragment : BaseFragment() {
             with(ui) {
                 tvDrinkTitle.text = drink.name
                 tvDrinkName.text = drink.name
-                // TODO: tvBillCount
                 tvBillCount.text = getString(R.string.notOrderYet)
                 updateDrinkPrice()
                 val option = RequestOptions()
@@ -74,33 +79,37 @@ class DrinkFragment : BaseFragment() {
     }
 
     internal fun onBackClicked() {
+        (activity as? BaseActivity)?.hideKeyBoard()
         activity.onBackPressed()
     }
 
     internal fun onCheckClicked() {
-        orderInfo.note = ui.edtNote.text.toString().trim()
+        (activity as? BaseActivity)?.hideKeyBoard()
         (activity as? OrderActivity)?.let {
-            if (orderInfo.count > 0) {
-                var price = drink.price
-                orderedOption.forEach {
-                    it.items.forEach {
-                        price += it.price
-                    }
+            if (count > 0) {
+                orderedOption.clear()
+                orderedOption.addAll(it.store.options.getOrderedOptions(optionalBodies))
+                val price = drink.price + orderedOption.sumBy {
+                    it.getTotalPrice()
                 }
-                it.drinkOrder(orderInfo)
+                it.drinkOrder(OrderedDrink(-1, drink.id, drink.name, price, drink.image, count, ui.edtNote.text.toString().trim(), orderedOption))
             }
             it.onBackPressed()
         }
     }
 
+    internal fun onEditClicked() {
+        // TODO: Handle later.
+    }
+
     internal fun onAddDrinkClicked() {
-        orderInfo.count++
+        count++
         updateDrinkPrice()
     }
 
     internal fun onMinusDrinkClicked() {
-        if (orderInfo.count > 0) {
-            orderInfo.count--
+        if (count > 0) {
+            count--
             updateDrinkPrice()
         }
     }
@@ -114,10 +123,11 @@ class DrinkFragment : BaseFragment() {
     }
 
     internal fun updateDrinkPrice() {
+        (activity as? BaseActivity)?.hideKeyBoard()
         ui.tvPrice.text = context.getString(R.string.drinkPrice, drink.price)
-        ui.tvDrinkCount.text = orderInfo.count.toString()
+        ui.tvDrinkCount.text = count.toString()
         var totalOptionPrice = 0
-        orderInfo.optionals.clear()
+        optionalBodies.clear()
         orderedOption.clear()
         drinkOptions.forEach {
             val orderedItems = mutableSetOf<Long>()
@@ -128,10 +138,11 @@ class DrinkFragment : BaseFragment() {
                 }
             }
             if (orderedItems.isNotEmpty()) {
-                orderInfo.optionals.add(OptionalBody(it.id, orderedItems))
+                optionalBodies.add(OptionalBody(it.id, orderedItems))
             }
         }
-        ui.tvTotalPrice.text = context.getString(R.string.drinkTotalPrice, orderInfo.count * (drink.price + totalOptionPrice))
+        drinkTotalPrice = drink.price + totalOptionPrice
+        ui.tvTotalPrice.text = context.getString(R.string.drinkTotalPrice, count * drinkTotalPrice)
     }
 
     private fun getDrinkOption() {

@@ -1,18 +1,21 @@
 package cao.cuong.supership.supership.ui.order.cart
 
 import android.graphics.Typeface
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.widget.EditText
 import android.widget.TextView
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.OrderedDrink
 import cao.cuong.supership.supership.extension.commonEditText
 import cao.cuong.supership.supership.extension.commonTextView
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class CartFragmentUI : AnkoComponent<CartFragment> {
+class CartFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<CartFragment> {
 
     internal lateinit var tvBillTitle: TextView
     internal lateinit var edtCustomerName: EditText
@@ -22,6 +25,7 @@ class CartFragmentUI : AnkoComponent<CartFragment> {
     internal lateinit var tvBillCost: TextView
     internal lateinit var tvBillShipCost: TextView
     internal lateinit var tvTotalCost: TextView
+    internal val orderedDrinkAdapter = BillDrinkAdapter(orderedDrink)
 
     override fun createView(ui: AnkoContext<CartFragment>) = with(ui){
 
@@ -171,15 +175,22 @@ class CartFragmentUI : AnkoComponent<CartFragment> {
                     }.lparams(matchParent, dip(1))
 
                     textView(R.string.orderedDrinkList) {
-                        gravity = Gravity.CENTER_HORIZONTAL
-                        backgroundColorResource = R.color.colorBlue
-                        enableHighLightWhenClicked()
-                        verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                        onClick {
-                            owner.eventOrderDrinkListClicked()
-                        }
+                        textSizeDimen = R.dimen.storeTitleTextSize
+                        textColorResource = R.color.colorWhite
+                        setTypeface(null, Typeface.BOLD)
+                        verticalPadding = dimen(R.dimen.drinkItemUIPadding)
+                    }
+
+                    view {
+                        backgroundResource = R.color.colorGrayVeryLight
+                    }.lparams(matchParent, dip(1))
+
+                    recyclerView {
+                        id = R.id.cartFragmentRecyclerViewOrderDrinks
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = orderedDrinkAdapter
                     }.lparams(matchParent, wrapContent) {
-                        verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        margin = dimen(R.dimen.accountFragmentLoginPadding)
                     }
 
                 }.lparams(matchParent, wrapContent)
