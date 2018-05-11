@@ -27,7 +27,13 @@ interface StoreDataSource {
 
     fun createDrink(drinkBody: CreateDrinkBody): Single<MessageResponse>
 
+    fun editDrink(drinkBody: EditDrinkBody): Single<MessageResponse>
+
     fun createDrinkOption(createOptionBody: CreateDrinkOptionBody): Single<CreateDrinkOptionResponse>
+
+    fun editDrinkOption(editDrinkOptionBody: EditDrinkOptionBody): Single<MessageResponse>
+
+    fun deleteDrinkOption(token: String, id: Long): Single<MessageResponse>
 
     fun addDrinkItemOption(body: AddDrinkOptionItemBody): Single<MessageResponse>
 

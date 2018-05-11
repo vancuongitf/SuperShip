@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateCartStatus
+import cao.cuong.supership.supership.data.model.rxevent.UpdateCartStatus
 import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread

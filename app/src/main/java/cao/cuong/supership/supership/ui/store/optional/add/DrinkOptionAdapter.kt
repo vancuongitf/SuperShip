@@ -10,6 +10,8 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class DrinkOptionAdapter(private val items: MutableList<DrinkOptionItemBody>) : RecyclerView.Adapter<DrinkOptionAdapter.DrinkOptionItemHolder>() {
 
+    internal var onDeleteItem: (DrinkOptionItemBody) -> Unit = {}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkOptionItemHolder {
         val ui = DrinkOptionItemUI()
         return DrinkOptionItemHolder(ui, ui.createView(AnkoContext.Companion.create(parent.context, parent, false)))
@@ -24,7 +26,9 @@ class DrinkOptionAdapter(private val items: MutableList<DrinkOptionItemBody>) : 
     inner class DrinkOptionItemHolder(private val ui: DrinkOptionItemUI, itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             ui.imgDelete.onClick {
-
+                if (adapterPosition > -1) {
+                    onDeleteItem(items[adapterPosition])
+                }
             }
         }
 

@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.cancelButton
 import org.jetbrains.anko.okButton
 
 
@@ -149,6 +150,22 @@ internal fun Context.showOkAlert(throwable: Throwable, okOnClicked: () -> Unit =
         okButton {
             it.dismiss()
             okOnClicked()
+        }
+    }.show()
+}
+
+internal fun Context.showConfirmAlert(@StringRes message: Int, okButtonClick: () -> Unit) {
+    alert {
+        titleResource = R.string.notification
+        messageResource = message
+
+        okButton {
+            okButtonClick()
+            it.dismiss()
+        }
+
+        cancelButton {
+            it.dismiss()
         }
     }.show()
 }

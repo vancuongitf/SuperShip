@@ -23,7 +23,7 @@ class AddDrinkOptionFragmentUI(items: MutableList<DrinkOptionItemBody>) : AnkoCo
 
     override fun createView(ui: AnkoContext<AddDrinkOptionFragment>) = with(ui) {
         verticalLayout {
-
+            lparams(matchParent, matchParent)
             backgroundColorResource = R.color.colorWhite
             isClickable = true
 

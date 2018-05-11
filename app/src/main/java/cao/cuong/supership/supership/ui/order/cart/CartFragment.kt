@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateOrderUI
+import cao.cuong.supership.supership.data.model.rxevent.UpdateOrderUI
 import cao.cuong.supership.supership.data.model.ShipAddress
 import cao.cuong.supership.supership.data.model.google.StoreAddress
 import cao.cuong.supership.supership.data.source.remote.network.RxBus

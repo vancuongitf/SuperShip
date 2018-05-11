@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.store.optional
+package cao.cuong.supership.supership.ui.store.optional.list
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity

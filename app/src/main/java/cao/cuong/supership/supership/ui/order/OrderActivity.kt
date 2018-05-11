@@ -4,7 +4,7 @@ import android.os.Bundle
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.data.model.OrderedDrink
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateCartStatus
+import cao.cuong.supership.supership.data.model.rxevent.UpdateCartStatus
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft

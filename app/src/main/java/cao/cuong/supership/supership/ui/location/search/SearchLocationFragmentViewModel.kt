@@ -1,6 +1,6 @@
 package cao.cuong.supership.supership.ui.location.search
 
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateConfirmAddressEvent
+import cao.cuong.supership.supership.data.model.rxevent.UpdateConfirmAddressEvent
 import cao.cuong.supership.supership.data.model.google.AutoComplete
 import cao.cuong.supership.supership.data.source.GoogleMapRepository
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall

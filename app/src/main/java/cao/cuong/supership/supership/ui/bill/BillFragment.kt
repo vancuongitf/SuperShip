@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateOrderUI
+import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
+import cao.cuong.supership.supership.data.model.rxevent.UpdateOrderUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseActivity

@@ -5,6 +5,7 @@ import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.StoreRepository
 import cao.cuong.supership.supership.data.source.remote.request.AddDrinkOptionItemBody
 import cao.cuong.supership.supership.data.source.remote.request.CreateDrinkOptionBody
+import cao.cuong.supership.supership.data.source.remote.request.EditDrinkOptionBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import io.reactivex.Single
@@ -29,6 +30,19 @@ class AddDrinkOptionFragmentViewModel(context: Context) {
                     storeRepository.addDrinkItemOption(addDrinkOptionItemBody)
                             .observeOnUiThread()
                 }
+                .doOnSubscribe {
+                    progressDialogStatusObservable.onNext(true)
+                }
+                .doFinally {
+                    progressDialogStatusObservable.onNext(false)
+                }
+    }
+
+    internal fun editDrinkOption(editDrinkOptionBody: EditDrinkOptionBody): Single<MessageResponse> {
+        editDrinkOptionBody.token = localRepository.getAccessToken()
+        return storeRepository
+                .editDrinkOption(editDrinkOptionBody)
+                .observeOnUiThread()
                 .doOnSubscribe {
                     progressDialogStatusObservable.onNext(true)
                 }

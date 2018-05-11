@@ -71,7 +71,7 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                     }
 
                     ui.imgDelete.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgDelete, options[adapterPosition])
                     }
                 }
 
@@ -162,7 +162,7 @@ class OptionalAdapter(private val options: MutableList<DrinkOption>, private val
                     }
 
                     ui.imgDelete.onClick {
-                        onItemAction(ui.imgEdit, options[adapterPosition])
+                        onItemAction(ui.imgDelete, options[adapterPosition])
                     }
                 }
 
