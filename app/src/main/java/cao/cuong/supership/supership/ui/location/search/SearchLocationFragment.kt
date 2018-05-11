@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateConfirmAddressEvent
+import cao.cuong.supership.supership.data.model.rxevent.UpdateConfirmAddressEvent
 import cao.cuong.supership.supership.data.model.ShipAddress
 import cao.cuong.supership.supership.data.model.google.AutoComplete
 import cao.cuong.supership.supership.data.model.google.Direction

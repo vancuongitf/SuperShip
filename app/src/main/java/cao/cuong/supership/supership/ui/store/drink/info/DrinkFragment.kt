@@ -23,7 +23,7 @@ import org.jetbrains.anko.AnkoContext
 class DrinkFragment : BaseFragment() {
 
     companion object {
-        private const val KEY_DRINK = "drink"
+        internal const val KEY_DRINK = "drink"
 
         internal fun getNewInstance(drink: Drink): DrinkFragment {
             val instance = DrinkFragment()
@@ -99,7 +99,7 @@ class DrinkFragment : BaseFragment() {
     }
 
     internal fun onEditClicked() {
-        // TODO: Handle later.
+        (activity as? StoreActivity)?.openEditDrinkFragment(drink)
     }
 
     internal fun onAddDrinkClicked() {

@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.store.activity
 import android.os.Bundle
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
+import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.replaceFragment
@@ -11,12 +12,13 @@ import cao.cuong.supership.supership.ui.store.drink.create.CreateDrinkFragment
 import cao.cuong.supership.supership.ui.store.drink.info.DrinkFragment
 import cao.cuong.supership.supership.ui.store.info.StoreInfoFragment
 import cao.cuong.supership.supership.ui.store.list.StoreListFragment
-import cao.cuong.supership.supership.ui.store.optional.OptionalFragment
 import cao.cuong.supership.supership.ui.store.optional.add.AddDrinkOptionFragment
+import cao.cuong.supership.supership.ui.store.optional.list.OptionalFragment
 import org.jetbrains.anko.setContentView
 
 class StoreActivity : BaseStoreInfoActivity() {
 
+    internal var popSkip = 0
     private lateinit var ui: StoreActivityUI
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,14 @@ class StoreActivity : BaseStoreInfoActivity() {
 
     override fun onBindViewModel() = Unit
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        while (popSkip > 0) {
+            popSkip--
+            supportFragmentManager.popBackStackImmediate()
+        }
+    }
+
     internal fun openStoreInfoFragment(storeId: Long) {
         addFragment(R.id.storeActivityContainer, StoreInfoFragment.getNewInstance(storeId), { it.animRightToLeft() }, StoreInfoFragment::class.java.simpleName)
     }
@@ -61,5 +71,13 @@ class StoreActivity : BaseStoreInfoActivity() {
 
     internal fun openDrinkFragment(drink: Drink) {
         addFragment(R.id.storeActivityContainer, DrinkFragment.getNewInstance(drink), { it.animRightToLeft() }, DrinkFragment::class.java.simpleName)
+    }
+
+    internal fun openEditDrinkFragment(drink: Drink) {
+        addFragment(R.id.storeActivityContainer, CreateDrinkFragment.getNewInstance(-1L, drink), { it.animRightToLeft() }, "Edit-" + CreateDrinkFragment::class.java.simpleName)
+    }
+
+    internal fun openEditDrinkOptionFragment(drinkOption: DrinkOption) {
+        addFragment(R.id.storeActivityContainer, AddDrinkOptionFragment.getNewInstance(-1, drinkOption), { it.animRightToLeft() }, "Edit-${AddDrinkOptionFragment::class.java.simpleName}")
     }
 }

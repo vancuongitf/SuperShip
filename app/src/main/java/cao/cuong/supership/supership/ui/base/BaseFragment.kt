@@ -5,9 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import cao.cuong.supership.supership.R
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
+import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
+import cao.cuong.supership.supership.extension.hideKeyBoard
 import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.account.AccountFragment
 import cao.cuong.supership.supership.ui.bill.BillFragment
@@ -65,7 +66,7 @@ abstract class BaseFragment : Fragment() {
                         this.cancelButton {
                             it.dismiss()
                         }
-                    }
+                    }.show()
                 }
                 RxBus.publish(UpdateAccountUI())
             }
@@ -80,6 +81,10 @@ abstract class BaseFragment : Fragment() {
         } else {
             progressDialog.dismiss()
         }
+    }
+
+    protected fun hideKeyboard() {
+        (activity as? BaseActivity)?.hideKeyBoard()
     }
 
     /**

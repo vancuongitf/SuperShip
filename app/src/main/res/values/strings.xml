@@ -101,5 +101,7 @@
     <string name="billCustomerName">Tên khách hàng: %s</string>
     <string name="billUserAddress">Địa chỉ giao hàng: %s</string>
     <string name="shipRoad">Đường giao hàng</string>
-
+    <string name="nothingChange">Bạn chưa thay đổi thông tin gì của đồ uống này.\nBạn chắc chắn muốn rời khỏi trang này?</string>
+    <string name="cancelChange">Bạn chắc chắn muốn rời khỏi trang này?</string>
+    <string name="confirmDeleteDrink">Hành động không thể hoàn tác.\\nBạn chắc chắn muốn xóa tùy chọn này?</string>
 </resources>

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.data.model.BillAddress
-import cao.cuong.supership.supership.data.model.RxEvent.UpdateAccountUI
+import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread

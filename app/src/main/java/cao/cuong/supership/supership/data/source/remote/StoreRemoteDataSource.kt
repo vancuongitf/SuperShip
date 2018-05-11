@@ -35,7 +35,13 @@ class StoreRemoteDataSource : StoreDataSource {
 
     override fun createDrink(drinkBody: CreateDrinkBody) = apiService.createDrink(drinkBody)
 
+    override fun editDrink(drinkBody: EditDrinkBody) = apiService.editDrink(drinkBody)
+
     override fun createDrinkOption(createOptionBody: CreateDrinkOptionBody) = apiService.createDrinkOption(createOptionBody)
+
+    override fun editDrinkOption(editDrinkOptionBody: EditDrinkOptionBody) = apiService.editDrinkOption(editDrinkOptionBody)
+
+    override fun deleteDrinkOption(token: String, id: Long) = apiService.deleteDrinkOption(token, id)
 
     override fun addDrinkItemOption(body: AddDrinkOptionItemBody) = apiService.addDrinkItemOption(body)
 

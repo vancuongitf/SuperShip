@@ -63,8 +63,14 @@ interface ApiService {
     @POST("api/v1/store/drink/create.php")
     fun createDrink(@Body drinkBody: CreateDrinkBody): Single<MessageResponse>
 
+    @POST("api/v1/store/drink/edit.php")
+    fun editDrink(@Body drinkBody: EditDrinkBody): Single<MessageResponse>
+
     @POST("api/v1/store/option/create.php")
     fun createDrinkOption(@Body createOptionBody: CreateDrinkOptionBody): Single<CreateDrinkOptionResponse>
+
+    @POST("api/v1/store/option/edit.php")
+    fun editDrinkOption(@Body editDrinkOptionBody: EditDrinkOptionBody): Single<MessageResponse>
 
     @POST("api/v1/store/option/addoptionitem.php")
     fun addDrinkItemOption(@Body body: AddDrinkOptionItemBody): Single<MessageResponse>
@@ -80,4 +86,8 @@ interface ApiService {
 
     @POST("api/v1/user/payment/verify.php")
     fun verifyPayment(@Body paymentBody: VerifyPaymentBody): Single<MessageResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/store/option/delete.php")
+    fun deleteDrinkOption(@Field("token") token: String, @Field("id") id: Long): Single<MessageResponse>
 }

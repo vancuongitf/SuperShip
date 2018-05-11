@@ -27,11 +27,10 @@ class CreateDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<C
     internal val optionsAdapter = OptionalAdapter(options, OptionalAdapter.AdapterType.CREATE_DRINK)
 
     override fun createView(ui: AnkoContext<CreateDrinkFragment>) = with(ui) {
-        scrollView {
+        verticalLayout {
             lparams(matchParent, matchParent)
             backgroundResource = R.drawable.bg_login_image
             isClickable = true
-            verticalLayout {
 
                 toolbar {
 
@@ -69,78 +68,80 @@ class CreateDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<C
                         }
                     }.lparams(matchParent, wrapContent)
                 }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
-
-                view {
-                    backgroundResource = R.color.colorGray
-                    alpha = 0.7f
-                }.lparams(matchParent, dip(1)) {
-                    bottomMargin = dip(2)
-                }
+            scrollView {
 
                 verticalLayout {
-                    padding = dimen(R.dimen.accountFragmentLoginPadding)
-
-                    textView(R.string.chooseAvatar) {
-                        gravity = Gravity.CENTER_HORIZONTAL
-                        backgroundColorResource = R.color.colorBlue
-                        textColorResource = R.color.colorWhite
-                        padding = dimen(R.dimen.accountFragmentLoginPadding)
-                        enableHighLightWhenClicked()
-                        onClick {
-                            owner.chooseAvatar()
-                        }
-                    }.lparams(ctx.getWidthScreen() / 2, wrapContent) {
-                        verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
-
-                    rlAvatar = relativeLayout {
-
-                        padding = dimen(R.dimen.avatarBoder)
-                        backgroundColorResource = R.color.colorWhite
-                        visibility = View.GONE
-
-                        imgAvatar = imageView {
-
-                        }.lparams(ctx.getWidthScreen() / 2, ctx.getWidthScreen() / 2)
-                    }.lparams(wrapContent, wrapContent)
-
-                    commonEditText(R.string.drinkName) {
-                        edtName = editText
-                    }.lparams(matchParent, wrapContent) {
-                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
-
-                    commonEditText(R.string.price) {
-                        edtPrice = editText
-                        edtPrice.inputType = InputType.TYPE_CLASS_NUMBER
-
-                    }.lparams(matchParent, wrapContent) {
-                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
-
-                    textView(R.string.optionList) {
-                        textColorResource = R.color.colorWhite
-                        bottomPadding = dip(2)
-                    }.lparams(matchParent, wrapContent) {
-                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
 
                     view {
-                        backgroundResource = R.color.colorRed
+                        backgroundResource = R.color.colorGray
                         alpha = 0.7f
                     }.lparams(matchParent, dip(1)) {
                         bottomMargin = dip(2)
                     }
 
-                    recyclerView {
-                        id = R.id.createDrinkDrinkOptions
-                        layoutManager = LinearLayoutManager(ctx)
-                        backgroundColorResource = R.color.colorWhiteLight
-                        adapter = optionsAdapter
-                    }
-                }.lparams(matchParent, wrapContent)
+                    verticalLayout {
+                        padding = dimen(R.dimen.accountFragmentLoginPadding)
 
-            }.lparams(matchParent, wrapContent)
+                        textView(R.string.chooseAvatar) {
+                            gravity = Gravity.CENTER_HORIZONTAL
+                            backgroundColorResource = R.color.colorBlue
+                            textColorResource = R.color.colorWhite
+                            padding = dimen(R.dimen.accountFragmentLoginPadding)
+                            enableHighLightWhenClicked()
+                            onClick {
+                                owner.chooseAvatar()
+                            }
+                        }.lparams(ctx.getWidthScreen() / 2, wrapContent) {
+                            verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+
+                        rlAvatar = relativeLayout {
+
+                            padding = dimen(R.dimen.avatarBoder)
+                            backgroundColorResource = R.color.colorWhite
+                            visibility = View.GONE
+
+                            imgAvatar = imageView {
+
+                            }.lparams(ctx.getWidthScreen() / 2, ctx.getWidthScreen() / 2)
+                        }.lparams(wrapContent, wrapContent)
+
+                        commonEditText(R.string.drinkName) {
+                            edtName = editText
+                        }.lparams(matchParent, wrapContent) {
+                            topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+
+                        commonEditText(R.string.price) {
+                            edtPrice = editText
+                            edtPrice.inputType = InputType.TYPE_CLASS_NUMBER
+                        }.lparams(matchParent, wrapContent) {
+                            topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+
+                        textView(R.string.optionList) {
+                            textColorResource = R.color.colorWhite
+                            bottomPadding = dip(2)
+                        }.lparams(matchParent, wrapContent) {
+                            topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+
+                        view {
+                            backgroundResource = R.color.colorRed
+                            alpha = 0.7f
+                        }.lparams(matchParent, dip(1)) {
+                            bottomMargin = dip(2)
+                        }
+
+                        recyclerView {
+                            id = R.id.createDrinkDrinkOptions
+                            layoutManager = LinearLayoutManager(ctx)
+                            backgroundColorResource = R.color.colorWhiteLight
+                            adapter = optionsAdapter
+                        }
+                    }.lparams(matchParent, wrapContent)
+                }.lparams(matchParent, wrapContent)
+            }.lparams(matchParent, matchParent)
         }
     }
 }

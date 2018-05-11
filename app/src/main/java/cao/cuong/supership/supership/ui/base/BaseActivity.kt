@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import cao.cuong.supership.supership.App
-import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
+import cao.cuong.supership.supership.data.model.rxevent.UnAuthorizeException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.user.UserActivity

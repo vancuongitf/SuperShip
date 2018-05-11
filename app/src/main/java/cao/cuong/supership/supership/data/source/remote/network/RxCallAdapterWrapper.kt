@@ -1,7 +1,7 @@
 package cao.cuong.supership.supership.data.source.remote.network
 
 import android.util.Log
-import cao.cuong.supership.supership.data.model.RxEvent.UnAuthorizeException
+import cao.cuong.supership.supership.data.model.rxevent.UnAuthorizeException
 import okhttp3.ResponseBody
 import retrofit2.*
 import cao.cuong.supership.supership.data.source.remote.util.BaseRxCallAdapterWrapper
