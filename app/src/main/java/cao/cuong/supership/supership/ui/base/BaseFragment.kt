@@ -10,9 +10,9 @@ import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.hideKeyBoard
 import cao.cuong.supership.supership.extension.showOkAlert
-import cao.cuong.supership.supership.ui.account.AccountFragment
-import cao.cuong.supership.supership.ui.bill.BillFragment
-import cao.cuong.supership.supership.ui.user.UserActivity
+import cao.cuong.supership.supership.ui.customer.account.AccountFragment
+import cao.cuong.supership.supership.ui.customer.bill.BillFragment
+import cao.cuong.supership.supership.ui.customer.user.UserActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.jetbrains.anko.cancelButton

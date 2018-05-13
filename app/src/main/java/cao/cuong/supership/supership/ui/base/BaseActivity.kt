@@ -7,7 +7,7 @@ import cao.cuong.supership.supership.App
 import cao.cuong.supership.supership.data.model.rxevent.UnAuthorizeException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
-import cao.cuong.supership.supership.ui.user.UserActivity
+import cao.cuong.supership.supership.ui.customer.user.UserActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
