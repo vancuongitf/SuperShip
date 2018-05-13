@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.bill.info
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,6 +98,7 @@ class BillInfoFragment : BaseFragment() {
     }
 
     internal fun eventShowShipRoadClick() {
+        ui.imgShowShipRoad.visibility = View.GONE
         bill?.let {
             val billInfo = it
             (activity as? BillActivity)?.openShipRoadFragment(billInfo.store.address, billInfo.address, billInfo.shipRoad)
@@ -155,10 +157,8 @@ class BillInfoFragment : BaseFragment() {
     }
 
     private fun handleVerifyPaymentSuccess(messageResponse: MessageResponse) {
-        bill?.let {
-            it.onlinePayment = 1
-            handleGetInfoSuccess(it)
-        }
+        ui.imgPayment.setImageResource(R.drawable.ic_bg_tranparent)
+        ui.imgPayment.isEnabled = false
         context.showOkAlert(R.string.notification, messageResponse.message)
     }
 }
