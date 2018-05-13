@@ -47,6 +47,12 @@ interface ApiService {
     @GET("api/v1/store/store.php")
     fun getStoreInfo(@Query("store_id") storeId: Long): Single<Store>
 
+    @POST("api/v1/store/update.php")
+    fun editStoreInfo(@Body editStoreBody: EditStoreBody): Single<MessageResponse>
+
+    @POST("api/v1/store/updatestatus.php")
+    fun updateStoreStatus(@Body editStoreBody: UpdateStoreStatusBody): Single<MessageResponse>
+
     @GET("api/v1/store/express.php")
     fun getExpressStore(@Query("advance_param") advanceParam: Int, @Query("page") page: Int, @Query("lat") lat: Double?, @Query("lng") lng: Double?): Single<StoreExpressResponse>
 

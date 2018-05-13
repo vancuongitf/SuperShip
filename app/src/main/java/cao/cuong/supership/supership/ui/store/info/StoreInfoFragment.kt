@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
-import cao.cuong.supership.supership.data.model.rxevent.UpdateCartStatus
 import cao.cuong.supership.supership.data.model.Store
+import cao.cuong.supership.supership.data.model.rxevent.UpdateCartStatus
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
+import cao.cuong.supership.supership.data.source.remote.request.UpdateStoreStatusBody
+import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.observeOnUiThread
+import cao.cuong.supership.supership.extension.showConfirmAlert
+import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.order.OrderActivity
 import cao.cuong.supership.supership.ui.store.BaseStoreInfoActivity
@@ -42,7 +46,6 @@ class StoreInfoFragment : BaseFragment() {
     private lateinit var viewModel: StoreInfoFragmentViewModel
     private val drinks = mutableListOf<Drink>()
     private var orderCase = false
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         storeId = arguments.getLong(KEY_STORE_ID)
@@ -98,6 +101,11 @@ class StoreInfoFragment : BaseFragment() {
         } else {
             ui.tvStarRate.text = context.getString(R.string.store_rate, store.rate.rate.toString(), store.rate.rateCount.toString())
         }
+        if (store.status) {
+            ui.imgChangeStoreStatus.setImageResource(R.drawable.ic_close)
+        } else {
+            ui.imgChangeStoreStatus.setImageResource(R.drawable.ic_open)
+        }
     }
 
     internal fun onCartClicked() {
@@ -110,6 +118,24 @@ class StoreInfoFragment : BaseFragment() {
 
     internal fun reloadData() {
         loadData()
+    }
+
+    internal fun onEditInfoClicked() {
+
+    }
+
+    internal fun changeStoreStatus() {
+        (activity as? StoreActivity)?.let {
+            if (it.store.status) {
+                context.showConfirmAlert(R.string.closeConfirm) {
+                    changeStoreStatus(0)
+                }
+            } else {
+                context.showConfirmAlert(R.string.openConfirm) {
+                    changeStoreStatus(1)
+                }
+            }
+        }
     }
 
     private fun drinkAdapterOnItemClicked(drink: Drink) {
@@ -137,6 +163,24 @@ class StoreInfoFragment : BaseFragment() {
     }
 
     private fun loadData() {
-        viewModel.getStoreInfo().subscribe(this::handleGetStoreInfoSuccess, this::handleApiError)
+        viewModel.getStoreInfo().subscribe(this::handleGetStoreInfoSuccess, this::handleGetStoreApiError)
+    }
+
+    private fun handleGetStoreApiError(throwable: Throwable) {
+        context.showOkAlert(throwable) {
+            activity.onBackPressed()
+        }
+    }
+
+    private fun changeStoreStatus(newStatus: Int) {
+        viewModel.changeStoreStatus(UpdateStoreStatusBody(viewModel.getAccessToken(), storeId, newStatus))
+                .observeOnUiThread()
+                .subscribe(this::handleChangeStoreStatusSuccess, this::handleApiError)
+    }
+
+    private fun handleChangeStoreStatusSuccess(messageResponse: MessageResponse) {
+        context.showOkAlert(R.string.notification, messageResponse.message) {
+            reloadData()
+        }
     }
 }
