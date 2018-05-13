@@ -13,4 +13,12 @@ data class EditStoreBody(@SerializedName("id") var id: Long,
                          @SerializedName("store_phone") var phone: String,
                          @SerializedName("store_email") var email: String,
                          @SerializedName("store_image") var image: String,
-                         @SerializedName("store_open_time") var openHour: OpenHour)
+                         @SerializedName("store_open_time") var openHour: OpenHour) {
+    internal fun sameWithOther(editStoreBody: EditStoreBody) = id == editStoreBody.id
+            && name == editStoreBody.name
+            && address == editStoreBody.address
+            && latLng.latitude == editStoreBody.latLng.latitude
+            && latLng.longitude == editStoreBody.latLng.longitude
+            && phone == editStoreBody.phone
+            && openHour.sameWithOther(editStoreBody.openHour)
+}

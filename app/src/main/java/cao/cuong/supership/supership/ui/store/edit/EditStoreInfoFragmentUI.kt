@@ -1,4 +1,4 @@
-package cao.cuong.supership.supership.ui.store.create
+package cao.cuong.supership.supership.ui.store.edit
 
 import android.view.Gravity
 import android.view.View
@@ -12,7 +12,7 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
+class EditStoreInfoFragmentUI : AnkoComponent<EditStoreInfoFragment> {
 
     internal val checkBoxlist = mutableListOf<CheckBox>()
     internal lateinit var imgAvatar: ImageView
@@ -24,66 +24,67 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
     internal lateinit var tvOpenTime: TextView
     internal lateinit var tvCloseTime: TextView
 
-    override fun createView(ui: AnkoContext<CreateStoreFragment>) = with(ui) {
+    override fun createView(ui: AnkoContext<EditStoreInfoFragment>) = with(ui) {
         verticalLayout {
             lparams(matchParent, matchParent)
             backgroundResource = R.drawable.bg_login_image
             isClickable = true
 
-                toolbar {
+            toolbar {
 
-                    backgroundColorResource = R.color.colorWhite
-                    setContentInsetsAbsolute(0, 0)
+                backgroundColorResource = R.color.colorWhite
+                setContentInsetsAbsolute(0, 0)
 
-                    linearLayout {
+                linearLayout {
 
+                    gravity = Gravity.CENTER_VERTICAL
+
+                    relativeLayout {
                         gravity = Gravity.CENTER_VERTICAL
 
-                        relativeLayout {
-
-                            gravity = Gravity.CENTER_VERTICAL
-
-                            enableHighLightWhenClicked()
-                            onClick {
-                                owner.onBackClicked()
-                            }
-
-                            imageView(R.drawable.ic_back_button) {
-                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                            }
-                        }.lparams(wrapContent, matchParent)
-
-                        textView(R.string.createStore) {
-                            textSizeDimen = R.dimen.storeTitleTextSize
-                            textColorResource = R.color.colorBlue
-                        }.lparams(0, wrapContent) {
-                            weight = 1f
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.onBackClicked()
                         }
 
-                        relativeLayout {
-                            gravity = Gravity.CENTER_VERTICAL
+                        imageView(R.drawable.ic_back_button) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
 
-                            enableHighLightWhenClicked()
-                            onClick {
-                                owner.addStoreClicked()
-                            }
+                    textView(R.string.createStore) {
+                        textSizeDimen = R.dimen.storeTitleTextSize
+                        textColorResource = R.color.colorBlue
+                    }.lparams(0, wrapContent) {
+                        weight = 1f
+                    }
 
-                            imageView(R.drawable.ic_check_button) {
-                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                            }
-                        }.lparams(wrapContent, matchParent)
-                    }.lparams(matchParent, wrapContent)
-                }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
 
-                view {
-                    backgroundResource = R.color.colorGray
-                    alpha = 0.7f
-                }.lparams(matchParent, dip(1)) {
-                    bottomMargin = dip(2)
-                }
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.addStoreClicked()
+                        }
+
+                        imageView(R.drawable.ic_check_button) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
+
+                }.lparams(matchParent, wrapContent)
+            }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+
+            view {
+                backgroundResource = R.color.colorGray
+                alpha = 0.7f
+            }.lparams(matchParent, dip(1)) {
+                bottomMargin = dip(2)
+            }
             scrollView {
+
 
                 verticalLayout {
                     padding = dimen(R.dimen.accountFragmentLoginPadding)

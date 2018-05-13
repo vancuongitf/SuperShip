@@ -54,6 +54,7 @@ class StoreListFragment : BaseFragment() {
     }
 
     private fun handleUpdateList(notification: Notification<Boolean>) {
+        ui.swipeRefreshLayout.isRefreshing = false
         if (notification.isOnNext) {
             ui.storeAdapter.notifyDataSetChanged()
             if (viewModel.stores.isEmpty()) {

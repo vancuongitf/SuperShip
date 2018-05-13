@@ -1,32 +1,37 @@
-package cao.cuong.supership.supership.ui.store.create
+package cao.cuong.supership.supership.ui.store.edit
 
 import android.app.Activity.RESULT_OK
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OpenHour
+import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.model.google.StoreAddress
-import cao.cuong.supership.supership.data.source.remote.request.CreateStoreBody
+import cao.cuong.supership.supership.data.source.remote.request.EditStoreBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.location.LocationActivity
 import cao.cuong.supership.supership.ui.location.LocationActivity.Companion.REQUEST_CODE_SEARCH_LOCATION
 import cao.cuong.supership.supership.ui.store.activity.StoreActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 
-class CreateStoreFragment : BaseFragment() {
+class EditStoreInfoFragment : BaseFragment() {
 
-    private lateinit var ui: CreateStoreFragmentUI
+    private lateinit var ui: EditStoreInfoFragmentUI
+    private lateinit var viewModel: EditStoreInfoFragmentViewModel
     private var uri: Uri? = null
     private var openHour = -1
     private var openMin = -1
@@ -35,12 +40,45 @@ class CreateStoreFragment : BaseFragment() {
     private var openTime = -1
     private var closeTime = -1
     private var address: StoreAddress? = null
-    private lateinit var viewModel: CreateStoreFragmentViewModel
+    private lateinit var store: Store
+    private lateinit var editStoreBody: EditStoreBody
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = CreateStoreFragmentViewModel(context)
-        ui = CreateStoreFragmentUI()
+        viewModel = EditStoreInfoFragmentViewModel(context)
+        ui = EditStoreInfoFragmentUI()
         return ui.createView(AnkoContext.Companion.create(context, this))
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        try {
+            store = (activity as StoreActivity).store
+            editStoreBody = EditStoreBody(store.id, "", store.name, "", store.address, store.latLng, store.phone, store.email, "", store.openHour)
+        } catch (e: Exception) {
+            context.showOkAlert(Throwable("Xãy ra lỗi. Vui lòng thử lại sau!")) {
+                activity.onBackPressed()
+            }
+        }
+        ui.edtName.setText(store.name)
+        ui.edtEmail.setText(store.email)
+        ui.edtPhone.setText(store.phone)
+        ui.tvAddress.text = store.address
+        address = StoreAddress(store.address, store.latLng)
+        openTime = store.openHour.open
+        closeTime = store.openHour.close
+        val option = RequestOptions()
+                .placeholder(R.drawable.glide_place_holder)
+        Glide.with(context)
+                .applyDefaultRequestOptions(option)
+                .asBitmap()
+                .load("https://vnshipperman.000webhostapp.com/uploads/${store.image}")
+                .into(ui.imgAvatar)
+        store.openHour.openDays.forEach {
+            ui.checkBoxlist[it].isChecked = true
+        }
+        ui.tvOpenTime.text = "${(store.openHour.open / 60).numberToString()} : ${(store.openHour.open % 60).numberToString()}"
+        ui.tvCloseTime.text = "${(store.openHour.close / 60).numberToString()} : ${(store.openHour.close % 60).numberToString()}"
+        ui.rlAvatar.visibility = View.VISIBLE
     }
 
     override fun onBindViewModel() {
@@ -58,9 +96,15 @@ class CreateStoreFragment : BaseFragment() {
                     val result = CropImage.getActivityResult(data)
                     val resultUri = result.uri
                     resultUri?.let {
+                        Log.i("tag11", "xxx")
                         uri = it
-                        ui.imgAvatar.setImageURI(uri)
-                        ui.rlAvatar.visibility = View.VISIBLE
+                        val option = RequestOptions()
+                                .placeholder(R.drawable.glide_place_holder)
+                        Glide.with(context)
+                                .applyDefaultRequestOptions(option)
+                                .asBitmap()
+                                .load(it)
+                                .into(ui.imgAvatar)
                     }
                 }
 
@@ -131,35 +175,35 @@ class CreateStoreFragment : BaseFragment() {
             }
         }
 
-        if (uri != null) {
-            if (name.isValidateStoreName()) {
-                if (address != null) {
-                    if (phone.isValidatePhoneNumber()) {
-                        if (email.isValidateEmail()) {
-                            if (openDays.isNotEmpty()) {
-                                if (openTime < 0 || closeTime < 0 || openTime == closeTime || openTime > closeTime) {
-                                    message = "Vui lòng chọn giờ mở/đóng cửa hợp lệ."
-                                } else {
-                                    val createStoreBody = CreateStoreBody("", name, unAccentName, address!!.address, address!!.latLng, phone, email, "", OpenHour(openDays.toMutableList(), openTime, closeTime))
-                                    createStore(createStoreBody)
-                                }
+        if (name.isValidateStoreName()) {
+            if (address != null) {
+                if (phone.isValidatePhoneNumber()) {
+                    if (email.isValidateEmail()) {
+                        if (openDays.isNotEmpty()) {
+                            if (openTime < 0 || closeTime < 0 || openTime == closeTime || openTime > closeTime) {
+                                message = "Vui lòng chọn giờ mở/đóng cửa hợp lệ."
                             } else {
-                                message = "Vui lòng chọn ngày mở cửa."
+                                val editBody = EditStoreBody(store.id, "", name, unAccentName, address!!.address, address!!.latLng, phone, email, store.image, OpenHour(openDays.toMutableList(), openTime, closeTime))
+                                if (editStoreBody.sameWithOther(editBody) && uri == null) {
+                                    message = "Bạn chưa thay dổi thông tin gì của của hàng."
+                                } else {
+                                    editStoreInfo(editBody)
+                                }
                             }
                         } else {
-                            message = "Email không hợp lệ."
+                            message = "Vui lòng chọn ngày mở cửa."
                         }
                     } else {
-                        message = "Số điện thoại không hợp lệ."
+                        message = "Email không hợp lệ."
                     }
                 } else {
-                    message = "Vui lòng chọn địa chỉ cho cửa hàng."
+                    message = "Số điện thoại không hợp lệ."
                 }
             } else {
-                message = "Tên cửa hàng không hợp lệ."
+                message = "Vui lòng chọn địa chỉ cho cửa hàng."
             }
         } else {
-            message = "Vui lòng chọn ảnh đại diện cho cửa hàng."
+            message = "Tên cửa hàng không hợp lệ."
         }
         if (message.isNotEmpty()) {
             val error = Throwable(message)
@@ -167,12 +211,11 @@ class CreateStoreFragment : BaseFragment() {
         }
     }
 
-    private fun createStore(createStoreBody: CreateStoreBody) {
-        uri?.let {
-            viewModel.createStore(it, createStoreBody)
-                    .observeOnUiThread()
-                    .subscribe(this::handleCreateStoreSuccess, this::handleApiError)
-        }
+    private fun editStoreInfo(editStoreBody: EditStoreBody) {
+        editStoreBody.token = viewModel.getAccessToken()
+        viewModel.editStoreInfo(uri, editStoreBody)
+                .observeOnUiThread()
+                .subscribe(this::handleCreateStoreSuccess, this::handleApiError)
     }
 
     private fun handleCreateStoreSuccess(messageResponse: MessageResponse) {

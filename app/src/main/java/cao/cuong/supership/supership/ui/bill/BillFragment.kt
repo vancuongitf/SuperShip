@@ -46,7 +46,11 @@ class BillFragment: BaseFragment() {
     }
 
     internal fun eventReloadClicked() {
-        updateUI(UpdateAccountUI())
+        if (viewModel.isLogin()) {
+            updateUI(UpdateAccountUI())
+        } else {
+            ui.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     internal fun eventLoginButtonClick() {

@@ -121,7 +121,7 @@ class StoreInfoFragment : BaseFragment() {
     }
 
     internal fun onEditInfoClicked() {
-
+        (activity as? StoreActivity)?.openEditStoreInfoFragment()
     }
 
     internal fun changeStoreStatus() {
