@@ -3,15 +3,15 @@ package cao.cuong.supership.supership.ui.order.cart
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
-import cao.cuong.supership.supership.data.model.rxevent.UpdateOrderUI
 import cao.cuong.supership.supership.data.model.ShipAddress
 import cao.cuong.supership.supership.data.model.google.StoreAddress
+import cao.cuong.supership.supership.data.model.rxevent.UpdateCartStatus
+import cao.cuong.supership.supership.data.model.rxevent.UpdateOrderUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.request.BillBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
@@ -139,6 +139,11 @@ class CartFragment:BaseFragment(){
 
     private fun handleOrderSuccess(messageResponse: MessageResponse) {
         context.showOkAlert(R.string.notification, messageResponse.message) {
+            (activity as? OrderActivity)?.let {
+                it.orderedDrinks.clear()
+                RxBus.publish(UpdateCartStatus(it.orderedDrinks.isNotEmpty()))
+                it.onBackPressed()
+            }
             RxBus.publish(UpdateOrderUI())
         }
     }
