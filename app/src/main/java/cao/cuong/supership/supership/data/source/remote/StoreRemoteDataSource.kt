@@ -19,6 +19,12 @@ class StoreRemoteDataSource : StoreDataSource {
 
     private val apiService = ApiClient.getInstance(null).service
 
+    override fun createStore(createStoreBody: CreateStoreBody) = apiService.createStore(createStoreBody)
+
+    override fun editStoreInfo(editStoreBody: EditStoreBody) = apiService.editStoreInfo(editStoreBody)
+
+    override fun changeStoreStatus(updateStoreStatusBody: UpdateStoreStatusBody) = apiService.updateStoreStatus(updateStoreStatusBody)
+
     override fun getStoreInfo(storeId: Long) = apiService.getStoreInfo(storeId)
 
     override fun getStoreExpressList(advanceParam: Int, page: Int, lat: Double?, lng: Double?) = apiService.getExpressStore(advanceParam, page, lat, lng)
@@ -30,8 +36,6 @@ class StoreRemoteDataSource : StoreDataSource {
         val requestFileBody = MultipartBody.Part.createFormData("image", file.name, requestBody)
         return apiService.uploadImage(requestFileBody)
     }
-
-    override fun createStore(createStoreBody: CreateStoreBody) = apiService.createStore(createStoreBody)
 
     override fun createDrink(drinkBody: CreateDrinkBody) = apiService.createDrink(drinkBody)
 

@@ -13,6 +13,12 @@ class StoreRepository : StoreDataSource {
 
     private val storeRemoteDataSource = StoreRemoteDataSource()
 
+    override fun createStore(createStoreBody: CreateStoreBody) = storeRemoteDataSource.createStore(createStoreBody)
+
+    override fun editStoreInfo(editStoreBody: EditStoreBody) = storeRemoteDataSource.editStoreInfo(editStoreBody)
+
+    override fun changeStoreStatus(updateStoreStatusBody: UpdateStoreStatusBody) = storeRemoteDataSource.changeStoreStatus(updateStoreStatusBody)
+
     override fun getStoreInfo(storeId: Long) = storeRemoteDataSource.getStoreInfo(storeId)
 
     override fun getStoreExpressList(advanceParam: Int, page: Int, lat: Double?, lng: Double?) = storeRemoteDataSource.getStoreExpressList(advanceParam, page, lat, lng)
@@ -20,8 +26,6 @@ class StoreRepository : StoreDataSource {
     override fun searchStore(query: String, page: Int) = storeRemoteDataSource.searchStore(query, page)
 
     override fun uploadImage(file: File) = storeRemoteDataSource.uploadImage(file)
-
-    override fun createStore(createStoreBody: CreateStoreBody) = storeRemoteDataSource.createStore(createStoreBody)
 
     override fun createDrink(drinkBody: CreateDrinkBody) = storeRemoteDataSource.createDrink(drinkBody)
 

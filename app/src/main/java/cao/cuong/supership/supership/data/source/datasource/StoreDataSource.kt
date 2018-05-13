@@ -15,6 +15,12 @@ import java.io.File
  */
 interface StoreDataSource {
 
+    fun createStore(createStoreBody: CreateStoreBody): Single<MessageResponse>
+
+    fun editStoreInfo(editStoreBody: EditStoreBody): Single<MessageResponse>
+
+    fun changeStoreStatus(updateStoreStatusBody: UpdateStoreStatusBody): Single<MessageResponse>
+
     fun getStoreInfo(storeId: Long): Single<Store>
 
     fun getStoreExpressList(advanceParam: Int, page: Int, lat: Double? = null, lng: Double? = null): Single<StoreExpressResponse>
@@ -22,8 +28,6 @@ interface StoreDataSource {
     fun searchStore(query: String, page: Int): CustomCall<StoreExpressResponse>
 
     fun uploadImage(file: File): Single<MessageResponse>
-
-    fun createStore(createStoreBody: CreateStoreBody): Single<MessageResponse>
 
     fun createDrink(drinkBody: CreateDrinkBody): Single<MessageResponse>
 

@@ -30,6 +30,7 @@ import org.jetbrains.anko.support.v4.nestedScrollView
 class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boolean = false) : AnkoComponent<StoreInfoFragment> {
 
     internal lateinit var imgStoreAvatar: ImageView
+    internal lateinit var imgChangeStoreStatus: ImageView
     internal lateinit var tvStoreNameTitle: TextView
     internal lateinit var tvStoreName: TextView
     internal lateinit var tvAddress: TextView
@@ -100,14 +101,19 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
 
                                 gravity = Gravity.CENTER_VERTICAL
 
-                                imageView(R.drawable.ic_back_button) {
+                                relativeLayout {
+
+                                    gravity = Gravity.CENTER_VERTICAL
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.onBackClicked()
                                     }
-                                }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                    horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                }
+
+                                    imageView(R.drawable.ic_back_button) {
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }.lparams(wrapContent, matchParent)
 
                                 tvStoreNameTitle = textView {
                                     textSizeDimen = R.dimen.storeTitleTextSize
@@ -115,6 +121,45 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                                 }.lparams(0, wrapContent) {
                                     weight = 1f
                                 }
+
+                                relativeLayout {
+
+                                    gravity = Gravity.CENTER_VERTICAL
+                                    visibility = if (orderCase) {
+                                        View.GONE
+                                    } else {
+                                        View.VISIBLE
+                                    }
+                                    enableHighLightWhenClicked()
+                                    onClick {
+                                        owner.onEditInfoClicked()
+                                    }
+
+                                    imageView(R.drawable.ic_edit_note) {
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }.lparams(wrapContent, matchParent)
+
+                                relativeLayout {
+
+                                    visibility = if (orderCase) {
+                                        View.GONE
+                                    } else {
+                                        View.VISIBLE
+                                    }
+
+                                    gravity = Gravity.CENTER_VERTICAL
+                                    enableHighLightWhenClicked()
+                                    onClick {
+                                        owner.changeStoreStatus()
+                                    }
+
+                                    imgChangeStoreStatus = imageView {
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }.lparams(wrapContent, matchParent)
 
                                 relativeLayout {
 

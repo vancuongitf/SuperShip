@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.ui.store.list
 
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
@@ -13,12 +14,15 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : AnkoComponent<StoreListFragment> {
 
     internal lateinit var tvNonStore: TextView
     internal lateinit var recyclerView: RecyclerView
     internal var storeAdapter = StoreAdapter(stores)
+    internal lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun createView(ui: AnkoContext<StoreListFragment>) = with(ui) {
 
@@ -33,14 +37,19 @@ class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : A
 
                     gravity = Gravity.CENTER_VERTICAL
 
-                    imageView(R.drawable.ic_back_button) {
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
+
                         enableHighLightWhenClicked()
                         onClick {
                             owner.onBackClicked()
                         }
-                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
+
+                        imageView(R.drawable.ic_back_button) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
 
                     textView(R.string.yourStore) {
                         textSizeDimen = R.dimen.storeTitleTextSize
@@ -49,14 +58,21 @@ class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : A
                         weight = 1f
                     }
 
-                    imageView(R.drawable.ic_add_button) {
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
+
                         enableHighLightWhenClicked()
                         onClick {
                             owner.addStoreClicked()
                         }
-                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                    }
+
+                        imageView(R.drawable.ic_add_button) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
+
+
                 }.lparams(matchParent, wrapContent)
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 
@@ -66,20 +82,27 @@ class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : A
                 bottomMargin = dip(2)
             }
 
-            tvNonStore = textView(R.string.nonStore) {
-                gravity = Gravity.CENTER
-                visibility = View.GONE
-            }.lparams(matchParent, 0) {
-                weight = 1f
-            }
+            swipeRefreshLayout = swipeRefreshLayout {
 
-            recyclerView = recyclerView {
-                id = R.id.recyclerViewStoreList
-                layoutManager = LinearLayoutManager(ctx)
-                adapter = storeAdapter
-            }.lparams(matchParent, 0) {
-                weight = 1f
-            }
+                verticalLayout {
+                    lparams(matchParent, matchParent)
+
+                    tvNonStore = textView(R.string.nonStore) {
+                        gravity = Gravity.CENTER
+                        visibility = View.GONE
+                    }.lparams(matchParent, matchParent)
+
+                    recyclerView = recyclerView {
+                        id = R.id.recyclerViewStoreList
+                        layoutManager = LinearLayoutManager(ctx)
+                        adapter = storeAdapter
+                    }.lparams(matchParent, matchParent)
+                }
+
+                onRefresh {
+                    owner.reloadData()
+                }
+            }.lparams(matchParent, matchParent)
         }
 
 

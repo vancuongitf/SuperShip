@@ -106,4 +106,6 @@
     <string name="cancelChange">Bạn chắc chắn muốn rời khỏi trang này?</string>
     <string name="confirmDeleteDrink">Hành động không thể hoàn tác.\\nBạn chắc chắn muốn xóa tùy chọn này?</string>
     <string name="deleteDrinkConfirm">Hành động không thể hoàn tác. Bạn chắc chắn muốn xóa đồ uống này ra khỏi menu?</string>
+    <string name="closeConfirm">Bạn chắc chắn muốn đóng cửa cửa hàng này?</string>
+    <string name="openConfirm">Bạn chắc chắn muốn mở cửa  cửa hàng này?</string>
 </resources>
