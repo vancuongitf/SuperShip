@@ -69,6 +69,8 @@ abstract class BaseFragment : Fragment() {
                     }.show()
                 }
                 RxBus.publish(UpdateAccountUI())
+            } else {
+                context.showOkAlert(throwable)
             }
         } else {
             context.showOkAlert(throwable ?: Throwable("Xãy ra lỗi! Vui lòng thử lại sau."))

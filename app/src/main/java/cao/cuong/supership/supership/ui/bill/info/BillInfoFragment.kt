@@ -85,6 +85,7 @@ class BillInfoFragment : BaseFragment() {
                                 }
                             }
                         } catch (e: JSONException) {
+                            handleApiError(Throwable("Xãy ra lỗi! Vui lòng thử lại sau."))
                         }
                     }
                 }
