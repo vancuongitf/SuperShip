@@ -15,7 +15,7 @@ import cao.cuong.supership.supership.extension.isGPSEnable
 import cao.cuong.supership.supership.extension.isNetworkConnection
 import cao.cuong.supership.supership.extension.permissionIsEnable
 import cao.cuong.supership.supership.ui.base.BaseActivity
-import cao.cuong.supership.supership.ui.main.MainActivity
+import cao.cuong.supership.supership.ui.customer.main.MainActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.jetbrains.anko.alert
