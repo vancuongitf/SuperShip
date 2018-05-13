@@ -1,6 +1,7 @@
-package cao.cuong.supership.supership.ui.location.search
+package cao.cuong.supership.supership.ui.location.shiproad
 
 import cao.cuong.supership.supership.data.model.google.AutoComplete
+import cao.cuong.supership.supership.data.model.google.Direction
 import cao.cuong.supership.supership.data.model.rxevent.UpdateConfirmAddressEvent
 import cao.cuong.supership.supership.data.source.GoogleMapRepository
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
@@ -16,15 +17,18 @@ import io.reactivex.subjects.PublishSubject
 import retrofit2.Call
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
-class SearchLocationFragmentViewModel {
+class ShipRoadFragmentViewModel {
 
     internal val updateListObservable = PublishSubject.create<Notification<Boolean>>()
     internal val searchObservable = PublishSubject.create<String>()
     internal val updateProgressDialogStatus = BehaviorSubject.create<Boolean>()
+    internal val getDirectionObservable = PublishSubject.create<Notification<Direction>>()
     internal val locations = mutableListOf<AutoComplete>()
     private val googleMapRepository = GoogleMapRepository()
-    private var currentCall: CustomCall<AutoCompleteResponse>? = null
+    private var currentSearchCall: CustomCall<AutoCompleteResponse>? = null
+    private var currentDirectionCall: CustomCall<Direction>? = null
 
     init {
         initSearchObservable()
@@ -40,15 +44,9 @@ class SearchLocationFragmentViewModel {
                 updateProgressDialogStatus.onNext(false)
             }
 
-    internal fun getAddressByLatLng(latLng: LatLng) = googleMapRepository.getAddress(latLng)
-            .observeOnUiThread()
-            .doOnSubscribe {
-                updateProgressDialogStatus.onNext(true)
-                RxBus.publish(UpdateConfirmAddressEvent())
-            }
-            .doFinally {
-                updateProgressDialogStatus.onNext(false)
-            }
+    internal fun getDirection(from: LatLng, to: LatLng) {
+        callGetDirectionApi(from, to)
+    }
 
     private fun initSearchObservable() {
         searchObservable
@@ -65,12 +63,12 @@ class SearchLocationFragmentViewModel {
     }
 
     private fun callSearchApi(query: String): PublishSubject<Notification<Boolean>> {
-        if (currentCall != null || query.isEmpty()) {
-            currentCall?.cancel()
+        if (currentSearchCall != null || query.isEmpty()) {
+            currentSearchCall?.cancel()
         }
         val result = PublishSubject.create<Notification<Boolean>>()
-        currentCall = googleMapRepository.searchLocation(query)
-        currentCall?.enqueue(object : CustomCallback<AutoCompleteResponse> {
+        currentSearchCall = googleMapRepository.searchLocation(query)
+        currentSearchCall?.enqueue(object : CustomCallback<AutoCompleteResponse> {
             override fun success(call: Call<AutoCompleteResponse>, response: Response<AutoCompleteResponse>) {
                 val data = response.body()
                 if (data != null) {
@@ -87,5 +85,28 @@ class SearchLocationFragmentViewModel {
             }
         })
         return result
+    }
+
+    private fun callGetDirectionApi(from: LatLng, to: LatLng) {
+        thread {
+            if (currentDirectionCall != null) {
+                currentDirectionCall?.cancel()
+            }
+            currentDirectionCall = googleMapRepository.getDirection(from, to)
+            currentDirectionCall?.enqueue(object : CustomCallback<Direction> {
+                override fun success(call: Call<Direction>, response: Response<Direction>) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        getDirectionObservable.onNext(Notification.createOnNext(responseBody))
+                    } else {
+                        getDirectionObservable.onNext(Notification.createOnError(Throwable("Xãy ra lỗi.")))
+                    }
+                }
+
+                override fun onError(t: Throwable) {
+                    getDirectionObservable.onNext(Notification.createOnError(t))
+                }
+            })
+        }
     }
 }

@@ -20,7 +20,7 @@ internal fun Long.getDistanceString(): String {
 
 internal fun Long.getDistanceShipString(): String {
     val value = Math.ceil(this.toDouble() / 100) / 10
-    return "${value}Km"
+    return "Khoảng cách: ${value}Km"
 }
 
 internal fun Long.getShipFee(): Long {

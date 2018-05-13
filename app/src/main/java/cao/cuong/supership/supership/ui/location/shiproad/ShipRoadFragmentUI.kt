@@ -1,7 +1,8 @@
-package cao.cuong.supership.supership.ui.location.search
+package cao.cuong.supership.supership.ui.location.shiproad
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -10,6 +11,7 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.google.AutoComplete
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.mapView
+import cao.cuong.supership.supership.ui.location.search.LocationAdapter
 import com.google.android.gms.maps.MapView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
@@ -17,7 +19,7 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.sdk25.coroutines.textChangedListener
 
-class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoComponent<SearchLocationFragment> {
+class ShipRoadFragmentUI(locations: MutableList<AutoComplete>) : AnkoComponent<ShipRoadFragment> {
 
     internal lateinit var recyclerView: RecyclerView
     internal val locationAdapter = LocationAdapter(locations)
@@ -26,7 +28,7 @@ class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoCompo
     internal lateinit var tvAddress: TextView
     internal lateinit var tvDistance: TextView
 
-    override fun createView(ui: AnkoContext<SearchLocationFragment>) = with(ui) {
+    override fun createView(ui: AnkoContext<ShipRoadFragment>) = with(ui) {
         verticalLayout {
             lparams(matchParent, matchParent)
             padding = dimen(R.dimen.toolBarPadding)
@@ -53,6 +55,9 @@ class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoCompo
                             afterTextChanged {
                                 owner.handleSearchViewTextChange(it.toString().trim())
                             }
+                        }
+                        onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                            Log.i("tag11", hasFocus.toString())
                         }
                     }.lparams(matchParent, wrapContent) {
                         leftMargin = dimen(R.dimen.toolBarLeftPadding)
@@ -124,7 +129,6 @@ class SearchLocationFragmentUI(locations: MutableList<AutoComplete>) : AnkoCompo
             relativeLayout {
 
                 mapView = mapView {
-
                 }.lparams(matchParent, matchParent)
 
                 recyclerView = recyclerView {

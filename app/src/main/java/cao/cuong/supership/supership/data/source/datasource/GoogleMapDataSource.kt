@@ -16,5 +16,5 @@ interface GoogleMapDataSource {
 
     fun getPlaceDetail(placeId: String): Single<PlaceDetailResponse>
 
-    fun getDirection(from: LatLng, to: LatLng): Single<Direction>
+    fun getDirection(from: LatLng, to: LatLng): CustomCall<Direction>
 }

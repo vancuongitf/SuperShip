@@ -5,6 +5,7 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.replaceFragment
 import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.location.search.SearchLocationFragment
+import cao.cuong.supership.supership.ui.location.shiproad.ShipRoadFragment
 import org.jetbrains.anko.setContentView
 
 class LocationActivity : BaseActivity() {
@@ -13,7 +14,6 @@ class LocationActivity : BaseActivity() {
         internal const val REQUEST_CODE_SEARCH_LOCATION = 22
         internal const val KEY_ADDRESS_RESULT = "address_result"
         internal const val KEY_STORE_ADDRESS = "store_address"
-        internal const val KEY_SHIP_ROAD = "ship_road"
     }
 
     private lateinit var ui: LocationActivityUI
@@ -23,7 +23,7 @@ class LocationActivity : BaseActivity() {
         ui = LocationActivityUI()
         ui.setContentView(this)
         if (intent.extras != null) {
-            replaceFragment(R.id.searchLocationContainer, SearchLocationFragment.getNewInstance(intent.extras.getParcelable(KEY_STORE_ADDRESS)))
+            replaceFragment(R.id.searchLocationContainer, ShipRoadFragment.getNewInstance(intent.extras.getParcelable(KEY_STORE_ADDRESS)))
         } else {
             replaceFragment(R.id.searchLocationContainer, SearchLocationFragment.getNewInstance(null))
         }

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 class StoreAddress(
         @SerializedName("address") var address: String,
-        @SerializedName("lat_lng") val latLng: LatLng) : Parcelable {
+        @SerializedName("lat_lng") var latLng: LatLng) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<StoreAddress> {
         override fun createFromParcel(parcel: Parcel): StoreAddress {
@@ -33,5 +33,5 @@ class StoreAddress(
         return 0
     }
 
-    internal fun isInvalid() = address.isNotEmpty() && (latLng != null)
+    internal fun isValid() = address.isNotEmpty()
 }
