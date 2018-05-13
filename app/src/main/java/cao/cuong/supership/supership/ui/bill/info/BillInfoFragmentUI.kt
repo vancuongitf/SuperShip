@@ -4,9 +4,11 @@ import android.graphics.Typeface
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
@@ -39,6 +41,7 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
     internal lateinit var tvOrderTime: TextView
     internal lateinit var tvStatus: TextView
     internal lateinit var imgShowShipRoad: ImageView
+    internal lateinit var rlPayment: RelativeLayout
     internal val billDrinkAdapter = BillDrinkAdapter(orderedDrink, BillDrinkAdapter.AdapterType.BILL_INFO)
 
     override fun createView(ui: AnkoContext<BillInfoFragment>) = with(ui) {
@@ -98,6 +101,7 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
                                     textSizeDimen = R.dimen.secondaryTextSize
                                     textColorResource = R.color.colorBlack
                                     singleLine = true
+                                    ellipsize = TextUtils.TruncateAt.END
                                 }.lparams(0, wrapContent) {
                                     weight = 1f
                                     verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
@@ -110,7 +114,9 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
                                     onClick {
                                         owner.eventShowShipRoadClick()
                                     }
-                                }.lparams(dimen(R.dimen.billInfoButtonShowShipRoad), dimen(R.dimen.billInfoButtonShowShipRoad))
+                                }.lparams(dimen(R.dimen.billInfoButtonShowShipRoad), dimen(R.dimen.billInfoButtonShowShipRoad)) {
+                                    leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                }
 
                             }.lparams(matchParent, wrapContent)
 
@@ -185,31 +191,43 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
 
                                 gravity = Gravity.CENTER_VERTICAL
 
-                                imageView(R.drawable.ic_back_button) {
+                                relativeLayout {
+                                    gravity = Gravity.CENTER_VERTICAL
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.onBackClicked()
                                     }
-                                }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                    horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                }
+
+                                    imageView(R.drawable.ic_back_button) {
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }.lparams(wrapContent, matchParent)
 
                                 tvBillId = textView {
                                     textSizeDimen = R.dimen.storeTitleTextSize
                                     textColorResource = R.color.colorBlue
+                                    singleLine = true
+                                    ellipsize = TextUtils.TruncateAt.END
                                 }.lparams(0, wrapContent) {
                                     weight = 1f
                                 }
 
-                                imgPayment = imageView(R.drawable.ic_payment) {
+                                rlPayment = relativeLayout {
                                     visibility = View.GONE
+                                    gravity = Gravity.CENTER_VERTICAL
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.paymentClicked()
                                     }
-                                }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                    horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                }
+
+                                    imgPayment = imageView(R.drawable.ic_payment) {
+
+
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }.lparams(wrapContent, matchParent)
 
                             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 

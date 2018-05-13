@@ -25,5 +25,5 @@ interface GoogleApiService {
 
     @GET("directions/json")
     fun direction(@Query("origin") from: String,
-                  @Query("destination") to: String): Single<Direction>
+                  @Query("destination") to: String): CustomCall<Direction>
 }

@@ -3,7 +3,6 @@ package cao.cuong.supership.supership.ui.bill.info
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -147,9 +146,9 @@ class BillInfoFragment : BaseFragment() {
             tvStatus.text = context.getString(R.string.status, bill.status.getBillStatus())
             drinks.addAll(bill.drinks)
             if (bill.isOnlinePayment() || bill.status == 3) {
-                ui.imgPayment.visibility = View.GONE
+                ui.rlPayment.visibility = View.GONE
             } else {
-                ui.imgPayment.visibility = View.VISIBLE
+                ui.rlPayment.visibility = View.VISIBLE
             }
             imgShowShipRoad.visibility = View.VISIBLE
             ui.billDrinkAdapter.notifyDataSetChanged()
@@ -158,7 +157,7 @@ class BillInfoFragment : BaseFragment() {
 
     private fun handleVerifyPaymentSuccess(messageResponse: MessageResponse) {
         ui.imgPayment.setImageResource(R.drawable.ic_bg_tranparent)
-        ui.imgPayment.isEnabled = false
+        ui.rlPayment.isEnabled = false
         context.showOkAlert(R.string.notification, messageResponse.message)
     }
 }

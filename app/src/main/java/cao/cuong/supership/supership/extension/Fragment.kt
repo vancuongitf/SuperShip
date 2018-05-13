@@ -33,11 +33,9 @@ internal fun Fragment.addChildFragment(@IdRes containerId: Int, fragment: BaseFr
         transaction.add(containerId, fragment, fragment.javaClass.simpleName)
         transaction.commit()
         if (backStack != null) {
-            Log.i("tag1122", "back stack")
             transaction.addToBackStack(backStack)
         }
         childFragmentManager.executePendingTransactions()
-        Log.i("tag1122334455", childFragmentManager.backStackEntryCount.toString())
     }
 }
 

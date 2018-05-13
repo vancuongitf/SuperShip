@@ -32,14 +32,6 @@ class StoreFragmentViewModel(private val context: Context, private val advancePa
                         .subscribeOn(Schedulers.io())
                         .timeout(waitingTimeForLocation, TimeUnit.MILLISECONDS)
                         .subscribe({
-                            GoogleClient.getInstance(null).service
-                                    .getAddress("${it.latitude},${it.longitude}")
-                                    .observeOnUiThread()
-                                    .subscribe({
-                                        Log.i("tag11", Gson().toJson(it))
-                                    }, {
-                                        Log.i("tag11", Gson().toJson(it))
-                                    })
                             getExpressStore(it.latitude, it.longitude)
                         }, {
                             getExpressStore(null, null)

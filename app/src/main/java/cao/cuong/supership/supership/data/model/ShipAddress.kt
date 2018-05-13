@@ -4,7 +4,18 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 
-data class ShipAddress(var latLng: LatLng, var address: String, val distance: Long, val shipRoad: String) : Parcelable {
+data class ShipAddress(var latLng: LatLng, var address: String, var distance: Long, var shipRoad: String) : Parcelable {
+
+    companion object CREATOR : Parcelable.Creator<ShipAddress> {
+        override fun createFromParcel(parcel: Parcel): ShipAddress {
+            return ShipAddress(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ShipAddress?> {
+            return arrayOfNulls(size)
+        }
+    }
+
     constructor(parcel: Parcel) : this(
             parcel.readParcelable(LatLng::class.java.classLoader),
             parcel.readString(),
@@ -23,13 +34,5 @@ data class ShipAddress(var latLng: LatLng, var address: String, val distance: Lo
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ShipAddress> {
-        override fun createFromParcel(parcel: Parcel): ShipAddress {
-            return ShipAddress(parcel)
-        }
-
-        override fun newArray(size: Int): Array<ShipAddress?> {
-            return arrayOfNulls(size)
-        }
-    }
+    internal fun isValid(): Boolean = address.isNotEmpty() && distance > -1 && shipRoad.isNotEmpty()
 }

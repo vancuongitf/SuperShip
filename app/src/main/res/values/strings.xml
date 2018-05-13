@@ -92,7 +92,7 @@
     <string name="yourBills">Đơn hàng của bạn</string>
     <string name="drinks">Danh sách đồ uống</string>
     <string name="rate">Đánh giá cửa hàng</string>
-    <string name="billInfoTitle">Mã đơn hàng: %d</string>
+    <string name="billInfoTitle">Đơn hàng: %d</string>
     <string name="shipPrice">Phí giao hàng: %d VND</string>
     <string name="totalPrice">Tổng cộng: %d VND</string>
     <string name="orderAt">Đặt lúc: %s</string>
