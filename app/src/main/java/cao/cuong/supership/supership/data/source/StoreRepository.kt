@@ -27,6 +27,8 @@ class StoreRepository : StoreDataSource {
 
     override fun editDrink(drinkBody: EditDrinkBody) = storeRemoteDataSource.editDrink(drinkBody)
 
+    override fun deleteDrink(token: String, id: Long) = storeRemoteDataSource.deleteDrink(token, id)
+
     override fun createDrinkOption(createOptionBody: CreateDrinkOptionBody) = storeRemoteDataSource.createDrinkOption(createOptionBody)
 
     override fun editDrinkOption(editDrinkOptionBody: EditDrinkOptionBody) = storeRemoteDataSource.editDrinkOption(editDrinkOptionBody)

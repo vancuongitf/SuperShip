@@ -14,6 +14,7 @@ class DrinkItemUI:AnkoComponent<ViewGroup> {
     internal lateinit var tvDrinkName: TextView
     internal lateinit var tvDrinkPrice: TextView
     internal lateinit var tvDrinkBillCount: TextView
+    internal lateinit var imgOrderCount: ImageView
 
     override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
         relativeLayout {
@@ -54,7 +55,7 @@ class DrinkItemUI:AnkoComponent<ViewGroup> {
                 linearLayout {
                     gravity = Gravity.CENTER_VERTICAL
 
-                    imageView(R.drawable.ic_cart) {
+                    imgOrderCount = imageView(R.drawable.ic_cart) {
 
                     }.lparams(dimen(R.dimen.drinkItemCartSize), dimen(R.dimen.drinkItemCartSize)) {
                         rightMargin = dimen(R.dimen.drinkItemUIPadding)
@@ -63,7 +64,6 @@ class DrinkItemUI:AnkoComponent<ViewGroup> {
                     tvDrinkBillCount = textView {
                         textColorResource = R.color.colorGray
                         textSizeDimen = R.dimen.drinkItemSecondaryTextSize
-                        text = "Chưa được đặt lần nào."
                     }
                 }
 

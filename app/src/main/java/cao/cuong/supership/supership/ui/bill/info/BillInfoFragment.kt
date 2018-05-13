@@ -155,7 +155,10 @@ class BillInfoFragment : BaseFragment() {
     }
 
     private fun handleVerifyPaymentSuccess(messageResponse: MessageResponse) {
-        ui.imgPayment.visibility = View.GONE
+        bill?.let {
+            it.onlinePayment = 1
+            handleGetInfoSuccess(it)
+        }
         context.showOkAlert(R.string.notification, messageResponse.message)
     }
 }

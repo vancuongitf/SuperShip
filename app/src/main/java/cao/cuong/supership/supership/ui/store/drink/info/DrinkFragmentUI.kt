@@ -42,6 +42,7 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
     internal lateinit var imgAdd: ImageView
     internal lateinit var tvDrinkCount: TextView
     internal lateinit var edtNote: EditText
+    internal lateinit var imgOrderCount: ImageView
     internal val drinkOptionAdapter = OptionalAdapter(options, OptionalAdapter.AdapterType.ORDER)
 
     override fun createView(ui: AnkoContext<DrinkFragment>) = with(ui) {
@@ -141,8 +142,7 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
 
                             linearLayout {
                                 gravity = Gravity.CENTER_VERTICAL
-                                imageView(R.drawable.ic_cart)
-                                        .lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
+                                imgOrderCount = imageView(R.drawable.ic_cart).lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
                                             rightMargin = dimen(R.dimen.storeItemUITvAddressTopMargin)
                                         }
 
@@ -198,11 +198,32 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
                                     }
 
                                     imageView {
-                                        if (isFromOrder) {
-                                            backgroundResource = R.drawable.ic_check_button
+                                        backgroundResource = if (isFromOrder) {
+                                            R.drawable.ic_check_button
                                         } else {
-                                            backgroundResource = R.drawable.ic_edit_24dp
+                                            R.drawable.ic_edit_note
                                         }
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        centerInParent()
+                                    }
+
+                                }.lparams(dimen(R.dimen.toolBarHeight), dimen(R.dimen.toolBarHeight))
+
+                                relativeLayout {
+
+                                    padding = dimen(R.dimen.accountFragmentLoginPadding)
+                                    visibility = if (isFromOrder) {
+                                        View.GONE
+                                    } else {
+                                        View.VISIBLE
+                                    }
+                                    enableHighLightWhenClicked()
+                                    onClick {
+                                        owner.onDeleteDrinkClicked()
+                                    }
+
+                                    imageView(R.drawable.ic_trash) {
+
                                     }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
                                         centerInParent()
                                     }

@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.order.cart
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,6 +80,7 @@ class CartFragment:BaseFragment(){
                         val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), shipAddress!!.shipRoad, orderActivity.orderedDrinks)
                         if (viewModel.isLogin()) {
                             viewModel.submitOrder(billBody)
+                                    .observeOnUiThread()
                                     .subscribe(this::handleOrderSuccess, this::handleApiError)
                         } else {
                             context.showOkAlert(R.string.notification, R.string.requestLogin) {
@@ -138,7 +140,6 @@ class CartFragment:BaseFragment(){
     private fun handleOrderSuccess(messageResponse: MessageResponse) {
         context.showOkAlert(R.string.notification, messageResponse.message) {
             RxBus.publish(UpdateOrderUI())
-            activity.finish()
         }
     }
 

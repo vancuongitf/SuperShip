@@ -65,6 +65,7 @@
     <string name="drinkPrice">Giá: %d VND</string>
     <string name="note">Ghi chú</string>
     <string name="notOrderYet">Chưa được đặt lần nào.</string>
+    <string name="orderCount">Đã được đặt %d lần.</string>
     <string name="drinkTotalPrice">Tổng cộng: %d VND</string>
     <string name="optional">Tuỳ chọn</string>
     <string name="price">Giá</string>
@@ -104,4 +105,5 @@
     <string name="nothingChange">Bạn chưa thay đổi thông tin gì của đồ uống này.\nBạn chắc chắn muốn rời khỏi trang này?</string>
     <string name="cancelChange">Bạn chắc chắn muốn rời khỏi trang này?</string>
     <string name="confirmDeleteDrink">Hành động không thể hoàn tác.\\nBạn chắc chắn muốn xóa tùy chọn này?</string>
+    <string name="deleteDrinkConfirm">Hành động không thể hoàn tác. Bạn chắc chắn muốn xóa đồ uống này ra khỏi menu?</string>
 </resources>

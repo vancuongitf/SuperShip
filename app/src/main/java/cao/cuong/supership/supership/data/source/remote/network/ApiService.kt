@@ -66,6 +66,10 @@ interface ApiService {
     @POST("api/v1/store/drink/edit.php")
     fun editDrink(@Body drinkBody: EditDrinkBody): Single<MessageResponse>
 
+    @FormUrlEncoded
+    @POST("api/v1/store/drink/delete.php")
+    fun deleteDrink(@Field("token") token: String, @Field("id") id: Long): Single<MessageResponse>
+
     @POST("api/v1/store/option/create.php")
     fun createDrinkOption(@Body createOptionBody: CreateDrinkOptionBody): Single<CreateDrinkOptionResponse>
 
