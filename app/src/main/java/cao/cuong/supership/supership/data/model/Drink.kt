@@ -12,11 +12,12 @@ data class Drink(@SerializedName("drink_id") var id: Long,
                  @SerializedName("drink_name") var name: String,
                  @SerializedName("drink_price") var price: Int,
                  @SerializedName("drink_image") var image: String,
+                 @SerializedName("order_count") var orderCount: Int,
                  @SerializedName("drink_options") var options: MutableSet<Long>) : Serializable {
 
     internal fun copy(): Drink {
         val newOptions = mutableSetOf<Long>()
         newOptions.addAll(options)
-        return Drink(id, menuId, name, price, image, newOptions)
+        return Drink(id, menuId, name, price, image, orderCount, newOptions)
     }
 }

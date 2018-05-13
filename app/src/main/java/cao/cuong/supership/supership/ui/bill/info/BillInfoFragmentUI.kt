@@ -202,7 +202,7 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
                                 }
 
                                 imgPayment = imageView(R.drawable.ic_paypal) {
-                                    visibility = View.GONE
+//                                    visibility = View.GONE
                                     enableHighLightWhenClicked()
                                     onClick {
                                         owner.paymentClicked()

@@ -7,7 +7,7 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class DrinkAdapter(private val drinks: MutableList<Drink>) : RecyclerView.Adapter<DrinkAdapter.DrinkHolder>() {
@@ -44,6 +44,13 @@ class DrinkAdapter(private val drinks: MutableList<Drink>) : RecyclerView.Adapte
 
             ui.tvDrinkName.text = drink.name
             ui.tvDrinkPrice.text = itemView.context.getString(R.string.drinkPrice, drink.price)
+            if (drink.orderCount > 0) {
+                ui.tvDrinkBillCount.textColorResource = R.color.colorBlue
+                ui.tvDrinkBillCount.text = itemView.context.getString(R.string.orderCount, drink.orderCount)
+            } else {
+                ui.tvDrinkBillCount.textColorResource = R.color.colorGray
+                ui.tvDrinkBillCount.text = itemView.context.getString(R.string.notOrderYet)
+            }
         }
     }
 }

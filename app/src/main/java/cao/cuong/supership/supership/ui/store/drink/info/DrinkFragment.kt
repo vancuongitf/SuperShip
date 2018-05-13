@@ -9,8 +9,8 @@ import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.data.model.OptionalBody
 import cao.cuong.supership.supership.data.model.OrderedDrink
-import cao.cuong.supership.supership.extension.getOrderedOptions
-import cao.cuong.supership.supership.extension.hideKeyBoard
+import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
+import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.order.OrderActivity
@@ -19,6 +19,9 @@ import cao.cuong.supership.supership.ui.store.activity.StoreActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.textColorResource
 
 class DrinkFragment : BaseFragment() {
 
@@ -59,19 +62,29 @@ class DrinkFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            with(ui) {
-                tvDrinkTitle.text = drink.name
-                tvDrinkName.text = drink.name
-                tvBillCount.text = getString(R.string.notOrderYet)
-                updateDrinkPrice()
-                val option = RequestOptions()
-                        .placeholder(R.drawable.glide_place_holder)
-                Glide.with(context)
-                        .applyDefaultRequestOptions(option)
-                        .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/${drink.image}")
-                        .into(imgDrinkImage)
+        with(ui) {
+            tvDrinkTitle.text = drink.name
+            tvDrinkName.text = drink.name
+            tvBillCount.text = getString(R.string.notOrderYet)
+            updateDrinkPrice()
+            val option = RequestOptions()
+                    .placeholder(R.drawable.glide_place_holder)
+            Glide.with(context)
+                    .applyDefaultRequestOptions(option)
+                    .asBitmap()
+                    .load("https://vnshipperman.000webhostapp.com/uploads/${drink.image}")
+                    .into(imgDrinkImage)
+            if (drink.orderCount > 0) {
+                ui.tvBillCount.textColorResource = R.color.colorBlue
+                ui.tvBillCount.text = context.getString(R.string.orderCount, drink.orderCount)
+            } else {
+                ui.tvBillCount.textColorResource = R.color.colorGray
+                ui.tvBillCount.text = context.getString(R.string.notOrderYet)
             }
+        }
+        viewModel.updateProgressStatusObservable
+                .observeOnUiThread()
+                .subscribe(this::handleUpdateProgressDialogStatus)
     }
 
     override fun onBindViewModel() {
@@ -143,6 +156,23 @@ class DrinkFragment : BaseFragment() {
         }
         drinkTotalPrice = drink.price + totalOptionPrice
         ui.tvTotalPrice.text = context.getString(R.string.drinkTotalPrice, count * drinkTotalPrice)
+    }
+
+    internal fun onDeleteDrinkClicked() {
+        context.showConfirmAlert(R.string.deleteDrinkConfirm) {
+            viewModel.deleteDrink(drink.id)
+                    .observeOnUiThread()
+                    .subscribe(this::handleDeleteDrinkSuccess, this::handleApiError)
+        }
+    }
+
+    private fun handleDeleteDrinkSuccess(messageResponse: MessageResponse) {
+        context.showOkAlert(R.string.notification, messageResponse.message) {
+            (activity as? StoreActivity)?.let {
+                it.shouldReload = true
+                it.onBackPressed()
+            }
+        }
     }
 
     private fun getDrinkOption() {

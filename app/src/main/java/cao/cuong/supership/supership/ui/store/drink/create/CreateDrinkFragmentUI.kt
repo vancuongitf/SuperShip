@@ -12,6 +12,7 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.DrinkOption
 import cao.cuong.supership.supership.extension.commonEditText
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
+import cao.cuong.supership.supership.extension.getHeightScreen
 import cao.cuong.supership.supership.extension.getWidthScreen
 import cao.cuong.supership.supership.ui.store.optional.adapter.OptionalAdapter
 import org.jetbrains.anko.*
@@ -138,9 +139,9 @@ class CreateDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<C
                             layoutManager = LinearLayoutManager(ctx)
                             backgroundColorResource = R.color.colorWhiteLight
                             adapter = optionsAdapter
-                        }
+                        }.lparams(matchParent, context.getHeightScreen())
                     }.lparams(matchParent, wrapContent)
-                }.lparams(matchParent, wrapContent)
+                }.lparams(matchParent, matchParent)
             }.lparams(matchParent, matchParent)
         }
     }
