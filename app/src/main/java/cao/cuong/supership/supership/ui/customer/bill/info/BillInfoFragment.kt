@@ -30,7 +30,7 @@ class BillInfoFragment : BaseFragment() {
 
     companion object {
         internal const val KEY_BILL_ID = "key_id"
-        private const val REQUEST_PAYMENT_PAY_PAL = 2203
+        internal const val REQUEST_PAYMENT_PAY_PAL = 2203
 
         internal fun getNewInstance(id: Long): BillInfoFragment {
             val instance = BillInfoFragment()
@@ -101,7 +101,7 @@ class BillInfoFragment : BaseFragment() {
         ui.imgShowShipRoad.visibility = View.GONE
         bill?.let {
             val billInfo = it
-            (activity as? BillActivity)?.openShipRoadFragment(billInfo.store.address, billInfo.address, billInfo.shipRoad)
+            (activity as? BillActivity)?.openShipRoadFragment(billId, billInfo.store.address, billInfo.address, billInfo.shipRoad)
         }
     }
 

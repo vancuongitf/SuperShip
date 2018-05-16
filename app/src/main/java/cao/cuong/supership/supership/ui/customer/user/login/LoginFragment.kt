@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.ui.customer.user.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.customer.user.UserActivity
+import cao.cuong.supership.supership.ui.shipper.account.ShipperActivity
+import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 
@@ -54,7 +57,22 @@ class LoginFragment : BaseFragment() {
     }
 
     internal fun eventSignUpButtonClicked() {
-        (activity as? UserActivity)?.openSignUpFragment()
+        when (viewModel.getModule()) {
+
+            SplashFragment.CUSTOMER_MODULE -> {
+                (activity as? UserActivity)?.openSignUpFragment()
+            }
+
+            SplashFragment.SHIPPER_MODULE -> {
+                val intent = Intent(context, ShipperActivity::class.java)
+                startActivity(intent)
+            }
+
+            SplashFragment.STAFF_MODULE -> {
+
+            }
+
+        }
     }
 
     internal fun eventForgotPasswordClicked() {

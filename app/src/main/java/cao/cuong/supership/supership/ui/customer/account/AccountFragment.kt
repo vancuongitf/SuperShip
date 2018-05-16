@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.data.model.BillAddress
-import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.model.UserInfo
+import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
@@ -112,7 +112,7 @@ class AccountFragment : BaseFragment() {
         viewModel.saveUserInfo(userInfo)
     }
 
-    private fun handleApiGetInfoError(throwable: Throwable){
+    private fun handleApiGetInfoError(throwable: Throwable) {
         ui.llNonLogin.visibility = View.GONE
         ui.llLogin.visibility = View.GONE
         ui.tvReload.visibility = View.VISIBLE

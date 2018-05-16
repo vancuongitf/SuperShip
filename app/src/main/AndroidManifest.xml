@@ -55,6 +55,11 @@
         <activity android:name="cao.cuong.supership.supership.ui.customer.order.OrderActivity" />
         <activity android:name="cao.cuong.supership.supership.ui.customer.user.UserActivity" />
         <activity android:name="cao.cuong.supership.supership.ui.customer.bill.activity.BillActivity" />
+
+        <activity android:name=".ui.shipper.main.ShipperMainActivity" />
+        <activity android:name=".ui.shipper.account.ShipperActivity" />
+        <activity android:name=".ui.shipper.cash.CashActivity" />
+
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

@@ -32,7 +32,7 @@ class BillFragmentUI(bills: MutableList<ExpressBill>) : AnkoComponent<BillFragme
 
             toolbar {
 
-                backgroundColorResource = R.color.colorBlue
+                backgroundColorResource = R.color.colorGrayLight
                 setContentInsetsAbsolute(0, 0)
 
                 linearLayout {

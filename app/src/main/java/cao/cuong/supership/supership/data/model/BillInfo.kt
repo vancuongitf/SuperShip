@@ -18,7 +18,8 @@ data class BillInfo(@SerializedName("bill_id") val id: Long,
                     @SerializedName("online_payment") var onlinePayment: Int,
                     @SerializedName("confirm_code") val confirmCode: Int,
                     @SerializedName("bill_complete_time") val completeTime: Long,
-                    @SerializedName("drinks") val drinks: MutableList<OrderedDrink>) {
+                    @SerializedName("drinks") val drinks: MutableList<OrderedDrink>,
+                    @SerializedName("request_shipper") val requestShipper: Long) {
 
     internal fun getUSDPrice() = Math.ceil((shipPrice + price).toDouble() / BuildConfig.USD_EXCHANGE_RATE * 100) / 100
 

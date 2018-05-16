@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.datasource
 
+import cao.cuong.supership.supership.data.model.BillLocation
 import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.request.*
@@ -44,4 +45,6 @@ interface StoreDataSource {
     fun addDrinkItemOption(body: AddDrinkOptionItemBody): Single<MessageResponse>
 
     fun orderDrink(billBody: BillBody): Single<MessageResponse>
+
+    fun getLastedBillLocation(token: String, id: Long): Single<BillLocation>
 }

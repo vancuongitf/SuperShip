@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote
 
+import cao.cuong.supership.supership.data.model.BillLocation
 import cao.cuong.supership.supership.data.source.datasource.StoreDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.request.*
@@ -52,4 +53,6 @@ class StoreRemoteDataSource : StoreDataSource {
     override fun addDrinkItemOption(body: AddDrinkOptionItemBody) = apiService.addDrinkItemOption(body)
 
     override fun orderDrink(billBody: BillBody) = apiService.orderDrink(billBody)
+
+    override fun getLastedBillLocation(token: String, id: Long) = apiService.getBillLastLocation(token, id)
 }
