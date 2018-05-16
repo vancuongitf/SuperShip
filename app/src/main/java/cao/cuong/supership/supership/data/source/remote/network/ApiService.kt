@@ -1,9 +1,6 @@
 package cao.cuong.supership.supership.data.source.remote.network
 
-import cao.cuong.supership.supership.data.model.AccessToken
-import cao.cuong.supership.supership.data.model.BillInfo
-import cao.cuong.supership.supership.data.model.Store
-import cao.cuong.supership.supership.data.model.UserInfo
+import cao.cuong.supership.supership.data.model.*
 import cao.cuong.supership.supership.data.model.paypal.VerifyPaymentBody
 import cao.cuong.supership.supership.data.source.remote.request.*
 import cao.cuong.supership.supership.data.source.remote.response.*
@@ -94,10 +91,45 @@ interface ApiService {
     @GET("api/v1/store/order/order.php")
     fun getOrderInfo(@Query("token") token: String, @Query("id") id: Long): Single<BillInfo>
 
+    @GET("api/v1/store/order/order.php")
+    fun getOrderInfo(@Query("token") token: String, @Query("id") id: Long, @Query("from_shipper") fromShipper: Boolean): Single<BillInfo>
+
     @POST("api/v1/user/payment/verify.php")
     fun verifyPayment(@Body paymentBody: VerifyPaymentBody): Single<MessageResponse>
 
     @FormUrlEncoded
     @POST("api/v1/store/option/delete.php")
     fun deleteDrinkOption(@Field("token") token: String, @Field("id") id: Long): Single<MessageResponse>
+
+    @POST("api/v1/shipper/create.php")
+    fun createShipper(@Body createShipperBody: CreateShipperBody): Single<MessageResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/shipper/login.php")
+    fun loginShipper(@Field("user") account: String, @Field("pass") pass: String): Single<AccessToken>
+
+    @FormUrlEncoded
+    @POST("api/v1/shipper/info.php")
+    fun getShipperInfo(@Field("token") token: String): Single<Shipper>
+
+    @GET("api/v1/shipper/checkedbill.php")
+    fun getCheckedBills(@Query("token") token: String, @Query("page") page: Int): Single<BillExpressResponse>
+
+    @POST("api/v1/shipper/takebill.php")
+    fun takeBill(@Body takeBillBody: TakeBillBody): Single<MessageResponse>
+
+    @GET("api/v1/shipper/takedbills.php")
+    fun getTookBills(@Query("token") token: String, @Query("page") page: Int, @Query("status") status: Int): Single<BillExpressResponse>
+
+    @POST("api/v1/shipper/completebill.php")
+    fun completeBill(@Body completeBillBody: CompleteBillBody): Single<MessageResponse>
+
+    @POST("api/v1/shipper/location.php")
+    fun submitCurrentLocation(@Body currentLocationBody: CurrentLocationBody): CustomCall<MessageResponse>
+
+    @GET("api/v1/store/order/livelocation.php")
+    fun getBillLastLocation(@Query("token") token: String, @Query("id") id: Long): Single<BillLocation>
+
+    @POST("api/v1/shipper/verifycash.php")
+    fun verifyCash(@Body verifyCashBody: VerifyCashBody): Single<MessageResponse>
 }

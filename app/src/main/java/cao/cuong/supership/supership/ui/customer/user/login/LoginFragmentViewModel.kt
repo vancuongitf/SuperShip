@@ -3,9 +3,11 @@ package cao.cuong.supership.supership.ui.customer.user.login
 import android.content.Context
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.source.LocalRepository
+import cao.cuong.supership.supership.data.source.ShipperRepository
 import cao.cuong.supership.supership.data.source.UserRepository
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.extension.observeOnUiThread
+import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
 import io.reactivex.Notification
 import io.reactivex.subjects.PublishSubject
 
@@ -17,25 +19,51 @@ class LoginFragmentViewModel(private val context: Context) {
 
     private val localRepository = LocalRepository(context)
     private val userRepository = UserRepository()
+    private val shipperRepository = ShipperRepository()
 
     internal val loginStatusObserver = PublishSubject.create<Notification<AccessToken>>()
     internal val updateProgressStatus = PublishSubject.create<Boolean>()
 
     internal fun login(user: String, pass: String) {
-        userRepository.login(user, pass)
-                .observeOnUiThread()
-                .doOnSubscribe({
-                    updateProgressStatus.onNext(true)
-                })
-                .doFinally {
-                    updateProgressStatus.onNext(false)
-                }
-                .subscribe(this::saveAccessToken, {
-                    loginStatusObserver.onNext(Notification.createOnError(it))
-                })
+
+        when (localRepository.getModule()) {
+            SplashFragment.SHIPPER_MODULE -> {
+                shipperRepository.login(user, pass)
+                        .observeOnUiThread()
+                        .doOnSubscribe({
+                            updateProgressStatus.onNext(true)
+                        })
+                        .doFinally {
+                            updateProgressStatus.onNext(false)
+                        }
+                        .subscribe(this::saveAccessToken, {
+                            loginStatusObserver.onNext(Notification.createOnError(it))
+                        })
+            }
+
+            SplashFragment.CUSTOMER_MODULE -> {
+                userRepository.login(user, pass)
+                        .observeOnUiThread()
+                        .doOnSubscribe({
+                            updateProgressStatus.onNext(true)
+                        })
+                        .doFinally {
+                            updateProgressStatus.onNext(false)
+                        }
+                        .subscribe(this::saveAccessToken, {
+                            loginStatusObserver.onNext(Notification.createOnError(it))
+                        })
+            }
+
+            SplashFragment.STAFF_MODULE -> {
+
+            }
+        }
     }
 
-    internal fun saveAccessToken(token: AccessToken) {
+    internal fun getModule() = localRepository.getModule()
+
+    private fun saveAccessToken(token: AccessToken) {
         if (token.token.isNotEmpty()) {
             localRepository.saveAccessToken(token.token)
             loginStatusObserver.onNext(Notification.createOnNext(token))

@@ -13,6 +13,9 @@ import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.customer.account.AccountFragment
 import cao.cuong.supership.supership.ui.customer.bill.BillFragment
 import cao.cuong.supership.supership.ui.customer.user.UserActivity
+import cao.cuong.supership.supership.ui.shipper.bill.checked.CheckedBillFragment
+import cao.cuong.supership.supership.ui.shipper.bill.receive.ReceiveBillFragment
+import cao.cuong.supership.supership.ui.shipper.info.ShipperInfoFragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.jetbrains.anko.cancelButton
@@ -53,7 +56,7 @@ abstract class BaseFragment : Fragment() {
     protected fun handleApiError(throwable: Throwable?) {
         if (throwable is ApiException) {
             if (throwable.code == HttpsURLConnection.HTTP_UNAUTHORIZED) {
-                if (this !is AccountFragment && this !is BillFragment) {
+                if (this !is AccountFragment && this !is BillFragment && this !is CheckedBillFragment && this !is ReceiveBillFragment && this !is ShipperInfoFragment) {
                     alert {
                         this.message = throwable.message ?: "Phiên đăng nhậo đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
                         this.isCancelable = false
@@ -67,8 +70,9 @@ abstract class BaseFragment : Fragment() {
                             it.dismiss()
                         }
                     }.show()
+                } else {
+                    RxBus.publish(UpdateAccountUI())
                 }
-                RxBus.publish(UpdateAccountUI())
             } else {
                 context.showOkAlert(throwable)
             }

@@ -20,7 +20,7 @@ import org.jetbrains.anko.AnkoContext
  *
  * @author at-cuongcao.
  */
-class BillFragment: BaseFragment() {
+class BillFragment : BaseFragment() {
 
     private lateinit var ui: BillFragmentUI
     private lateinit var viewModel: BillFragmentViewModel

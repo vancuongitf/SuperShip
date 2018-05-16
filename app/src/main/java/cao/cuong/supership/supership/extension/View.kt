@@ -25,3 +25,18 @@ internal fun View.enableHighLightWhenClicked() {
         false
     }
 }
+
+internal fun View.enableHighLightWhenClickedForListItem() {
+    val originAlphaAnimation = AnimationUtils.loadAnimation(context, R.anim.high_light_fade_in)
+    val lessAlphaAnimation = AnimationUtils.loadAnimation(context, R.anim.high_light_fade_out)
+
+    setOnTouchListener { v, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN ->
+                v.startAnimation(lessAlphaAnimation)
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->
+                v.startAnimation(originAlphaAnimation)
+        }
+        false
+    }
+}

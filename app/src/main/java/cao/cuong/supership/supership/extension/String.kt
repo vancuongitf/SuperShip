@@ -19,6 +19,8 @@ private const val REGEX_EMAIL_ADDRESS = "((([a-zA-Z0-9]{0,1})+([_|.]{0,1}([a-zA-
 private const val REGEX_OTP_CODE = "[1-9][0-9]{5}"
 private const val REGEX_FULL_NAME = "[a-zA-Z_ \\-ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+"
 private const val REGEX_STORE_NAME = "[a-zA-Z0-9_ \\-ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ*%@]+"
+private const val REGEX_PERSONAL_ID_1 = "[1-9][0-9]{8}"
+private const val REGEX_PERSONAL_ID_2 = "[1-9][0-9]{11}"
 
 internal fun String.unAccent(): String {
     val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
@@ -46,11 +48,8 @@ internal fun String.isValidateOTPCode() = Regex(REGEX_OTP_CODE).matches(this)
 internal fun String.isValidateStoreName() = Regex(REGEX_STORE_NAME).matches(this)
 
 internal fun String.isValidatePhoneNumber() = Regex(REGEX_PHONE_NUMBER_MOBILE).matches(this) || Regex(REGEX_PHONE_NUMBER_STATIC).matches(this)
-//internal fun String.validatePassword(): Boolean {
-//    val regex = ""
-//    val pattern = Pattern.compile(Patterns.EMAIL_ADDRESS.pattern())
-//    return pattern.toRegex().matches(this)
-//}
+
+internal fun String.isValidatePersonalId() = Regex(REGEX_PERSONAL_ID_1).matches(this) || Regex(REGEX_PERSONAL_ID_2).matches(this)
 
 internal fun String.sha1(): String {
     val hexChars = "0123456789ABCDEF"

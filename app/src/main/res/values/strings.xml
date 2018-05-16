@@ -108,4 +108,19 @@
     <string name="deleteDrinkConfirm">Hành động không thể hoàn tác. Bạn chắc chắn muốn xóa đồ uống này ra khỏi menu?</string>
     <string name="closeConfirm">Bạn chắc chắn muốn đóng cửa cửa hàng này?</string>
     <string name="openConfirm">Bạn chắc chắn muốn mở cửa  cửa hàng này?</string>
+    <string name="chooseModule">Vui lòng chọn ứng dụng của bạn</string>
+    <string name="customerModule">Khách hàng</string>
+    <string name="shipperModule">Shipper</string>
+    <string name="staff">Nhân viên</string>
+    <string name="personalId">Số chứng minh nhân dân</string>
+    <string name="birthDay">Ngày sinh</string>
+    <string name="checkedBills">Đơn hàng đã xác nhận</string>
+    <string name="takeBill">Bạn thật sự muốn nhận đơn hàng này.</string>
+    <string name="confirmCode">Mã xác nhận:</string>
+    <string name="confirmMessage">* Chỉ bắt buộc đối với đơn hàng thanh toán online.</string>
+    <string name="completeBill">Xác nhận giao hàng</string>
+    <string name="personalInfo">Thông tin cá nhân</string>
+    <string name="cash">Nạp tiền vào tài khoản</string>
+    <string name="unAuthorzation">Phiên đăng nhập đã kết thúc. Vui lòng đăng nhập lại để tiếp tục.</string>
+    <string name="cashCount">Số tiền</string>
 </resources>

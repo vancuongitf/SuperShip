@@ -10,19 +10,39 @@ import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.customer.bill.info.BillInfoFragment
 import cao.cuong.supership.supership.ui.customer.bill.ship.BillShipRoadFragment
+import cao.cuong.supership.supership.ui.shipper.bill.complete.ShipperBillCompleteFragment
+import cao.cuong.supership.supership.ui.shipper.bill.info.ShipperBillInfoFragment
+import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
 import org.jetbrains.anko.setContentView
 
 class BillActivity : BaseActivity() {
 
     private lateinit var ui: BillActivityUI
+    private lateinit var viewModel: BillActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = BillActivityViewModel(this)
         ui = BillActivityUI()
         ui.setContentView(this)
         val billId = intent.extras.getLong(BillInfoFragment.KEY_BILL_ID)
         if (billId > 0) {
-            replaceFragment(R.id.billActivityContainer, BillInfoFragment.getNewInstance(billId))
+
+            when (viewModel.getModule()) {
+
+                SplashFragment.CUSTOMER_MODULE -> {
+                    replaceFragment(R.id.billActivityContainer, BillInfoFragment.getNewInstance(billId))
+                }
+
+                SplashFragment.SHIPPER_MODULE -> {
+                    replaceFragment(R.id.billActivityContainer, ShipperBillInfoFragment.getNewInstance(billId))
+                }
+
+                SplashFragment.STAFF_MODULE -> {
+
+                }
+            }
+
         } else {
             showOkAlert(Throwable("Xãy ra lỗi.")) {
                 finish()
@@ -34,7 +54,11 @@ class BillActivity : BaseActivity() {
 
     }
 
-    internal fun openShipRoadFragment(storeAddress: Address, billAddress: Address, points: String) {
-        addFragment(R.id.billActivityContainer, BillShipRoadFragment.getNewInstance(storeAddress, billAddress, points), { it.animRightToLeft() }, BillShipRoadFragment::class.java.simpleName)
+    internal fun openShipRoadFragment(billId: Long, storeAddress: Address, billAddress: Address, points: String) {
+        addFragment(R.id.billActivityContainer, BillShipRoadFragment.getNewInstance(billId, storeAddress, billAddress, points), { it.animRightToLeft() }, BillShipRoadFragment::class.java.simpleName)
+    }
+
+    internal fun openCompleteBillFragment(billId: Long) {
+        addFragment(R.id.billActivityContainer, ShipperBillCompleteFragment.getNewInstance(billId), { it.animRightToLeft() }, ShipperBillCompleteFragment::class.java.simpleName)
     }
 }

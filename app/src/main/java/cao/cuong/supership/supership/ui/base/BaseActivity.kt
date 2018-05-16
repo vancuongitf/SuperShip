@@ -3,11 +3,15 @@ package cao.cuong.supership.supership.ui.base
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import cao.cuong.supership.supership.App
+import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.rxevent.UnAuthorizeException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
+import cao.cuong.supership.supership.extension.showConfirmAlert
 import cao.cuong.supership.supership.ui.customer.user.UserActivity
+import cao.cuong.supership.supership.ui.shipper.main.ShipperMainActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
