@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.data.source.datasource
 
+import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
@@ -28,4 +29,12 @@ interface LocalDataSource {
     fun saveUserInfo(userInfo: UserInfo)
 
     fun getUserInfo(): UserInfo?
+
+    fun chooseModule(module: Int)
+
+    fun getModule(): Int
+
+    fun saveShipperInfo(shipper: Shipper)
+
+    fun getShipperInfo(): Shipper?
 }

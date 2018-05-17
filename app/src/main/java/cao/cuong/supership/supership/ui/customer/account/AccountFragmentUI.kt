@@ -9,6 +9,7 @@ import cao.cuong.supership.supership.extension.commonEditTextWithEditButton
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.ui.base.widget.CommonEditTextWithEditButton
 import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 /**
@@ -26,107 +27,143 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
     internal lateinit var tvReload: TextView
 
     override fun createView(ui: AnkoContext<AccountFragment>) = with(ui) {
-        relativeLayout {
 
-            backgroundResource = R.color.colorWhite
-            padding = dimen(R.dimen.accountFragmentLoginPadding)
+        verticalLayout {
+            lparams(matchParent, matchParent)
 
-            tvReload = textView(R.string.reload) {
-                visibility = View.GONE
-                gravity = Gravity.CENTER
-                backgroundColorResource = R.color.colorBlue
-                enableHighLightWhenClicked()
-                verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+            toolbar {
 
-                onClick {
-                    owner.eventReloadClicked()
-                }
-            }.lparams(matchParent, wrapContent) {
-                centerInParent()
-            }
+                backgroundColorResource = R.color.colorGrayLight
+                setContentInsetsAbsolute(0, 0)
 
-            llNonLogin = verticalLayout {
-                lparams(matchParent, matchParent)
-                isClickable = true
-                backgroundColorResource = R.color.colorWhite
-                gravity = Gravity.CENTER
-                visibility = View.GONE
+                linearLayout {
 
-                textView(R.string.pleaseLogin) {
-                    verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    gravity = Gravity.CENTER_HORIZONTAL
-                    textColorResource = R.color.colorBlack
+                    leftPadding = dimen(R.dimen.accountFragmentLoginPadding)
+
+                    gravity = Gravity.CENTER_VERTICAL
+
+                    textView(R.string.personalInfo) {
+                        textSizeDimen = R.dimen.storeTitleTextSize
+                        textColorResource = R.color.colorBlack
+                    }.lparams(0, wrapContent) {
+                        weight = 1f
+                    }
+
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
+
+                        enableHighLightWhenClicked()
+                        onClick {
+                        }
+
+                        imageView(R.drawable.ic_edit_note) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
+
                 }.lparams(matchParent, wrapContent)
+            }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 
-                textView(R.string.login) {
-                    gravity = Gravity.CENTER_HORIZONTAL
+            relativeLayout {
+
+                backgroundResource = R.color.colorWhite
+                padding = dimen(R.dimen.accountFragmentLoginPadding)
+
+                tvReload = textView(R.string.reload) {
+                    visibility = View.GONE
+                    gravity = Gravity.CENTER
                     backgroundColorResource = R.color.colorBlue
                     enableHighLightWhenClicked()
                     verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
 
                     onClick {
-                        owner.eventLoginButtonClick()
-                    }
-                }.lparams(matchParent, wrapContent)
-            }
-
-            llLogin = verticalLayout {
-                visibility = View.GONE
-                isClickable = true
-                backgroundColorResource = R.color.colorWhite
-                edtFullName = commonEditTextWithEditButton(R.drawable.ic_user, {
-                    owner.eventChangeFullNameClick()
-                }) {}.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
-
-                edtPhoneNumber = commonEditTextWithEditButton(R.drawable.ic_phone, {
-                    owner.eventChangePhoneNumberClick()
-                }) {}.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
-
-                edtEmail = commonEditTextWithEditButton(R.drawable.ic_email, {
-                    owner.eventChangeEmailClick()
-                }) {}.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
-
-                view { }.lparams(matchParent, 0) {
-                    weight = 1f
-                }
-
-                textView(R.string.yourStore) {
-                    gravity = Gravity.CENTER_HORIZONTAL
-                    backgroundColorResource = R.color.colorCyan
-                    verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    enableHighLightWhenClicked()
-                    onClick {
-                        owner.eventStoreListClicked()
-                    }
-                }
-
-                textView(R.string.changePassword) {
-                    gravity = Gravity.CENTER_HORIZONTAL
-                    backgroundColorResource = R.color.colorBlue
-                    verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    enableHighLightWhenClicked()
-                    onClick {
-                        owner.eventChangePasswordButtonClicked()
+                        owner.eventReloadClicked()
                     }
                 }.lparams(matchParent, wrapContent) {
-                    verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    centerInParent()
                 }
 
-                textView(R.string.logOut) {
-                    gravity = Gravity.CENTER_HORIZONTAL
-                    backgroundColorResource = R.color.colorGrayLight
-                    enableHighLightWhenClicked()
-                    verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    onClick {
-                        owner.logOutClick()
+                llNonLogin = verticalLayout {
+                    lparams(matchParent, matchParent)
+                    isClickable = true
+                    backgroundColorResource = R.color.colorWhite
+                    gravity = Gravity.CENTER
+                    visibility = View.GONE
+
+                    textView(R.string.pleaseLogin) {
+                        verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        textColorResource = R.color.colorBlack
+                    }.lparams(matchParent, wrapContent)
+
+                    textView(R.string.login) {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        backgroundColorResource = R.color.colorBlue
+                        enableHighLightWhenClicked()
+                        verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+
+                        onClick {
+                            owner.eventLoginButtonClick()
+                        }
+                    }.lparams(matchParent, wrapContent)
+                }
+
+                llLogin = verticalLayout {
+                    visibility = View.GONE
+                    isClickable = true
+                    backgroundColorResource = R.color.colorWhite
+                    edtFullName = commonEditTextWithEditButton(R.drawable.ic_user, {
+                    }) {}.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
                     }
-                }.lparams(matchParent, wrapContent)
+
+                    edtPhoneNumber = commonEditTextWithEditButton(R.drawable.ic_phone, {
+                    }) {}.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    edtEmail = commonEditTextWithEditButton(R.drawable.ic_email, {
+                    }) {}.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    view { }.lparams(matchParent, 0) {
+                        weight = 1f
+                    }
+
+                    textView(R.string.yourStore) {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        backgroundColorResource = R.color.colorCyan
+                        verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.eventStoreListClicked()
+                        }
+                    }
+
+                    textView(R.string.changePassword) {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        backgroundColorResource = R.color.colorBlue
+                        verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.eventChangePasswordButtonClicked()
+                        }
+                    }.lparams(matchParent, wrapContent) {
+                        verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    textView(R.string.logOut) {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        backgroundColorResource = R.color.colorGrayLight
+                        enableHighLightWhenClicked()
+                        verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                        onClick {
+                            owner.logOutClick()
+                        }
+                    }.lparams(matchParent, wrapContent)
+                }.lparams(matchParent, matchParent)
             }.lparams(matchParent, matchParent)
         }
     }

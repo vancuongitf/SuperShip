@@ -1,7 +1,9 @@
 package cao.cuong.supership.supership.data.source
 
 import android.content.Context
+import android.util.Log
 import cao.cuong.supership.supership.BuildConfig
+import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.datasource.LocalDataSource
@@ -25,6 +27,8 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         internal const val SHARED_KEY_SEARCH_HISTORY = "key_search_history"
         internal const val SHARED_KEY_ACCESS_TOKEN = "key_access_token"
         internal const val SHARED_KEY_USER_INFO = "user_info"
+        internal const val SHARED_KEY_MODULE = "key_module"
+        internal const val SHARED_KEY_SHIPPER_INFO = "key_shipper_info"
     }
 
     private val pref by lazy {
@@ -91,6 +95,7 @@ class LocalRepository(private val context: Context) : LocalDataSource {
     override fun clearAccessToken() {
         pref.edit().putString(SHARED_KEY_ACCESS_TOKEN, "").apply()
         pref.edit().putString(SHARED_KEY_USER_INFO, "").apply()
+        pref.edit().putString(SHARED_KEY_SHIPPER_INFO, "").apply()
     }
 
     override fun saveUserInfo(userInfo: UserInfo) {
@@ -105,6 +110,25 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         return try {
             Gson().fromJson<UserInfo>(userStr, UserInfo::class.java)
         } catch (e: JsonSyntaxException) {
+            null
+        }
+    }
+
+    override fun chooseModule(module: Int) {
+        pref.edit().putInt(SHARED_KEY_MODULE, module).apply()
+    }
+
+    override fun getModule() = pref.getInt(SHARED_KEY_MODULE, -1)
+
+    override fun saveShipperInfo(shipper: Shipper) {
+        pref.edit().putString(SHARED_KEY_SHIPPER_INFO, Gson().toJson(shipper).toString()).apply()
+    }
+
+    override fun getShipperInfo(): Shipper? {
+        val shipperString = pref.getString(SHARED_KEY_SHIPPER_INFO, "")
+        return try {
+            Gson().fromJson<Shipper>(shipperString, Shipper::class.java)
+        } catch (e: Exception) {
             null
         }
     }

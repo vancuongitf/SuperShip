@@ -42,4 +42,6 @@ class StoreRepository : StoreDataSource {
     override fun addDrinkItemOption(body: AddDrinkOptionItemBody) = storeRemoteDataSource.addDrinkItemOption(body)
 
     override fun orderDrink(billBody: BillBody) = storeRemoteDataSource.orderDrink(billBody)
+
+    override fun getLastedBillLocation(token: String, id: Long) = storeRemoteDataSource.getLastedBillLocation(token, id)
 }
