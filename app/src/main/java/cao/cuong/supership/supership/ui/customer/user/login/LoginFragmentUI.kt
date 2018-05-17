@@ -5,6 +5,7 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.Gravity
 import android.widget.EditText
+import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.commonEditText
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
@@ -21,6 +22,7 @@ class LoginFragmentUI : AnkoComponent<LoginFragment> {
 
     internal lateinit var edtUserName: EditText
     internal lateinit var edtPassword: EditText
+    internal lateinit var tvSignUp: TextView
 
     @SuppressLint("RtlHardcoded")
     override fun createView(ui: AnkoContext<LoginFragment>) = with(ui) {
@@ -78,7 +80,7 @@ class LoginFragmentUI : AnkoComponent<LoginFragment> {
                 verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
             }
 
-            textView(R.string.signUp) {
+            tvSignUp = textView(R.string.signUp) {
                 gravity = Gravity.CENTER_HORIZONTAL
                 backgroundColorResource = R.color.colorPink
                 enableHighLightWhenClicked()

@@ -2,7 +2,6 @@ package cao.cuong.supership.supership.ui.splash.splash
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
@@ -22,6 +21,7 @@ import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.customer.main.MainActivity
 import cao.cuong.supership.supership.ui.shipper.main.ShipperMainActivity
 import cao.cuong.supership.supership.ui.splash.SplashActivity
+import cao.cuong.supership.supership.ui.staff.main.StaffMainActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.jetbrains.anko.AnkoContext
@@ -97,7 +97,8 @@ class SplashFragment : BaseFragment() {
             }
 
             STAFF_MODULE -> {
-
+                startActivity(Intent(context, StaffMainActivity::class.java))
+                activity.finish()
             }
 
             else -> {

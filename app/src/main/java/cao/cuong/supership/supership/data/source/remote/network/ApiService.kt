@@ -132,4 +132,17 @@ interface ApiService {
 
     @POST("api/v1/shipper/verifycash.php")
     fun verifyCash(@Body verifyCashBody: VerifyCashBody): Single<MessageResponse>
+
+    // Staff
+    @FormUrlEncoded
+    @POST("api/v1/staff/login.php")
+    fun staffLogin(@Field("user") user: String, @Field("pass") pass: String): Single<AccessToken>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/info.php")
+    fun staffInfo(@Field("token") token: String): Single<Staff>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/bills.php")
+    fun getBillExpressStaff(@Field("token") token: String, @Field("status") status: Int, @Field("id") id: String, @Field("page") page: Int): CustomCall<BillExpressResponse>
 }

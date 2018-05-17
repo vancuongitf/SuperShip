@@ -4,6 +4,7 @@ import android.content.Context
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.ShipperRepository
+import cao.cuong.supership.supership.data.source.StaffRepository
 import cao.cuong.supership.supership.data.source.UserRepository
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.extension.observeOnUiThread
@@ -20,6 +21,7 @@ class LoginFragmentViewModel(private val context: Context) {
     private val localRepository = LocalRepository(context)
     private val userRepository = UserRepository()
     private val shipperRepository = ShipperRepository()
+    private val staffRepository = StaffRepository()
 
     internal val loginStatusObserver = PublishSubject.create<Notification<AccessToken>>()
     internal val updateProgressStatus = PublishSubject.create<Boolean>()
@@ -56,7 +58,17 @@ class LoginFragmentViewModel(private val context: Context) {
             }
 
             SplashFragment.STAFF_MODULE -> {
-
+                staffRepository.login(user, pass)
+                        .observeOnUiThread()
+                        .doOnSubscribe({
+                            updateProgressStatus.onNext(true)
+                        })
+                        .doFinally {
+                            updateProgressStatus.onNext(false)
+                        }
+                        .subscribe(this::saveAccessToken, {
+                            loginStatusObserver.onNext(Notification.createOnError(it))
+                        })
             }
         }
     }

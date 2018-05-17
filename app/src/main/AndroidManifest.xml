@@ -60,6 +60,8 @@
         <activity android:name=".ui.shipper.account.ShipperActivity" />
         <activity android:name=".ui.shipper.cash.CashActivity" />
 
+        <activity android:name=".ui.staff.main.StaffMainActivity" />
+
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

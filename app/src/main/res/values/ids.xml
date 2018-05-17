@@ -48,5 +48,6 @@
     <item name="billActivityContainer" type="id" />
     <item name="splashActivityContainer" type="id" />
     <item name="shipperActivityContainer" type="id" />
+    <item name="recyclerStaff" type="id" />
 
 </resources>

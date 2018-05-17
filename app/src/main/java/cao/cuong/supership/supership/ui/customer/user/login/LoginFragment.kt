@@ -35,6 +35,13 @@ class LoginFragment : BaseFragment() {
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (viewModel.getModule() == SplashFragment.STAFF_MODULE) {
+            ui.tvSignUp.visibility = View.GONE
+        }
+    }
+
     override fun onBindViewModel() {
         addDisposables(
                 viewModel

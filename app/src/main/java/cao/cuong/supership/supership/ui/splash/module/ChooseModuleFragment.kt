@@ -9,6 +9,7 @@ import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.customer.main.MainActivity
 import cao.cuong.supership.supership.ui.shipper.main.ShipperMainActivity
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
+import cao.cuong.supership.supership.ui.staff.main.StaffMainActivity
 import org.jetbrains.anko.AnkoContext
 
 class ChooseModuleFragment : BaseFragment() {
@@ -39,5 +40,8 @@ class ChooseModuleFragment : BaseFragment() {
     }
 
     internal fun eventStaffClick() {
+        viewModel.chooseModule(SplashFragment.STAFF_MODULE)
+        startActivity(Intent(context, StaffMainActivity::class.java))
+        activity.finish()
     }
 }
