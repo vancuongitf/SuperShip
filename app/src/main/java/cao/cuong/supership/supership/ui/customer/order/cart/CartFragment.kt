@@ -18,8 +18,8 @@ import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
-import cao.cuong.supership.supership.ui.location.LocationActivity
 import cao.cuong.supership.supership.ui.customer.order.OrderActivity
+import cao.cuong.supership.supership.ui.location.LocationActivity
 import org.jetbrains.anko.AnkoContext
 
 class CartFragment:BaseFragment(){
@@ -77,7 +77,13 @@ class CartFragment:BaseFragment(){
             if (shipAddress != null) {
                 if (userName.isValidateFullName()) {
                     if (phone.isValidatePhoneNumber()) {
-                        val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), shipAddress!!.shipRoad, orderActivity.orderedDrinks)
+                        val x = shipAddress?.shipRoad ?: ""
+                        val s = x.split("\\")
+                        var shipRoad = s[0]
+                        for (i in 1 until s.size) {
+                            shipRoad = shipRoad + "\\\\" + s[i]
+                        }
+                        val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), shipRoad, orderActivity.orderedDrinks)
                         if (viewModel.isLogin()) {
                             viewModel.submitOrder(billBody)
                                     .observeOnUiThread()

@@ -67,6 +67,9 @@ class ShipRoadFragment : BaseFragment() {
                 } else {
                     it?.let {
                         shipAddress.latLng = it
+                        shipAddress.address = ""
+                        shipAddress.distance = 0
+                        updateConfirmViewUIStatus()
                         viewModel.getDirection(storeAddress.latLng, it)
                     }
                 }

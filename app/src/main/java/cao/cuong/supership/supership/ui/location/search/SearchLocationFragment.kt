@@ -103,19 +103,19 @@ class SearchLocationFragment : BaseFragment() {
 
     internal fun currentLocationClicked() {
         (activity as? BaseActivity)?.hideKeyBoard()
-            context.getLastKnowLocation()
-                    .doOnSubscribe {
-                        storeAddress.address = ""
-                        updateConfirmViewUIStatus()
-                        viewModel.updateProgressDialogStatus.onNext(true)
-                    }
-                    .doFinally {
-                        viewModel.updateProgressDialogStatus.onNext(false)
-                    }
-                    .flatMap {
-                        storeAddress.latLng = it
-                        viewModel.getAddressByLatLng(it)
-                    }.subscribe(this::handleGetAddressByLatLngSuccess, this::handleApiError)
+        context.getLastKnowLocation()
+                .doOnSubscribe {
+                    storeAddress.address = ""
+                    updateConfirmViewUIStatus()
+                    viewModel.updateProgressDialogStatus.onNext(true)
+                }
+                .doFinally {
+                    viewModel.updateProgressDialogStatus.onNext(false)
+                }
+                .flatMap {
+                    storeAddress.latLng = it
+                    viewModel.getAddressByLatLng(it)
+                }.subscribe(this::handleGetAddressByLatLngSuccess, this::handleApiError)
     }
 
     internal fun chooseOnMapClicked() {
@@ -148,13 +148,13 @@ class SearchLocationFragment : BaseFragment() {
                     ui.recyclerView.visibility = View.GONE
                     storeAddress.address = autoComplete.description
                     storeAddress.latLng = it.placeDetail.geometry.location.toLatLng()
-                        val marker = MarkerOptions()
-                                .position(storeAddress.latLng)
-                                .title(autoComplete.description)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
-                                .visible(true)
-                        googleMap?.clear()
-                        googleMap?.addMarker(marker)
+                    val marker = MarkerOptions()
+                            .position(storeAddress.latLng)
+                            .title(autoComplete.description)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+                            .visible(true)
+                    googleMap?.clear()
+                    googleMap?.addMarker(marker)
                     googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(storeAddress.latLng, 15f))
                     updateConfirmViewUIStatus()
                 }, this::handleApiError)
