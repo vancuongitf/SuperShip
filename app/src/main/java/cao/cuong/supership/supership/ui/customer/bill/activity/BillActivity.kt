@@ -13,6 +13,7 @@ import cao.cuong.supership.supership.ui.customer.bill.ship.BillShipRoadFragment
 import cao.cuong.supership.supership.ui.shipper.bill.complete.ShipperBillCompleteFragment
 import cao.cuong.supership.supership.ui.shipper.bill.info.ShipperBillInfoFragment
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
+import cao.cuong.supership.supership.ui.staff.bill.info.StaffBillInfoFragment
 import org.jetbrains.anko.setContentView
 
 class BillActivity : BaseActivity() {
@@ -39,7 +40,7 @@ class BillActivity : BaseActivity() {
                 }
 
                 SplashFragment.STAFF_MODULE -> {
-
+                    replaceFragment(R.id.billActivityContainer, StaffBillInfoFragment.getNewInstance(billId))
                 }
             }
 

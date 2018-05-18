@@ -124,4 +124,6 @@
     <string name="unAuthorzation">Phiên đăng nhập đã kết thúc. Vui lòng đăng nhập lại để tiếp tục.</string>
     <string name="cashCount">Số tiền</string>
     <string name="bills">Đơn hàng</string>
+    <string name="checkBillConfirm">Bạn chắc chắn muốn xác nhận đơn hàng này?</string>
+    <string name="banBillConfirm">Bạn chắc chắn muốn hủy đơn hàng này?</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.model.rxevent.DeleteItemList
 import cao.cuong.supership.supership.data.model.rxevent.OpenUserActivityAlert
 import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
@@ -50,6 +51,13 @@ class StaffBillFragment : StaffBaseFragment() {
                 .subscribe({
                     this.getBills(ui.edtSearch.text.toString().trim())
                 })
+        RxBus.listen(DeleteItemList::class.java)
+                .observeOnUiThread()
+                .subscribe {
+                    val id = it.id
+                    viewModel.bills.remove(viewModel.bills.find { it.id == id })
+                    adapter.notifyDataSetChanged()
+                }
         getBills("")
         Handler().postDelayed({
             hideKeyboard()

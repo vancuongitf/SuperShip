@@ -92,7 +92,7 @@ interface ApiService {
     fun getOrderInfo(@Query("token") token: String, @Query("id") id: Long): Single<BillInfo>
 
     @GET("api/v1/store/order/order.php")
-    fun getOrderInfo(@Query("token") token: String, @Query("id") id: Long, @Query("from_shipper") fromShipper: Boolean): Single<BillInfo>
+    fun getOrderInfo(@Query("token") token: String, @Query("id") id: Long, @Query("module") module: Int = 0): Single<BillInfo>
 
     @POST("api/v1/user/payment/verify.php")
     fun verifyPayment(@Body paymentBody: VerifyPaymentBody): Single<MessageResponse>
@@ -145,4 +145,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/v1/staff/bills.php")
     fun getBillExpressStaff(@Field("token") token: String, @Field("status") status: Int, @Field("id") id: String, @Field("page") page: Int): CustomCall<BillExpressResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/checkbill.php")
+    fun checkBill(@Field("token") token: String, @Field("status") status: Int, @Field("id") id: Long): Single<MessageResponse>
 }

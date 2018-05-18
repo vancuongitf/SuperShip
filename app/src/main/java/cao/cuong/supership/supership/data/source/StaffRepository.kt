@@ -12,4 +12,8 @@ class StaffRepository : StaffDataSource {
     override fun getInfo(token: String) = staffRemoteDataSource.getInfo(token)
 
     override fun getBills(token: String, status: Int, id: String, page: Int) = staffRemoteDataSource.getBills(token, status, id, page)
+
+    override fun getBillInfo(token: String, id: Long) = staffRemoteDataSource.getBillInfo(token, id)
+
+    override fun checkBill(token: String, status: Int, id: Long) = staffRemoteDataSource.checkBill(token, status, id)
 }

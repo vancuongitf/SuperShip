@@ -15,5 +15,7 @@ internal fun Int.getBillStatus() = when (this) {
 
     2 -> "Đang vận chuyển"
 
-    else -> "Đã giao hàng"
+    3 -> "Đã giao hàng"
+
+    else -> "Đã từ chối"
 }

@@ -19,7 +19,7 @@ class ShipperRemoteDataSource : ShipperDataSource {
 
     override fun getCheckedBills(token: String, page: Int) = apiService.getCheckedBills(token, page)
 
-    override fun getBillInfo(token: String, id: Long) = apiService.getOrderInfo(token, id, true)
+    override fun getBillInfo(token: String, id: Long) = apiService.getOrderInfo(token, id, 1)
 
     override fun takeBill(takeBillBody: TakeBillBody) = apiService.takeBill(takeBillBody)
 
