@@ -16,4 +16,8 @@ class StaffRemoteDataSource : StaffDataSource {
     override fun getBillInfo(token: String, id: Long) = apiService.getOrderInfo(token, id, 2)
 
     override fun checkBill(token: String, status: Int, id: Long) = apiService.checkBill(token, status, id)
+
+    override fun getShippers(token: String, search: String, page: Int, status: Int) = apiService.getShippers(token, search, page, status)
+
+    override fun getShipperInfo(token: String, shipperId: Long) = apiService.getShipper(token, shipperId)
 }

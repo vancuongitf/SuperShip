@@ -40,6 +40,7 @@ class StaffBillFragment : StaffBaseFragment() {
         ui.onChangeListStatusClicked = this::onChangeStatusClicked
         ui.onTextChange = this::handleOnTextChange
         ui.tvTitle.text = context.getString(R.string.bills)
+        ui.llBillStatusChange.visibility = View.VISIBLE
         viewModel.updateProgressDialogStatus
                 .observeOnUiThread()
                 .subscribe(this::handleUpdateProgressDialogStatus)

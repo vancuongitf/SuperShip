@@ -1,9 +1,11 @@
 package cao.cuong.supership.supership.ui.shipper.account.signup
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.source.remote.request.CreateShipperBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
@@ -19,6 +21,7 @@ class ShipperSignUpFragment : BaseFragment() {
 
     private lateinit var ui: ShipperSignUpFragmentUI
     private var viewModel = ShipperSignUpFragmentViewModel()
+    private var birthDay = ""
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = ShipperSignUpFragmentUI()
@@ -44,17 +47,21 @@ class ShipperSignUpFragment : BaseFragment() {
                             if (phone.isValidatePhoneNumber()) {
                                 if (personalId.isValidatePersonalId()) {
                                     if (address.isValidateStoreName()) {
-                                        pass = pass.sha1()
-                                        val shipperBody = CreateShipperBody(fullName, userName, pass, personalId, address, "1995-01-20", phone, email)
-                                        viewModel.createUser(shipperBody)
-                                                .observeOnUiThread()
-                                                .doOnSubscribe {
-                                                    handleUpdateProgressDialogStatus(true)
-                                                }
-                                                .doFinally {
-                                                    handleUpdateProgressDialogStatus(false)
-                                                }
-                                                .subscribe(this::handleCreateUserSuccess, this::handleApiError)
+                                        if (birthDay.isNotEmpty()) {
+                                            pass = pass.sha1()
+                                            val shipperBody = CreateShipperBody(fullName, userName, pass, personalId, address, birthDay, phone, email)
+                                            viewModel.createUser(shipperBody)
+                                                    .observeOnUiThread()
+                                                    .doOnSubscribe {
+                                                        handleUpdateProgressDialogStatus(true)
+                                                    }
+                                                    .doFinally {
+                                                        handleUpdateProgressDialogStatus(false)
+                                                    }
+                                                    .subscribe(this::handleCreateUserSuccess, this::handleApiError)
+                                        } else {
+                                            context.showOkAlert(R.string.notification, "Vui lòng chọn ngày sinh.")
+                                        }
                                     } else {
                                         context.showOkAlert(R.string.notification, "Địa chỉ không hợp lệ.")
                                     }
@@ -79,6 +86,19 @@ class ShipperSignUpFragment : BaseFragment() {
         } else {
             context.showOkAlert(R.string.notification, R.string.validateFullName)
         }
+    }
+
+    internal fun onBackButtonClicked() {
+        context.showConfirmAlert(R.string.leaveConfirm) {
+            activity.onBackPressed()
+        }
+    }
+
+    internal fun onBirthDayClicked() {
+        DatePickerDialog(context, { view: DatePicker?, year: Int, month: Int, dayOfMonth: Int ->
+            birthDay = "$year-$month-$dayOfMonth"
+            ui.edtBirthday.text = birthDay
+        }, 1995, 2, 22).show()
     }
 
     private fun handleCreateUserSuccess(messageResponse: MessageResponse) {

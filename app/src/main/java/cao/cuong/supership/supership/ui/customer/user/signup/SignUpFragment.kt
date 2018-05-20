@@ -71,6 +71,12 @@ class SignUpFragment : BaseFragment() {
         }
     }
 
+    internal fun onBackButtonClicked() {
+        context.showConfirmAlert(R.string.leaveConfirm) {
+            activity.onBackPressed()
+        }
+    }
+
     private fun handleCreateUserSuccess(messageResponse: MessageResponse) {
         context.showOkAlert(R.string.notification, messageResponse.message) {
             activity.onBackPressed()

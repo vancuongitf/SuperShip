@@ -6,8 +6,8 @@ import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.commonEditText
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getHeightScreen
-import cao.cuong.supership.supership.extension.getWidthScreen
 import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 /**
@@ -24,68 +24,102 @@ class SignUpFragmentUI : AnkoComponent<SignUpFragment> {
     internal lateinit var edtEmail: EditText
 
     override fun createView(ui: AnkoContext<SignUpFragment>) = with(ui) {
-        scrollView {
-            lparams(context.getWidthScreen(), context.getHeightScreen())
+
+        verticalLayout {
+
             backgroundResource = R.drawable.bg_login_image
-            padding = dimen(R.dimen.accountFragmentLoginPadding)
+            isClickable = true
 
-            verticalLayout {
+            toolbar {
 
-                textView(R.string.signUpTitle) {
-                    textColorResource = R.color.colorRed
-                    textSizeDimen = R.dimen.signUpTitleSize
-                    gravity = Gravity.CENTER
-                    verticalPadding = dimen(R.dimen.signUpTitlePadding)
-                }.lparams(matchParent, wrapContent)
+                backgroundColorResource = R.color.colorWhite
+                setContentInsetsAbsolute(0, 0)
 
-                commonEditText(R.string.fullName) {
-                    edtFullName = editText
-                }.lparams(matchParent, wrapContent) {
+                linearLayout {
 
-                }
+                    gravity = Gravity.CENTER_VERTICAL
 
-                commonEditText(R.string.userName) {
-                    edtUserName = editText
-                }.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
 
-                commonEditText(R.string.password, true) {
-                    edtPassword = editText
-                }.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.onBackButtonClicked()
+                        }
 
-                commonEditText(R.string.retypePassword, true) {
-                    edtRetypePassword = editText
-                }.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
+                        imageView(R.drawable.ic_back_button) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
 
-                commonEditText(R.string.phoneNumber) {
-                    edtPhoneNumber = editText
-                }.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
-
-                commonEditText(R.string.email) {
-                    edtEmail = editText
-                }.lparams(matchParent, wrapContent) {
-                    topMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                }
-
-                textView(R.string.signUpButton) {
-                    gravity = Gravity.CENTER_HORIZONTAL
-                    backgroundColorResource = R.color.colorPink
-                    enableHighLightWhenClicked()
-                    verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
-                    onClick {
-                        owner.eventSignUpButtonClicked()
+                    textView(R.string.signUpTitle) {
+                        textSizeDimen = R.dimen.storeTitleTextSize
+                        textColorResource = R.color.colorBlack
+                    }.lparams(0, wrapContent) {
+                        weight = 1f
                     }
-                }.lparams(matchParent, wrapContent) {
-                    verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
+
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.eventSignUpButtonClicked()
+                        }
+
+                        imageView(R.drawable.ic_check_button) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }.lparams(wrapContent, matchParent)
+
+                }.lparams(matchParent, wrapContent)
+            }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+
+            scrollView {
+
+                verticalLayout {
+                    lparams(matchParent, matchParent)
+                    padding = dimen(R.dimen.accountFragmentLoginPadding)
+
+                    commonEditText(R.string.fullName) {
+                        edtFullName = editText
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    commonEditText(R.string.userName) {
+                        edtUserName = editText
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    commonEditText(R.string.password, true) {
+                        edtPassword = editText
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    commonEditText(R.string.retypePassword, true) {
+                        edtRetypePassword = editText
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    commonEditText(R.string.phoneNumber) {
+                        edtPhoneNumber = editText
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
+
+                    commonEditText(R.string.email) {
+                        edtEmail = editText
+                    }.lparams(matchParent, wrapContent) {
+                        topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                    }
                 }
-            }
+            }.lparams(matchParent, context.getHeightScreen())
         }
     }
 }

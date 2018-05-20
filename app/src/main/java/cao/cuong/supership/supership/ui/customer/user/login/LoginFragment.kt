@@ -2,6 +2,7 @@ package cao.cuong.supership.supership.ui.customer.user.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat.finishAffinity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +14,11 @@ import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.customer.user.UserActivity
 import cao.cuong.supership.supership.ui.shipper.account.ShipperActivity
+import cao.cuong.supership.supership.ui.splash.SplashActivity
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.startActivity
 
 /**
  *
@@ -80,6 +83,13 @@ class LoginFragment : BaseFragment() {
             }
 
         }
+    }
+
+    internal fun eventChangeModuleClicked() {
+        viewModel.removeModule()
+        startActivity(Intent(context, SplashActivity::class.java))
+        activity.finishAffinity()
+        Runtime.getRuntime().exit(0)
     }
 
     internal fun eventForgotPasswordClicked() {

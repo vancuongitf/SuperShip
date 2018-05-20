@@ -98,7 +98,7 @@
     <string name="orderAt">Đặt lúc: %s</string>
     <string name="billStoreName">Tên cửa hàng: %s</string>
     <string name="billStoreAddress">Địa chỉ cửa hàng: %s</string>
-    <string name="billCustomerPhone">Tên khách hàng: %s</string>
+    <string name="billCustomerPhone">Số điện thoại khách hàng: %s</string>
     <string name="billCustomerName">Tên khách hàng: %s</string>
     <string name="billUserAddress">Địa chỉ giao hàng: %s</string>
     <string name="shipRoad">Đường giao hàng</string>
@@ -126,4 +126,9 @@
     <string name="bills">Đơn hàng</string>
     <string name="checkBillConfirm">Bạn chắc chắn muốn xác nhận đơn hàng này?</string>
     <string name="banBillConfirm">Bạn chắc chắn muốn hủy đơn hàng này?</string>
+    <string name="changeModule">Thay đổi module</string>
+    <string name="leaveConfirm">Bạn chắc chắn muốn, hủy bỏ đăng ký và rời khỏi trang đăng ký.</string>
+    <string name="banConfirm">Bạn chắc chắn muốn khóa tài khoản này?</string>
+    <string name="activeConfirm">Bạn chắc chắn muốn kích hoạt tài khoản này.</string>
+    <string name="shipperInfo">Thông tin shipper</string>
 </resources>

@@ -75,6 +75,8 @@ class LoginFragmentViewModel(private val context: Context) {
 
     internal fun getModule() = localRepository.getModule()
 
+    internal fun removeModule() = localRepository.chooseModule(-1)
+
     private fun saveAccessToken(token: AccessToken) {
         if (token.token.isNotEmpty()) {
             localRepository.saveAccessToken(token.token)

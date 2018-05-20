@@ -3,9 +3,8 @@ package cao.cuong.supership.supership.ui.staff.main
 import android.support.annotation.DrawableRes
 import android.support.v4.app.Fragment
 import cao.cuong.supership.supership.R
-import cao.cuong.supership.supership.R.id.homeContainer
-import cao.cuong.supership.supership.ui.staff.base.StaffBaseFragment
 import cao.cuong.supership.supership.ui.staff.bill.StaffBillFragment
+import cao.cuong.supership.supership.ui.staff.shipper.StaffShipperFragment
 
 /**
  * MainTab
@@ -14,7 +13,7 @@ import cao.cuong.supership.supership.ui.staff.bill.StaffBillFragment
 class StaffMainTab(val itemType: TabItemType) {
 
     private val billFragment = StaffBillFragment()
-    private val shipperFragment = StaffBillFragment()
+    private val shipperFragment = StaffShipperFragment()
     private val accountFragment = StaffBillFragment()
 
     /**

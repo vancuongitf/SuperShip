@@ -149,4 +149,12 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/v1/staff/checkbill.php")
     fun checkBill(@Field("token") token: String, @Field("status") status: Int, @Field("id") id: Long): Single<MessageResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/shippers.php")
+    fun getShippers(@Field("token") token: String, @Field("search") search: String, @Field("page") page: Int, @Field("status") status: Int): CustomCall<ExpressShipperResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/shipper.php")
+    fun getShipper(@Field("token") token: String, @Field("id") shipperId: Long): Single<Shipper>
 }

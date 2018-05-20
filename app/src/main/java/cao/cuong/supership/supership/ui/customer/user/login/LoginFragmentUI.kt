@@ -23,6 +23,7 @@ class LoginFragmentUI : AnkoComponent<LoginFragment> {
     internal lateinit var edtUserName: EditText
     internal lateinit var edtPassword: EditText
     internal lateinit var tvSignUp: TextView
+    internal lateinit var tvChangeModule: TextView
 
     @SuppressLint("RtlHardcoded")
     override fun createView(ui: AnkoContext<LoginFragment>) = with(ui) {
@@ -87,6 +88,18 @@ class LoginFragmentUI : AnkoComponent<LoginFragment> {
                 verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
                 onClick {
                     owner.eventSignUpButtonClicked()
+                }
+            }.lparams(matchParent, wrapContent) {
+                verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+            }
+
+            tvChangeModule = textView(R.string.changeModule) {
+                gravity = Gravity.CENTER_HORIZONTAL
+                backgroundColorResource = R.color.colorGrayLight
+                enableHighLightWhenClicked()
+                verticalPadding = dimen(R.dimen.accountFragmentLoginPadding)
+                onClick {
+                    owner.eventChangeModuleClicked()
                 }
             }.lparams(matchParent, wrapContent) {
                 verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)

@@ -9,4 +9,5 @@ data class Shipper(@SerializedName("id") val id: Long,
                    @SerializedName("phone_number") var phone: String,
                    @SerializedName("deposit") var deposit: Int,
                    @SerializedName("personal_id") var personalId: String,
-                   @SerializedName("email") var email: String)
+                   @SerializedName("email") var email: String,
+                   @SerializedName("status") var status: Int)

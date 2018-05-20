@@ -2,9 +2,11 @@ package cao.cuong.supership.supership.data.source.datasource
 
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.model.BillInfo
+import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.model.Staff
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.response.BillExpressResponse
+import cao.cuong.supership.supership.data.source.remote.response.ExpressShipperResponse
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import io.reactivex.Single
 
@@ -19,4 +21,8 @@ interface StaffDataSource {
     fun getBillInfo(token: String, id: Long): Single<BillInfo>
 
     fun checkBill(token: String, status: Int, id: Long): Single<MessageResponse>
+
+    fun getShippers(token: String, search: String, page: Int, status: Int): CustomCall<ExpressShipperResponse>
+
+    fun getShipperInfo(token: String, shipperId: Long): Single<Shipper>
 }
