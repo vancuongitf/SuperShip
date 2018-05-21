@@ -16,6 +16,7 @@ class BillDrinkAdapter(private val drinks: MutableList<OrderedDrink>, private va
             .placeholder(R.drawable.glide_place_holder)
 
     internal var onDrinkCountChange: () -> Unit = {}
+    internal var onItemClicked: (Int) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillDrinkViewHolder {
         val ui = BillDrinkItemUI()
@@ -32,6 +33,12 @@ class BillDrinkAdapter(private val drinks: MutableList<OrderedDrink>, private va
     inner class BillDrinkViewHolder(private val ui: BillDrinkItemUI, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         init {
+
+            itemView.onClick {
+                if (adapterPosition > -1) {
+                    onItemClicked(adapterPosition)
+                }
+            }
 
             if (adapterType == AdapterType.BILL_INFO) {
                 ui.imgMinus.visibility = View.GONE

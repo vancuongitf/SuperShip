@@ -59,5 +59,4 @@ class StaffShipperFragmentViewModel(context: Context) {
             }
         })
     }
-
 }

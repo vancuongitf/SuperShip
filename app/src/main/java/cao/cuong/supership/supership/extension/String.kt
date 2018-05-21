@@ -14,7 +14,7 @@ import java.util.regex.Pattern
 private const val REGEX_USER_NAME = "[a-zA-Z][a-zA-Z0-9]{7,15}"
 private const val REGEX_PASS_WORD = "[a-zA-Z0-9]{8,16}"
 private const val REGEX_PHONE_NUMBER_MOBILE = "('+'84|84|0)(1[2689]|9)[0-9]{8,8}"
-private const val REGEX_PHONE_NUMBER_STATIC = "('+'84|84|0)2[0-9]{2}"
+private const val REGEX_PHONE_NUMBER_STATIC = "('+'84|84|0)2[0-9]{9}"
 private const val REGEX_EMAIL_ADDRESS = "((([a-zA-Z0-9]{0,1})+([_|.]{0,1}([a-zA-Z0-9]){0,1})+))+@(([a-zA-Z0-9]{1,63}[-|.]{1}[a-zA-Z0-9]{1,63})(([-|.]{1}[a-zA-Z0-9]{1,63}){0,1})+){1,255}"
 private const val REGEX_OTP_CODE = "[1-9][0-9]{5}"
 private const val REGEX_FULL_NAME = "[a-zA-Z_ \\-ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+"

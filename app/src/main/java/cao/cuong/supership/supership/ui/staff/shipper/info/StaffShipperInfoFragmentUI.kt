@@ -126,7 +126,6 @@ class StaffShipperInfoFragmentUI : AnkoComponent<StaffShipperInfoFragment> {
                     topMargin = dimen(R.dimen.accountFragmentLoginPadding)
                 }
 
-
                 edtAddress = commonEditTextWithEditButton(R.drawable.ic_address, {
                 }) {}.lparams(matchParent, wrapContent) {
                     topMargin = dimen(R.dimen.accountFragmentLoginPadding)

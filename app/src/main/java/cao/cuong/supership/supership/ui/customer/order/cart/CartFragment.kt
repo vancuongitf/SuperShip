@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
 import cao.cuong.supership.supership.data.model.ShipAddress
+import cao.cuong.supership.supership.data.model.UpdateOrderedBills
 import cao.cuong.supership.supership.data.model.google.StoreAddress
 import cao.cuong.supership.supership.data.model.rxevent.UpdateCartStatus
 import cao.cuong.supership.supership.data.model.rxevent.UpdateOrderUI
@@ -32,6 +33,7 @@ class CartFragment:BaseFragment(){
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = CartFragmentViewModel(context)
         ui = CartFragmentUI(orderedDrinks)
+        ui.orderedDrinkAdapter.onItemClicked = this::orderedAdapterItemClicked
         ui.orderedDrinkAdapter.onDrinkCountChange = this::updateBillInfo
         return ui.createView(AnkoContext.create(context, this))
     }
@@ -41,6 +43,12 @@ class CartFragment:BaseFragment(){
         viewModel.progressDialogStatusObservable
                 .observeOnUiThread()
                 .subscribe(this::handleUpdateProgressDialogStatus)
+        RxBus.listen(UpdateOrderedBills::class.java)
+                .observeOnUiThread()
+                .subscribe({
+                    updateBillInfo()
+                    ui.orderedDrinkAdapter.notifyDataSetChanged()
+                })
         updateUI()
     }
 
@@ -162,5 +170,9 @@ class CartFragment:BaseFragment(){
                 ui.tvTotalCost.text = "${cartPrice + it.distance.getShipFee()} VND"
             }
         }
+    }
+
+    private fun orderedAdapterItemClicked(position: Int) {
+        (activity as? OrderActivity)?.openOrderedDrinkFragment(position)
     }
 }

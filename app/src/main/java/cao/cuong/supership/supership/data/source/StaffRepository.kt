@@ -2,6 +2,8 @@ package cao.cuong.supership.supership.data.source
 
 import cao.cuong.supership.supership.data.source.datasource.StaffDataSource
 import cao.cuong.supership.supership.data.source.remote.StaffRemoteDataSource
+import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
+import io.reactivex.Single
 
 class StaffRepository : StaffDataSource {
 
@@ -20,4 +22,6 @@ class StaffRepository : StaffDataSource {
     override fun getShippers(token: String, search: String, page: Int, status: Int) = staffRemoteDataSource.getShippers(token, search, page, status)
 
     override fun getShipperInfo(token: String, shipperId: Long) = staffRemoteDataSource.getShipperInfo(token, shipperId)
+
+    override fun changeUserStatus(token: String, userId: Long, status: Int, isShipper: Boolean) = staffRemoteDataSource.changeUserStatus(token, userId, status, isShipper)
 }

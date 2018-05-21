@@ -10,6 +10,7 @@ import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.replaceFragment
 import cao.cuong.supership.supership.ui.customer.order.cart.CartFragment
+import cao.cuong.supership.supership.ui.customer.order.drink.item.OrderedDrinkFragment
 import cao.cuong.supership.supership.ui.customer.store.BaseStoreInfoActivity
 import cao.cuong.supership.supership.ui.customer.store.drink.info.DrinkFragment
 import cao.cuong.supership.supership.ui.customer.store.info.StoreInfoFragment
@@ -40,6 +41,12 @@ class OrderActivity : BaseStoreInfoActivity() {
     internal fun openCartFragment() {
         if (orderedDrinks.isNotEmpty()) {
             addFragment(R.id.orderActivityContainer, CartFragment(), { it.animRightToLeft() }, CartFragment::class.java.simpleName)
+        }
+    }
+
+    fun openOrderedDrinkFragment(position: Int) {
+        if (orderedDrinks.isNotEmpty()) {
+            addFragment(R.id.orderActivityContainer, OrderedDrinkFragment.getNewInstance(position), { it.animRightToLeft() }, OrderedDrinkFragment::class.java.simpleName)
         }
     }
 

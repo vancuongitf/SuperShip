@@ -2,10 +2,12 @@ package cao.cuong.supership.supership.ui.customer.order.drink.item
 
 import android.graphics.Typeface
 import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.DrinkOption
@@ -13,6 +15,7 @@ import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getWidthScreen
 import cao.cuong.supership.supership.ui.customer.store.optional.adapter.OptionalAdapter
 import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.collapsingToolbarLayout
 import org.jetbrains.anko.design.coordinatorLayout
@@ -30,6 +33,7 @@ class OrderedDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<
     internal lateinit var imgAdd: ImageView
     internal lateinit var tvDrinkCount: TextView
     internal lateinit var edtNote: EditText
+    internal lateinit var llDrinkCount: LinearLayout
     internal val drinkOptionAdapter = OptionalAdapter(options, OptionalAdapter.AdapterType.ORDER)
 
     override fun createView(ui: AnkoContext<OrderedDrinkFragment>) = with(ui) {
@@ -63,7 +67,7 @@ class OrderedDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<
                                     weight = 1f
                                 }
 
-                                linearLayout {
+                                llDrinkCount = linearLayout {
 
                                     imgMinus = imageView(R.drawable.ic_minus_black) {
                                         enableHighLightWhenClicked()
@@ -133,6 +137,47 @@ class OrderedDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<
                         }.lparams(matchParent, wrapContent)
                     }.lparams(matchParent, wrapContent) {
                         topMargin = dimen(R.dimen.toolBarHeight)
+                    }
+
+                    toolbar {
+                        setContentInsetsAbsolute(0, 0)
+                        backgroundColorResource = R.color.colorWhite
+
+                        verticalLayout {
+                            linearLayout {
+
+                                gravity = Gravity.CENTER_VERTICAL
+
+                                relativeLayout {
+
+                                    gravity = Gravity.CENTER_VERTICAL
+                                    enableHighLightWhenClicked()
+                                    onClick {
+                                        owner.onBackClicked()
+                                    }
+
+                                    imageView(R.drawable.ic_back_button) {
+                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                    }
+                                }.lparams(wrapContent, matchParent)
+
+                                textView {
+                                    textSizeDimen = R.dimen.storeTitleTextSize
+                                    textColorResource = R.color.colorBlue
+                                }.lparams(0, wrapContent) {
+                                    weight = 1f
+                                }
+
+                            }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+
+                            view {
+                                backgroundResource = R.color.colorGrayVeryLight
+                            }.lparams(matchParent, dip(1))
+
+                        }.lparams(matchParent, wrapContent)
+                    }.lparams(matchParent, wrapContent) {
+                        collapseMode = CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN
                     }
 
                 }.lparams(matchParent, wrapContent) {

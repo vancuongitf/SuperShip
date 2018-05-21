@@ -4,6 +4,7 @@ import android.support.annotation.DrawableRes
 import android.support.v4.app.Fragment
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.ui.staff.bill.StaffBillFragment
+import cao.cuong.supership.supership.ui.staff.info.StaffInfoFragment
 import cao.cuong.supership.supership.ui.staff.shipper.StaffShipperFragment
 
 /**
@@ -14,7 +15,7 @@ class StaffMainTab(val itemType: TabItemType) {
 
     private val billFragment = StaffBillFragment()
     private val shipperFragment = StaffShipperFragment()
-    private val accountFragment = StaffBillFragment()
+    private val accountFragment = StaffInfoFragment()
 
     /**
      * TabItemType
@@ -23,17 +24,17 @@ class StaffMainTab(val itemType: TabItemType) {
         /**
          * First Item On Tab
          */
-        ITEM_HOME(R.drawable.ic_home, R.drawable.ic_home_red, true),
+        ITEM_HOME(R.drawable.ic_bill_list_black, R.drawable.ic_bill_list_red, true),
 
         /**
          * Second Item On Tab
          */
-        ITEM_BILL(R.drawable.ic_bill, R.drawable.ic_bill_red),
+        ITEM_BILL(R.drawable.ic_shipper_black, R.drawable.ic_shipper_red),
 
         /**
          * Third Item On Tab
          */
-        ITEM_ACCOUNT(R.drawable.ic_account, R.drawable.ic_account_red)
+        ITEM_ACCOUNT(R.drawable.ic_user_info_black, R.drawable.ic_user_info_red)
     }
 
     /**

@@ -62,16 +62,6 @@ class AccountFragment : BaseFragment() {
         viewModel.logOut()
     }
 
-    internal fun eventChangeFullNameClick() {
-    }
-
-    internal fun eventChangePhoneNumberClick() {
-    }
-
-    internal fun eventChangeEmailClick() {
-
-    }
-
     internal fun eventStoreListClicked() {
         val intent = Intent(activity, StoreActivity::class.java)
         activity.startActivity(intent)

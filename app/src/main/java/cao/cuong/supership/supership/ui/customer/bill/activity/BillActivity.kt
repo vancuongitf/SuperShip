@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.customer.bill.activity
 import android.os.Bundle
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Address
+import cao.cuong.supership.supership.data.model.BillInfo
 import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.replaceFragment
@@ -10,6 +11,7 @@ import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.customer.bill.info.BillInfoFragment
 import cao.cuong.supership.supership.ui.customer.bill.ship.BillShipRoadFragment
+import cao.cuong.supership.supership.ui.customer.order.drink.item.OrderedDrinkFragment
 import cao.cuong.supership.supership.ui.shipper.bill.complete.ShipperBillCompleteFragment
 import cao.cuong.supership.supership.ui.shipper.bill.info.ShipperBillInfoFragment
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
@@ -18,6 +20,7 @@ import org.jetbrains.anko.setContentView
 
 class BillActivity : BaseActivity() {
 
+    internal var billInfo: BillInfo? = null
     private lateinit var ui: BillActivityUI
     private lateinit var viewModel: BillActivityViewModel
 
@@ -61,5 +64,9 @@ class BillActivity : BaseActivity() {
 
     internal fun openCompleteBillFragment(billId: Long) {
         addFragment(R.id.billActivityContainer, ShipperBillCompleteFragment.getNewInstance(billId), { it.animRightToLeft() }, ShipperBillCompleteFragment::class.java.simpleName)
+    }
+
+    internal fun openOrderedDrinkFragment(position: Int) {
+        addFragment(R.id.billActivityContainer, OrderedDrinkFragment.getNewInstance(position), { it.animRightToLeft() }, "Bill-" + OrderedDrinkFragment::class.java.simpleName)
     }
 }
