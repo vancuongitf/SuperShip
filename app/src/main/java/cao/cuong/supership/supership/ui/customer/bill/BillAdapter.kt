@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.customer.bill
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.ExpressBill
 import cao.cuong.supership.supership.extension.getBillStatus
@@ -40,7 +41,7 @@ class BillAdapter(private val expressBills: MutableList<ExpressBill>) : Recycler
                 com.bumptech.glide.Glide.with(itemView.context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/$storeImage")
+                        .load(BuildConfig.BASE_IMAGE_URL + storeImage)
                         .into(ui.imgStoreIcon)
                 ui.tvStoreName.text = storeName
                 ui.tvBillStatus.text = itemView.context.getString(R.string.status, status.getBillStatus())

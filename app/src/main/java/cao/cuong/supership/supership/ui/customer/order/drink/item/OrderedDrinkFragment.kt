@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
 import cao.cuong.supership.supership.data.model.UpdateOrderedBills
@@ -76,7 +77,7 @@ class OrderedDrinkFragment : BaseFragment() {
             Glide.with(context)
                     .applyDefaultRequestOptions(option)
                     .asBitmap()
-                    .load("https://vnshipperman.000webhostapp.com/uploads/${orderedDrink.image}")
+                    .load(BuildConfig.BASE_IMAGE_URL + orderedDrink.image)
                     .into(imgDrinkImage)
         }
         updateDrinkPrice()

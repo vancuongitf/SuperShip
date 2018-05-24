@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.data.model.Store
@@ -88,7 +89,7 @@ class StoreInfoFragment : BaseFragment() {
         Glide.with(context)
                 .applyDefaultRequestOptions(option)
                 .asBitmap()
-                .load("https://vnshipperman.000webhostapp.com/uploads/${store.image}")
+                .load(BuildConfig.BASE_IMAGE_URL + store.image)
                 .into(ui.imgStoreAvatar)
         ui.tvStoreNameTitle.text = store.name
         ui.tvStoreName.text = store.name

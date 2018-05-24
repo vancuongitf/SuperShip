@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.customer.order.cart
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
 import com.bumptech.glide.Glide
@@ -73,7 +74,7 @@ class BillDrinkAdapter(private val drinks: MutableList<OrderedDrink>, private va
                 Glide.with(itemView.context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/$image")
+                        .load(BuildConfig.BASE_IMAGE_URL + image)
                         .into(ui.imgDrinkImage)
                 ui.tvDrinkName.text = name
                 ui.tvDrinkPrice.text = itemView.context.getString(R.string.drinkPrice, price)

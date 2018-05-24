@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.customer.home.store
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.extension.getDistanceString
@@ -48,7 +49,7 @@ class StoreAdapter(private val storeInfoExpresses: MutableList<StoreInfoExpress>
                 Glide.with(itemView.context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/$storeImage")
+                        .load(BuildConfig.BASE_IMAGE_URL + storeImage)
                         .into(ui.imgStoreIcon)
                 ui.tvStoreName.text = storeName
                 ui.tvStoreAddress.text = storeAddress
