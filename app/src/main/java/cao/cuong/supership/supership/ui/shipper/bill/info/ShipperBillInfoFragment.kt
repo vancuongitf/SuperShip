@@ -24,7 +24,6 @@ class ShipperBillInfoFragment : BaseFragment() {
 
     companion object {
         internal const val KEY_BILL_ID = "key_id"
-        private const val REQUEST_PAYMENT_PAY_PAL = 2203
 
         internal fun getNewInstance(id: Long): ShipperBillInfoFragment {
             val instance = ShipperBillInfoFragment()
@@ -58,8 +57,7 @@ class ShipperBillInfoFragment : BaseFragment() {
         RxBus.listen(UpdateBillStatus::class.java)
                 .observeOnUiThread()
                 .subscribe({
-                    ui.rlCompleted.isEnabled = false
-                    ui.imgCompleted.setImageResource(R.drawable.ic_bg_tranparent)
+                    ui.rlCompleted.visibility = View.GONE
                 })
     }
 
@@ -72,7 +70,6 @@ class ShipperBillInfoFragment : BaseFragment() {
     }
 
     internal fun eventShowShipRoadClick() {
-        ui.imgShowShipRoad.visibility = View.GONE
         bill?.let {
             val billInfo = it
             (activity as? BillActivity)?.openShipRoadFragment(billId, billInfo.store.address, billInfo.address, billInfo.shipRoad)
@@ -113,8 +110,6 @@ class ShipperBillInfoFragment : BaseFragment() {
                 ui.imgShowShipRoad.visibility = View.GONE
             } else if (bill.status == 2) {
                 ui.rlRegister.visibility = View.GONE
-                ui.rlRegister.isEnabled = false
-                ui.imgRegister.setImageResource(R.drawable.ic_bg_tranparent)
                 if (bill.shipperId != bill.requestShipper) {
                     ui.rlCompleted.visibility = View.GONE
                     ui.imgShowShipRoad.visibility = View.GONE

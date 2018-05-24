@@ -24,7 +24,7 @@ class ResetPasswordFragmentUI(private val userName: String) : AnkoComponent<Rese
     override fun createView(ui: AnkoContext<ResetPasswordFragment>) = with(ui) {
         verticalLayout {
             lparams(context.getWidthScreen(), context.getHeightScreen())
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
 
             relativeLayout {

@@ -26,7 +26,7 @@ class HomeFragmentUI(private val fragmentAdapter: HomeFragmentAdapter) : AnkoCom
             lparams(matchParent, matchParent)
 
             toolbar {
-                backgroundColorResource = R.color.colorGrayVeryLight
+                backgroundColorResource = R.color.colorGrayLight
                 padding = dimen(R.dimen.toolBarPadding)
                 setContentInsetsAbsolute(0, 0)
                 onClick {

@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.customer.account
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.extension.commonEditTextWithEditButton
@@ -25,6 +26,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
     internal lateinit var edtEmail: CommonEditTextWithEditButton
     internal lateinit var billAddressAdapter: BillAddressAdapter
     internal lateinit var tvReload: TextView
+    internal lateinit var rlEditInfo: RelativeLayout
 
     override fun createView(ui: AnkoContext<AccountFragment>) = with(ui) {
 
@@ -49,18 +51,22 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
                         weight = 1f
                     }
 
-                    relativeLayout {
-                        gravity = Gravity.CENTER_VERTICAL
+                    rlEditInfo = relativeLayout {
+                        visibility = View.GONE
 
-                        enableHighLightWhenClicked()
-                        onClick {
-                        }
+                        relativeLayout {
+                            gravity = Gravity.CENTER_VERTICAL
 
-                        imageView(R.drawable.ic_edit_note) {
-                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                        }
-                    }.lparams(wrapContent, matchParent)
+                            enableHighLightWhenClicked()
+                            onClick {
+                            }
+
+                            imageView(R.drawable.ic_edit_note) {
+                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                            }
+                        }.lparams(wrapContent, matchParent)
+                    }
 
                 }.lparams(matchParent, wrapContent)
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))

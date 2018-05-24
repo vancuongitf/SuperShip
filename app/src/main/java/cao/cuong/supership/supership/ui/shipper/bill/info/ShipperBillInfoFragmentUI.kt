@@ -27,8 +27,6 @@ import org.jetbrains.anko.support.v4.nestedScrollView
 
 class ShipperBillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<ShipperBillInfoFragment> {
 
-    internal lateinit var imgRegister: ImageView
-    internal lateinit var imgCompleted: ImageView
     internal lateinit var imgStoreAvatar: ImageView
     internal lateinit var tvBillId: TextView
     internal lateinit var tvStoreName: TextView
@@ -41,7 +39,7 @@ class ShipperBillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoC
     internal lateinit var tvTotalPrice: TextView
     internal lateinit var tvOrderTime: TextView
     internal lateinit var tvStatus: TextView
-    internal lateinit var imgShowShipRoad: ImageView
+    internal lateinit var imgShowShipRoad: RelativeLayout
     internal lateinit var rlRegister: RelativeLayout
     internal lateinit var rlCompleted: RelativeLayout
     internal val billDrinkAdapter = BillDrinkAdapter(orderedDrink, BillDrinkAdapter.AdapterType.BILL_INFO)
@@ -109,15 +107,22 @@ class ShipperBillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoC
                                     verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                 }
 
-                                imgShowShipRoad = imageView(R.drawable.ic_show_ship_road) {
+                                imgShowShipRoad = relativeLayout {
                                     visibility = View.GONE
-                                    enableHighLightWhenClicked()
 
-                                    onClick {
-                                        owner.eventShowShipRoadClick()
+                                    relativeLayout {
+
+                                        enableHighLightWhenClicked()
+
+                                        onClick {
+                                            owner.eventShowShipRoadClick()
+                                        }
+
+                                        imageView(R.drawable.ic_show_ship_road) {
+                                        }.lparams(dimen(R.dimen.billInfoButtonShowShipRoad), dimen(R.dimen.billInfoButtonShowShipRoad)) {
+                                            leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
                                     }
-                                }.lparams(dimen(R.dimen.billInfoButtonShowShipRoad), dimen(R.dimen.billInfoButtonShowShipRoad)) {
-                                    leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                 }
 
                             }.lparams(matchParent, wrapContent)
@@ -217,33 +222,39 @@ class ShipperBillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoC
 
                                 rlRegister = relativeLayout {
                                     visibility = View.GONE
-                                    gravity = Gravity.CENTER_VERTICAL
-                                    enableHighLightWhenClicked()
-                                    onClick {
-                                        owner.onRegisterClick()
-                                    }
 
-                                    imgRegister = imageView(R.drawable.ic_register_bill) {
+                                    relativeLayout {
+                                        gravity = Gravity.CENTER_VERTICAL
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.onRegisterClick()
+                                        }
 
-                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                    }
-                                }.lparams(wrapContent, matchParent)
+                                        imageView(R.drawable.ic_register_bill) {
+
+                                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
+                                    }.lparams(wrapContent, matchParent)
+                                }
 
                                 rlCompleted = relativeLayout {
                                     visibility = View.GONE
-                                    gravity = Gravity.CENTER_VERTICAL
-                                    enableHighLightWhenClicked()
-                                    onClick {
-                                        owner.onCompleteClick()
-                                    }
 
-                                    imgCompleted = imageView(R.drawable.ic_complete_bill) {
+                                    relativeLayout {
+                                        gravity = Gravity.CENTER_VERTICAL
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.onCompleteClick()
+                                        }
 
-                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                    }
-                                }.lparams(wrapContent, matchParent)
+                                        imageView(R.drawable.ic_complete_bill) {
+
+                                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
+                                    }.lparams(wrapContent, matchParent)
+                                }
 
                             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 

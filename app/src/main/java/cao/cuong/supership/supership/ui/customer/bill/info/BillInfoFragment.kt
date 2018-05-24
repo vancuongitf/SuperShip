@@ -101,7 +101,6 @@ class BillInfoFragment : BaseFragment() {
     }
 
     internal fun eventShowShipRoadClick() {
-        ui.imgShowShipRoad.visibility = View.GONE
         bill?.let {
             val billInfo = it
             (activity as? BillActivity)?.openShipRoadFragment(billId, billInfo.store.address, billInfo.address, billInfo.shipRoad)
@@ -161,13 +160,11 @@ class BillInfoFragment : BaseFragment() {
     }
 
     private fun handleVerifyPaymentSuccess(messageResponse: MessageResponse) {
-        ui.imgPayment.setImageResource(R.drawable.ic_bg_tranparent)
-        ui.rlPayment.isEnabled = false
+        ui.rlPayment.visibility = View.GONE
         context.showOkAlert(R.string.notification, messageResponse.message)
     }
 
     private fun drinkAdapterItemClicked(position: Int) {
-        Log.i("tag11","xxx")
         (activity as? BillActivity)?.openOrderedDrinkFragment(position)
     }
 }

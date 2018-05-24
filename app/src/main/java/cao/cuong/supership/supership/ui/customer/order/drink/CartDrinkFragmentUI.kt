@@ -20,7 +20,7 @@ class CartDrinkFragmentUI(fm: FragmentManager, adapterSize: Int) : AnkoComponent
     override fun createView(ui: AnkoContext<CartDrinkFragment>) = with(ui) {
         verticalLayout {
             isClickable = true
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
 
             appBarLayout {
                 fitsSystemWindows = true
@@ -29,7 +29,7 @@ class CartDrinkFragmentUI(fm: FragmentManager, adapterSize: Int) : AnkoComponent
 
                     toolbar {
                         setContentInsetsAbsolute(0, 0)
-                        backgroundColorResource = R.color.colorWhite
+                        backgroundColorResource = R.color.colorGrayLight
 
                         verticalLayout {
                             linearLayout {

@@ -19,7 +19,7 @@ class BillShipRoadFragmentUI : AnkoComponent<BillShipRoadFragment> {
 
             toolbar {
                 setContentInsetsAbsolute(0, 0)
-                backgroundColorResource = R.color.colorWhite
+                backgroundColorResource = R.color.colorGrayLight
 
                 linearLayout {
 

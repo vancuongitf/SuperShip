@@ -20,7 +20,6 @@ import org.jetbrains.anko.AnkoContext
 class ForgotPasswordFragment : BaseFragment() {
 
     internal lateinit var ui: ForgotPasswordFragmentUI
-    internal lateinit var eventRequestResetSuccess: (response: RequestResetPassResponse) -> Unit
 
     private lateinit var viewModel: ForgotPasswordFragmentViewModel
 
@@ -34,6 +33,7 @@ class ForgotPasswordFragment : BaseFragment() {
     }
 
     internal fun eventResetButtonClicked() {
+        hideKeyboard()
         val email = ui.edtEmail.text.toString()
         if (email.isValidateEmail()) {
             viewModel.requestResetPassword(email)
@@ -52,7 +52,7 @@ class ForgotPasswordFragment : BaseFragment() {
 
     private fun handleRequestSuccess(response: RequestResetPassResponse) {
         context.showOkAlert(R.string.notification, context.getString(R.string.requestResetSuccess, ui.edtEmail.text.toString())) {
-            (activity as? UserActivity)?.openResetPasswordFragment()
+            (activity as? UserActivity)?.openResetPasswordFragment(response)
         }
     }
 }

@@ -4,7 +4,9 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
+import android.widget.ImageView
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.Status
 import cao.cuong.supership.supership.data.model.ExpressBill
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.ui.shipper.bill.checked.CheckedBillAdapter
@@ -19,6 +21,8 @@ class ReceiveBillFragmentUI(checkedBills: MutableList<ExpressBill>) : AnkoCompon
 
     internal lateinit var swipeRefreshLayout: SwipeRefreshLayout
     internal val checkedBillAdapter = CheckedBillAdapter(checkedBills)
+    internal lateinit var imgInTransit: ImageView
+    internal lateinit var imgCompleted: ImageView
 
     override fun createView(ui: AnkoContext<ReceiveBillFragment>) = with(ui) {
         verticalLayout {
@@ -47,10 +51,24 @@ class ReceiveBillFragmentUI(checkedBills: MutableList<ExpressBill>) : AnkoCompon
 
                         enableHighLightWhenClicked()
                         onClick {
-                            owner.onWrapClicked()
+                            owner.changeStatus(Status.BILL_IN_TRANSIT)
                         }
 
-                        imageView(R.drawable.ic_wrap) {
+                        imgInTransit = imageView(R.drawable.ic_transit_red) {
+                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+                    }
+
+                    relativeLayout {
+                        gravity = Gravity.CENTER_VERTICAL
+
+                        enableHighLightWhenClicked()
+                        onClick {
+                            owner.changeStatus(Status.BILL_COMPLETED)
+                        }
+
+                        imgCompleted = imageView(R.drawable.ic_done) {
                         }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
                             horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
                         }

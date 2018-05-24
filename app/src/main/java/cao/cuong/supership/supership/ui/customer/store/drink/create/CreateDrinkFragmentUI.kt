@@ -30,7 +30,7 @@ class CreateDrinkFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<C
     override fun createView(ui: AnkoContext<CreateDrinkFragment>) = with(ui) {
         verticalLayout {
             lparams(matchParent, matchParent)
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
             isClickable = true
 
                 toolbar {
