@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.Status
 import cao.cuong.supership.supership.data.model.rxevent.OpenUserActivityAlert
 import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
@@ -52,8 +54,19 @@ class ReceiveBillFragment : BaseFragment() {
         getReceiveBills()
     }
 
-    internal fun onWrapClicked() {
-        viewModel.wrapList()
+    internal fun changeStatus(newStatus: Int) {
+        when (newStatus) {
+            Status.BILL_IN_TRANSIT -> {
+                ui.imgInTransit.setImageResource(R.drawable.ic_transit_red)
+                ui.imgCompleted.setImageResource(R.drawable.ic_done)
+            }
+
+            Status.BILL_COMPLETED -> {
+                ui.imgInTransit.setImageResource(R.drawable.ic_transit)
+                ui.imgCompleted.setImageResource(R.drawable.ic_done_red)
+            }
+        }
+        viewModel.changeStatus(newStatus)
     }
 
     private fun handleUpdateList(notification: Notification<Boolean>) {

@@ -122,10 +122,8 @@ class StaffBillInfoFragment : BaseFragment() {
 
     private fun handleCheckBillSuccess(messageResponse: MessageResponse) {
         RxBus.publish(DeleteItemList(billId))
-        ui.rlChecked.isEnabled = false
-        ui.rlBanned.isEnabled = false
-        ui.imgChecked.setImageResource(R.drawable.ic_bg_tranparent)
-        ui.imgBanned.setImageResource(R.drawable.ic_bg_tranparent)
+        ui.rlChecked.visibility = View.GONE
+        ui.rlBanned.visibility = View.GONE
         ui.tvStatus.text = context.getString(R.string.status, expectStatus.getBillStatus())
         context.showOkAlert(R.string.notification, messageResponse.message)
     }

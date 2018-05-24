@@ -15,7 +15,6 @@ import cao.cuong.supership.supership.data.model.OrderedDrink
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
 import cao.cuong.supership.supership.extension.getHeightScreen
 import cao.cuong.supership.supership.extension.getWidthScreen
-import cao.cuong.supership.supership.ui.customer.bill.info.BillInfoFragment
 import cao.cuong.supership.supership.ui.customer.order.cart.BillDrinkAdapter
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
@@ -218,37 +217,43 @@ class StaffBillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoCom
 
                                 rlBanned = relativeLayout {
                                     visibility = View.GONE
-                                    gravity = Gravity.CENTER_VERTICAL
-                                    enableHighLightWhenClicked()
-                                    onClick {
-                                        owner.checkBill(-1)
-                                    }
 
-                                    imgBanned = imageView(R.drawable.ic_delete) {
+                                    relativeLayout {
+                                        gravity = Gravity.CENTER_VERTICAL
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.checkBill(-1)
+                                        }
+
+                                        imgBanned = imageView(R.drawable.ic_delete) {
 
 
-                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                    }
+                                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
+                                    }.lparams(wrapContent, matchParent)
                                 }.lparams(wrapContent, matchParent)
 
                                 rlChecked = relativeLayout {
                                     visibility = View.GONE
-                                    gravity = Gravity.CENTER_VERTICAL
-                                    enableHighLightWhenClicked()
-                                    onClick {
-                                        owner.checkBill(1)
-                                    }
 
-                                    imgChecked = imageView(R.drawable.ic_check_button) {
+                                    relativeLayout {
+                                        gravity = Gravity.CENTER_VERTICAL
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.checkBill(1)
+                                        }
+
+                                        imgChecked = imageView(R.drawable.ic_check_button) {
 
 
-                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                    }
-                                }.lparams(wrapContent, matchParent)
+                                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
+                                    }.lparams(wrapContent, matchParent)
 
-                            }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+                                }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+                            }.lparams(wrapContent, matchParent)
 
                             view {
                                 backgroundResource = R.color.colorGrayVeryLight

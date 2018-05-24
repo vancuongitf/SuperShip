@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Shipper
-import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
-import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.extension.showConfirmAlert
@@ -100,12 +98,8 @@ class StaffShipperInfoFragment : BaseFragment() {
             ui.edtPhoneNumber.editText.setText(it.phone)
             if (it.status == 0) {
                 ui.rlBannedButton.visibility = View.VISIBLE
-                ui.imgBanned.setImageResource(R.drawable.ic_ban)
-                ui.rlBannedButton.isEnabled = true
             } else {
                 ui.rlBannedButton.visibility = View.GONE
-                ui.imgBanned.setImageResource(R.drawable.ic_bg_tranparent)
-                ui.rlBannedButton.isEnabled = false
             }
             if (it.status == 1) {
                 ui.rlChangeStatusButton.visibility = View.VISIBLE

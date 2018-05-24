@@ -42,12 +42,8 @@ class ReceiveBillFragmentViewModel(context: Context) {
                 })
     }
 
-    internal fun wrapList() {
-        currentStatus = if (currentStatus == 2) {
-            3
-        } else {
-            2
-        }
+    internal fun changeStatus(newStatus: Int) {
+        currentStatus = newStatus
         checkedBills.clear()
         updateListObservable.onNext(Notification.createOnNext(true))
         getCheckedBills()

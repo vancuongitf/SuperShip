@@ -17,7 +17,6 @@ class StaffShipperInfoFragmentUI : AnkoComponent<StaffShipperInfoFragment> {
     internal lateinit var rlChangeStatusButton: RelativeLayout
     internal lateinit var rlBannedButton: RelativeLayout
     internal lateinit var imgChangeStatus: ImageView
-    internal lateinit var imgBanned:ImageView
     internal lateinit var edtId: CommonEditTextWithEditButton
     internal lateinit var edtFullName: CommonEditTextWithEditButton
     internal lateinit var edtPersonalId: CommonEditTextWithEditButton
@@ -65,18 +64,21 @@ class StaffShipperInfoFragmentUI : AnkoComponent<StaffShipperInfoFragment> {
 
                     rlBannedButton = relativeLayout {
                         visibility = View.GONE
-                        gravity = Gravity.CENTER_VERTICAL
 
-                        enableHighLightWhenClicked()
-                        onClick {
-                            owner.eventBannedButtonClicked()
-                        }
+                        relativeLayout {
+                            gravity = Gravity.CENTER_VERTICAL
 
-                        imgBanned = imageView(R.drawable.ic_ban) {
-                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                        }
-                    }.lparams(wrapContent, matchParent)
+                            enableHighLightWhenClicked()
+                            onClick {
+                                owner.eventBannedButtonClicked()
+                            }
+
+                            imageView(R.drawable.ic_ban) {
+                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                            }
+                        }.lparams(wrapContent, matchParent)
+                    }
 
                     rlChangeStatusButton = relativeLayout {
                         visibility = View.GONE
