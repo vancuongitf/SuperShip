@@ -27,7 +27,6 @@ import org.jetbrains.anko.support.v4.nestedScrollView
 
 class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<BillInfoFragment> {
 
-    internal lateinit var imgPayment: ImageView
     internal lateinit var imgStoreAvatar: ImageView
     internal lateinit var tvBillId: TextView
     internal lateinit var tvStoreName: TextView
@@ -40,7 +39,7 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
     internal lateinit var tvTotalPrice: TextView
     internal lateinit var tvOrderTime: TextView
     internal lateinit var tvStatus: TextView
-    internal lateinit var imgShowShipRoad: ImageView
+    internal lateinit var imgShowShipRoad: RelativeLayout
     internal lateinit var rlPayment: RelativeLayout
     internal val billDrinkAdapter = BillDrinkAdapter(orderedDrink, BillDrinkAdapter.AdapterType.BILL_INFO)
 
@@ -107,15 +106,17 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
                                     verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                 }
 
-                                imgShowShipRoad = imageView(R.drawable.ic_show_ship_road) {
+                                imgShowShipRoad = relativeLayout {
                                     visibility = View.GONE
-                                    enableHighLightWhenClicked()
+                                    imageView(R.drawable.ic_show_ship_road) {
+                                        enableHighLightWhenClicked()
 
-                                    onClick {
-                                        owner.eventShowShipRoadClick()
+                                        onClick {
+                                            owner.eventShowShipRoadClick()
+                                        }
+                                    }.lparams(dimen(R.dimen.billInfoButtonShowShipRoad), dimen(R.dimen.billInfoButtonShowShipRoad)) {
+                                        leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                     }
-                                }.lparams(dimen(R.dimen.billInfoButtonShowShipRoad), dimen(R.dimen.billInfoButtonShowShipRoad)) {
-                                    leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                                 }
 
                             }.lparams(matchParent, wrapContent)
@@ -215,21 +216,23 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
 
                                 rlPayment = relativeLayout {
                                     visibility = View.GONE
-                                    gravity = Gravity.CENTER_VERTICAL
-                                    enableHighLightWhenClicked()
-                                    onClick {
-                                        owner.paymentClicked()
-                                    }
+                                    relativeLayout {
+                                        gravity = Gravity.CENTER_VERTICAL
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.paymentClicked()
+                                        }
 
-                                    imgPayment = imageView(R.drawable.ic_payment) {
+                                        imageView(R.drawable.ic_payment) {
 
 
-                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                    }
-                                }.lparams(wrapContent, matchParent)
+                                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
+                                    }.lparams(wrapContent, matchParent)
 
-                            }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+                                }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+                            }
 
                             view {
                                 backgroundResource = R.color.colorGrayVeryLight
