@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.customer.order.cart
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
 import com.bumptech.glide.Glide
@@ -16,6 +17,7 @@ class BillDrinkAdapter(private val drinks: MutableList<OrderedDrink>, private va
             .placeholder(R.drawable.glide_place_holder)
 
     internal var onDrinkCountChange: () -> Unit = {}
+    internal var onItemClicked: (Int) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillDrinkViewHolder {
         val ui = BillDrinkItemUI()
@@ -32,6 +34,12 @@ class BillDrinkAdapter(private val drinks: MutableList<OrderedDrink>, private va
     inner class BillDrinkViewHolder(private val ui: BillDrinkItemUI, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         init {
+
+            itemView.onClick {
+                if (adapterPosition > -1) {
+                    onItemClicked(adapterPosition)
+                }
+            }
 
             if (adapterType == AdapterType.BILL_INFO) {
                 ui.imgMinus.visibility = View.GONE
@@ -66,7 +74,7 @@ class BillDrinkAdapter(private val drinks: MutableList<OrderedDrink>, private va
                 Glide.with(itemView.context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/$image")
+                        .load(BuildConfig.BASE_IMAGE_URL + image)
                         .into(ui.imgDrinkImage)
                 ui.tvDrinkName.text = name
                 ui.tvDrinkPrice.text = itemView.context.getString(R.string.drinkPrice, price)

@@ -143,18 +143,22 @@ interface ApiService {
     fun staffInfo(@Field("token") token: String): Single<Staff>
 
     @FormUrlEncoded
-    @POST("api/v1/staff/bills.php")
+    @POST("api/v1/staff/bill/bills.php")
     fun getBillExpressStaff(@Field("token") token: String, @Field("status") status: Int, @Field("id") id: String, @Field("page") page: Int): CustomCall<BillExpressResponse>
 
     @FormUrlEncoded
-    @POST("api/v1/staff/checkbill.php")
+    @POST("api/v1/staff/bill/checkbill.php")
     fun checkBill(@Field("token") token: String, @Field("status") status: Int, @Field("id") id: Long): Single<MessageResponse>
 
     @FormUrlEncoded
-    @POST("api/v1/staff/shippers.php")
+    @POST("api/v1/staff/shipper/shippers.php")
     fun getShippers(@Field("token") token: String, @Field("search") search: String, @Field("page") page: Int, @Field("status") status: Int): CustomCall<ExpressShipperResponse>
 
     @FormUrlEncoded
-    @POST("api/v1/staff/shipper.php")
+    @POST("api/v1/staff/shipper/shipper.php")
     fun getShipper(@Field("token") token: String, @Field("id") shipperId: Long): Single<Shipper>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/shipper/status.php")
+    fun changeUserStatus(@Field("token") token: String, @Field("id") userId: Long, @Field("status") status: Int, @Field("is_shipper") isShipper: Boolean): Single<MessageResponse>
 }

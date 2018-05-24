@@ -20,6 +20,7 @@ android {
             switch (variant.getName()) {
                 case "debug":
                     variant.buildConfigField "String", "BASE_API_URL", '"https://vnshipperman.000webhostapp.com/"'
+                    variant.buildConfigField "String", "BASE_IMAGE_URL", '"https://vnshipperman.000webhostapp.com/uploads/"'
                     variant.buildConfigField "String", "BASE_GOOGLE_API_URL", '"https://maps.googleapis.com/maps/api/"'
                     variant.buildConfigField "String", "BASE_PAY_PAL_API_URL", '"https://api.sandbox.paypal.com/"'
                     variant.buildConfigField "int", "SHIP_FEE", '10000'

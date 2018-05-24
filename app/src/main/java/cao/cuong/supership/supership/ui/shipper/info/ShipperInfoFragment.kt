@@ -11,6 +11,7 @@ import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.customer.user.UserActivity
 import cao.cuong.supership.supership.ui.shipper.cash.CashActivity
 import org.jetbrains.anko.AnkoContext
 
@@ -45,6 +46,8 @@ class ShipperInfoFragment : BaseFragment() {
     }
 
     internal fun eventLoginButtonClick() {
+        val intent = Intent(context, UserActivity::class.java)
+        startActivityForResult(intent, UserActivity.USER_ACTIVITY_REQUEST_CODE)
     }
 
     internal fun eventCashClicked() {
@@ -60,6 +63,9 @@ class ShipperInfoFragment : BaseFragment() {
 
     internal fun logOutClick() {
         viewModel.logOut()
+        ui.llNonLogin.visibility = View.VISIBLE
+        ui.llLogin.visibility = View.GONE
+        ui.tvReload.visibility = View.GONE
     }
 
     private fun updateUi(event: UpdateAccountUI) {

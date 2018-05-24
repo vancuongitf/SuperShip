@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OpenHour
 import cao.cuong.supership.supership.data.model.Store
@@ -17,9 +18,9 @@ import cao.cuong.supership.supership.data.source.remote.request.EditStoreBody
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.customer.store.activity.StoreActivity
 import cao.cuong.supership.supership.ui.location.LocationActivity
 import cao.cuong.supership.supership.ui.location.LocationActivity.Companion.REQUEST_CODE_SEARCH_LOCATION
-import cao.cuong.supership.supership.ui.customer.store.activity.StoreActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.theartofdev.edmodo.cropper.CropImage
@@ -71,7 +72,7 @@ class EditStoreInfoFragment : BaseFragment() {
         Glide.with(context)
                 .applyDefaultRequestOptions(option)
                 .asBitmap()
-                .load("https://vnshipperman.000webhostapp.com/uploads/${store.image}")
+                .load(BuildConfig.BASE_IMAGE_URL + store.image)
                 .into(ui.imgAvatar)
         store.openHour.openDays.forEach {
             ui.checkBoxlist[it].isChecked = true

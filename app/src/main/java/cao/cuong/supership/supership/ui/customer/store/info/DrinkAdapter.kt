@@ -1,14 +1,17 @@
 package cao.cuong.supership.supership.ui.customer.store.info
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import org.jetbrains.anko.*
+import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.textColorResource
 
 class DrinkAdapter(private val drinks: MutableList<Drink>) : RecyclerView.Adapter<DrinkAdapter.DrinkHolder>() {
 
@@ -39,7 +42,7 @@ class DrinkAdapter(private val drinks: MutableList<Drink>) : RecyclerView.Adapte
             Glide.with(itemView.context)
                     .applyDefaultRequestOptions(option)
                     .asBitmap()
-                    .load("https://vnshipperman.000webhostapp.com/uploads/${drink.image}")
+                    .load(BuildConfig.BASE_IMAGE_URL + drink.image)
                     .into(ui.imgDrinkImage)
 
             ui.tvDrinkName.text = drink.name

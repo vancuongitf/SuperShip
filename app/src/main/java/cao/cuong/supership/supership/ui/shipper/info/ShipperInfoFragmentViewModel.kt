@@ -20,6 +20,5 @@ class ShipperInfoFragmentViewModel(context: Context) {
 
     internal fun logOut() {
         localRepository.clearAccessToken()
-        RxBus.publish(UpdateAccountUI())
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.data.model.DrinkOption
@@ -94,7 +95,7 @@ class CreateDrinkFragment : BaseFragment() {
                 Glide.with(context)
                         .applyDefaultRequestOptions(option)
                         .asBitmap()
-                        .load("https://vnshipperman.000webhostapp.com/uploads/${drink.image}")
+                        .load(BuildConfig.BASE_IMAGE_URL + drink.image)
                         .into(ui.imgAvatar)
                 ui.edtName.setText(drink.name)
                 ui.edtPrice.setText(drink.price.toString())

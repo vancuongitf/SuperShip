@@ -200,6 +200,7 @@ class StaffBaseFragmentUI : AnkoComponent<StaffBaseFragment> {
                         edtSearch = editText {
                             backgroundColorResource = R.color.colorWhite
                             hint = "Tìm kiếm..."
+                            singleLine = true
                             addTextChangedListener(object : TextWatcher {
                                 override fun afterTextChanged(s: Editable?) {
                                     s?.let {

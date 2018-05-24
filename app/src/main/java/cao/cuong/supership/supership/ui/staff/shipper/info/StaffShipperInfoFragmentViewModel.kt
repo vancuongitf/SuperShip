@@ -21,4 +21,13 @@ class StaffShipperInfoFragmentViewModel(context: Context) {
                     .doFinally {
                         updateProgressStatusObservable.onNext(false)
                     }
+
+    internal fun changeShipperStatus(shipperId: Long, status: Int) = staffRepository.changeUserStatus(localRepository.getAccessToken(), shipperId, status, true)
+            .observeOnUiThread()
+            .doOnSubscribe {
+                updateProgressStatusObservable.onNext(true)
+            }
+            .doFinally {
+                updateProgressStatusObservable.onNext(false)
+            }
 }

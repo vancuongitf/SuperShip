@@ -3,9 +3,11 @@ package cao.cuong.supership.supership.ui.customer.bill.info
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.BillInfo
 import cao.cuong.supership.supership.data.model.OrderedDrink
@@ -51,6 +53,7 @@ class BillInfoFragment : BaseFragment() {
         billId = arguments.getLong(KEY_BILL_ID)
         viewModel = BillInfoFragmentViewModel(context)
         ui = BillInfoFragmentUI(drinks)
+        ui.billDrinkAdapter.onItemClicked = this::drinkAdapterItemClicked
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -127,13 +130,14 @@ class BillInfoFragment : BaseFragment() {
 
     private fun handleGetInfoSuccess(bill: BillInfo) {
         this.bill = bill
+        (activity as? BillActivity)?.billInfo = bill
         with(ui) {
             val option = RequestOptions()
                     .placeholder(R.drawable.glide_place_holder)
             Glide.with(context)
                     .applyDefaultRequestOptions(option)
                     .asBitmap()
-                    .load("https://vnshipperman.000webhostapp.com/uploads/${bill.store.image}")
+                    .load(BuildConfig.BASE_IMAGE_URL + bill.store.image)
                     .into(imgStoreAvatar)
             tvStoreName.text = context.getString(R.string.billStoreName, bill.store.name)
             tvStoreAddress.text = context.getString(R.string.billStoreAddress, bill.store.address.address)
@@ -160,5 +164,10 @@ class BillInfoFragment : BaseFragment() {
         ui.imgPayment.setImageResource(R.drawable.ic_bg_tranparent)
         ui.rlPayment.isEnabled = false
         context.showOkAlert(R.string.notification, messageResponse.message)
+    }
+
+    private fun drinkAdapterItemClicked(position: Int) {
+        Log.i("tag11","xxx")
+        (activity as? BillActivity)?.openOrderedDrinkFragment(position)
     }
 }

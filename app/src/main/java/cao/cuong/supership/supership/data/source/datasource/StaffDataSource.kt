@@ -25,4 +25,6 @@ interface StaffDataSource {
     fun getShippers(token: String, search: String, page: Int, status: Int): CustomCall<ExpressShipperResponse>
 
     fun getShipperInfo(token: String, shipperId: Long): Single<Shipper>
+
+    fun changeUserStatus(token: String, userId: Long, status: Int, isShipper: Boolean): Single<MessageResponse>
 }

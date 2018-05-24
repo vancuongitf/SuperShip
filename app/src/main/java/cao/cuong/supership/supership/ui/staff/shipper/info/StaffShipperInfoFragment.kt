@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Shipper
+import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
+import cao.cuong.supership.supership.data.source.remote.network.RxBus
+import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.extension.showConfirmAlert
+import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import org.jetbrains.anko.AnkoContext
 
@@ -27,9 +31,10 @@ class StaffShipperInfoFragment : BaseFragment() {
     }
 
     private var shipperId = -1L
+    private var shipper: Shipper? = null
+    private var targetStatus = -1
     private lateinit var ui: StaffShipperInfoFragmentUI
     private lateinit var viewModel: StaffShipperInfoFragmentViewModel
-    private var shipper: Shipper? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = StaffShipperInfoFragmentViewModel(context)
@@ -61,15 +66,13 @@ class StaffShipperInfoFragment : BaseFragment() {
             when (it.status) {
                 0, 2 -> {
                     context.showConfirmAlert(R.string.activeConfirm) {
-                        it.status = 1
-                        handleGetShipperInfoSuccess(it)
+                        changeShipperStatus(1)
                     }
                 }
 
                 1 -> {
                     context.showConfirmAlert(R.string.banConfirm) {
-                        it.status = 2
-                        handleGetShipperInfoSuccess(it)
+                        changeShipperStatus(2)
                     }
                 }
             }
@@ -79,37 +82,54 @@ class StaffShipperInfoFragment : BaseFragment() {
     internal fun eventBannedButtonClicked() {
         shipper?.let {
             context.showConfirmAlert(R.string.banConfirm) {
-                it.status = 2
-                handleGetShipperInfoSuccess(it)
+                changeShipperStatus(2)
             }
         }
     }
 
-    private fun handleGetShipperInfoSuccess(shipper: Shipper) {
-        this.shipper = shipper
-        ui.edtId.editText.setText(shipper.id.toString())
-        ui.edtFullName.editText.setText(shipper.fullName)
-        ui.edtDeposit.editText.setText(context.getString(R.string.billPrice, shipper.deposit))
-        ui.edtAddress.editText.setText(shipper.address)
-        ui.edtBirthDay.editText.setText(shipper.birthDay)
-        ui.edtPersonalId.editText.setText(shipper.personalId)
-        ui.edtEmail.editText.setText(shipper.email)
-        ui.edtPhoneNumber.editText.setText(shipper.phone)
-        if (shipper.status == 0) {
-            ui.rlBannedButton.visibility = View.VISIBLE
-            ui.imgBanned.setImageResource(R.drawable.ic_ban)
-            ui.rlBannedButton.isEnabled = true
-        } else {
-            ui.rlBannedButton.visibility = View.GONE
-            ui.imgBanned.setImageResource(R.drawable.ic_bg_tranparent)
-            ui.rlBannedButton.isEnabled = false
+    private fun handleGetShipperInfoSuccess(newShipper: Shipper) {
+        this.shipper = newShipper
+        shipper?.let {
+            ui.edtId.editText.setText(it.id.toString())
+            ui.edtFullName.editText.setText(it.fullName)
+            ui.edtDeposit.editText.setText(context.getString(R.string.billPrice, it.deposit))
+            ui.edtAddress.editText.setText(it.address)
+            ui.edtBirthDay.editText.setText(it.birthDay)
+            ui.edtPersonalId.editText.setText(it.personalId)
+            ui.edtEmail.editText.setText(it.email)
+            ui.edtPhoneNumber.editText.setText(it.phone)
+            if (it.status == 0) {
+                ui.rlBannedButton.visibility = View.VISIBLE
+                ui.imgBanned.setImageResource(R.drawable.ic_ban)
+                ui.rlBannedButton.isEnabled = true
+            } else {
+                ui.rlBannedButton.visibility = View.GONE
+                ui.imgBanned.setImageResource(R.drawable.ic_bg_tranparent)
+                ui.rlBannedButton.isEnabled = false
+            }
+            if (it.status == 1) {
+                ui.rlChangeStatusButton.visibility = View.VISIBLE
+                ui.imgChangeStatus.setImageResource(R.drawable.ic_ban)
+            } else {
+                ui.rlChangeStatusButton.visibility = View.VISIBLE
+                ui.imgChangeStatus.setImageResource(R.drawable.ic_check_button)
+            }
         }
-        if (shipper.status == 1) {
-            ui.rlChangeStatusButton.visibility = View.VISIBLE
-            ui.imgChangeStatus.setImageResource(R.drawable.ic_ban)
-        } else {
-            ui.rlChangeStatusButton.visibility = View.VISIBLE
-            ui.imgChangeStatus.setImageResource(R.drawable.ic_check_button)
+    }
+
+    private fun changeShipperStatus(status: Int) {
+        targetStatus = status
+        viewModel.changeShipperStatus(shipperId, status)
+                .observeOnUiThread()
+                .subscribe(this::handleChangeStatusSuccess, this::handleApiError)
+    }
+
+    private fun handleChangeStatusSuccess(messageResponse: MessageResponse) {
+        shipper?.status = targetStatus
+        context.showOkAlert(R.string.notification, messageResponse.message) {
+            shipper?.let {
+                handleGetShipperInfoSuccess(it)
+            }
         }
     }
 }

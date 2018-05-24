@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.BillInfo
 import cao.cuong.supership.supership.data.model.OrderedDrink
@@ -94,7 +95,7 @@ class StaffBillInfoFragment : BaseFragment() {
             Glide.with(context)
                     .applyDefaultRequestOptions(option)
                     .asBitmap()
-                    .load("https://vnshipperman.000webhostapp.com/uploads/${bill.store.image}")
+                    .load(BuildConfig.BASE_IMAGE_URL + bill.store.image)
                     .into(imgStoreAvatar)
             tvStoreName.text = context.getString(R.string.billStoreName, bill.store.name)
             tvStoreAddress.text = context.getString(R.string.billStoreAddress, bill.store.address.address)

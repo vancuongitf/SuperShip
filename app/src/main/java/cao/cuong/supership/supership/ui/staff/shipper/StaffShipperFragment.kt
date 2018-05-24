@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.rxevent.OpenUserActivityAlert
+import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.extension.observeOnUiThread
@@ -23,6 +24,7 @@ class StaffShipperFragment : StaffBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         ui.onChangeListStatusClicked = this::onChangeStatusClicked
         ui.llUserStatusChange.visibility = View.VISIBLE
+        ui.onTextChange = this::handleOnTextChange
         viewModel = StaffShipperFragmentViewModel(context)
         adapter = ShipperAdapter(viewModel.shippers)
         adapter.onItemClicked = {
@@ -36,8 +38,15 @@ class StaffShipperFragment : StaffBaseFragment() {
         }
         ui.recyclerViewBills.adapter = adapter
         viewModel.updateListObservable
+        viewModel.updateListObservable
                 .observeOnUiThread()
                 .subscribe(this::handleUpdateList)
+        RxBus.listen(UpdateAccountUI::class.java)
+                .observeOnUiThread()
+                .subscribe({
+                    viewModel.currentPage = 1
+                    getShippers(ui.edtSearch.text.toString().trim())
+                })
         getShippers("")
     }
 
