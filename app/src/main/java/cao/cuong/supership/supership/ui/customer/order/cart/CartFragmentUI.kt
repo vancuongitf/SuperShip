@@ -33,11 +33,11 @@ class CartFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<Ca
             lparams(matchParent, matchParent)
 
             isClickable = true
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
 
             toolbar {
                 setContentInsetsAbsolute(0, 0)
-                backgroundColorResource = R.color.colorWhite
+                backgroundColorResource = R.color.colorGrayLight
 
                 linearLayout {
 
@@ -90,7 +90,7 @@ class CartFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<Ca
 
                     textView(R.string.customerInfo) {
                         textSizeDimen = R.dimen.storeTitleTextSize
-                        textColorResource = R.color.colorWhite
+                        textColorResource = R.color.colorBlack
                         setTypeface(null, Typeface.BOLD)
                         verticalPadding = dimen(R.dimen.drinkItemUIPadding)
                     }
@@ -132,7 +132,7 @@ class CartFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<Ca
 
                     textView(R.string.orderInfo) {
                         textSizeDimen = R.dimen.storeTitleTextSize
-                        textColorResource = R.color.colorWhite
+                        textColorResource = R.color.colorBlack
                         setTypeface(null, Typeface.BOLD)
                         verticalPadding = dimen(R.dimen.drinkItemUIPadding)
                     }
@@ -176,7 +176,7 @@ class CartFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponent<Ca
 
                     textView(R.string.orderedDrinkList) {
                         textSizeDimen = R.dimen.storeTitleTextSize
-                        textColorResource = R.color.colorWhite
+                        textColorResource = R.color.colorBlack
                         setTypeface(null, Typeface.BOLD)
                         verticalPadding = dimen(R.dimen.drinkItemUIPadding)
                     }

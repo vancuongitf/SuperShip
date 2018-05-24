@@ -23,13 +23,13 @@ class CommonTextView(context: Context, @StringRes private val title: Int, privat
                 lparams(matchParent, wrapContent)
 
                 textView(title) {
-                    textColorResource = R.color.colorWhite
+                    textColorResource = R.color.colorGray
                     bottomPadding = dip(2)
                 }
 
                 textView = textView {
-                    backgroundColorResource = R.color.colorCommonEditTextBackGround
-                    textColorResource = R.color.colorWhite
+                    backgroundColorResource = R.color.commonEditBackground
+                    textColorResource = R.color.colorBlack
                     verticalPadding = dip(5)
                     singleLine = true
                 }

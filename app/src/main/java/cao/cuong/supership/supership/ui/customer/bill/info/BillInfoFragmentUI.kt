@@ -185,7 +185,7 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
 
                     toolbar {
                         setContentInsetsAbsolute(0, 0)
-                        backgroundColorResource = R.color.colorWhite
+                        backgroundColorResource = R.color.colorGrayLight
 
                         verticalLayout {
                             linearLayout {

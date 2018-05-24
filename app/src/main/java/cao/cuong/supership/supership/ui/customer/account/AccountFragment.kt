@@ -99,6 +99,7 @@ class AccountFragment : BaseFragment() {
         ui.llNonLogin.visibility = View.GONE
         ui.llLogin.visibility = View.VISIBLE
         ui.tvReload.visibility = View.GONE
+        ui.rlEditInfo.visibility = View.VISIBLE
         viewModel.saveUserInfo(userInfo)
     }
 

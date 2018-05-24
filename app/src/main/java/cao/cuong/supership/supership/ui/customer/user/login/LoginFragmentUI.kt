@@ -29,17 +29,16 @@ class LoginFragmentUI : AnkoComponent<LoginFragment> {
     override fun createView(ui: AnkoContext<LoginFragment>) = with(ui) {
         verticalLayout {
             lparams(context.getWidthScreen(), context.getHeightScreen())
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
 
             view {}.lparams(matchParent, 0) {
                 weight = 0.8f
             }
 
-            textView(R.string.app_name) {
-                textColorResource = R.color.colorPink
-                gravity = Gravity.CENTER
-                textSizeDimen = R.dimen.splashActivityAppNameSize
+            imageView(R.drawable.ic_shipper) {
+            }.lparams(dip(100), dip(100)){
+                gravity = Gravity.CENTER_HORIZONTAL
             }
 
             view {}.lparams(matchParent, 0) {
@@ -59,7 +58,7 @@ class LoginFragmentUI : AnkoComponent<LoginFragment> {
             textView {
                 val source = context.getString(R.string.forgotPassword)
                 val spannableString = SpannableString(source)
-                textColorResource = R.color.colorWhite
+                textColorResource = R.color.colorBlack
                 enableHighLightWhenClicked()
                 spannableString.setSpan(UnderlineSpan(), 0, source.length, 0)
                 text = spannableString

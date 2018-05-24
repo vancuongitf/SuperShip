@@ -6,4 +6,4 @@ import com.google.gson.annotations.SerializedName
  *
  * @author at-cuongcao.
  */
-data class RequestResetPassResponse(@SerializedName("user_id") var userId: Int, @SerializedName("user_name") var userName: String)
+data class RequestResetPassResponse(@SerializedName("userId") var userId: Int, @SerializedName("userName") var userName: String)

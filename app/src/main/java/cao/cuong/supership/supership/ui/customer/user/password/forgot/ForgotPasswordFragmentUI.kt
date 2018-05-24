@@ -21,17 +21,14 @@ class ForgotPasswordFragmentUI : AnkoComponent<ForgotPasswordFragment> {
     override fun createView(ui: AnkoContext<ForgotPasswordFragment>) = with(ui) {
         verticalLayout {
             lparams(context.getWidthScreen(), context.getHeightScreen())
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
 
             relativeLayout {
                 gravity = Gravity.CENTER
 
-                textView(R.string.app_name) {
-                    textColorResource = R.color.colorPink
-                    gravity = Gravity.CENTER
-                    textSizeDimen = R.dimen.splashActivityAppNameSize
-                }
+                imageView(R.drawable.ic_shipper) {
+                }.lparams(dip(100), dip(100))
 
             }.lparams(matchParent, 0) {
                 weight = 1f

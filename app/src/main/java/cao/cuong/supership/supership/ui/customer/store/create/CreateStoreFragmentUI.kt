@@ -27,7 +27,7 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
     override fun createView(ui: AnkoContext<CreateStoreFragment>) = with(ui) {
         verticalLayout {
             lparams(matchParent, matchParent)
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
             isClickable = true
 
                 toolbar {

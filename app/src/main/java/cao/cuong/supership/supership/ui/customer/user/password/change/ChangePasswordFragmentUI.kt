@@ -17,7 +17,7 @@ class ChangePasswordFragmentUI : AnkoComponent<ChangePasswordFragment> {
     override fun createView(ui: AnkoContext<ChangePasswordFragment>) = with(ui) {
         verticalLayout {
             lparams(matchParent, matchParent)
-            backgroundResource = R.drawable.bg_login_image
+            backgroundColorResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
 
             view {

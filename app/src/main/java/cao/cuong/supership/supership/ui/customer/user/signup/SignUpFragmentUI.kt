@@ -27,12 +27,13 @@ class SignUpFragmentUI : AnkoComponent<SignUpFragment> {
 
         verticalLayout {
 
-            backgroundResource = R.drawable.bg_login_image
+            lparams(matchParent, matchParent)
+            backgroundColorResource = R.color.colorWhite
             isClickable = true
 
             toolbar {
 
-                backgroundColorResource = R.color.colorWhite
+                backgroundColorResource = R.color.colorGrayLight
                 setContentInsetsAbsolute(0, 0)
 
                 linearLayout {

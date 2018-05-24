@@ -2,6 +2,7 @@ package cao.cuong.supership.supership.ui.customer.user
 
 import android.os.Bundle
 import cao.cuong.supership.supership.R
+import cao.cuong.supership.supership.data.source.remote.response.RequestResetPassResponse
 import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.replaceFragment
@@ -46,7 +47,7 @@ class UserActivity : BaseActivity() {
         addFragment(R.id.userActivityContainer, ForgotPasswordFragment(), { it.animRightToLeft() }, ForgotPasswordFragment::class.java.simpleName)
     }
 
-    internal fun openResetPasswordFragment() {
-        addFragment(R.id.userActivityContainer, ResetPasswordFragment(), { it.animRightToLeft() }, ResetPasswordFragment::class.java.simpleName)
+    internal fun openResetPasswordFragment(response: RequestResetPassResponse) {
+        addFragment(R.id.userActivityContainer, ResetPasswordFragment.getNewInstance(response.userId, response.userName), { it.animRightToLeft() }, ResetPasswordFragment::class.java.simpleName)
     }
 }

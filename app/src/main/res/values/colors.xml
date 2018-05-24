@@ -18,4 +18,5 @@
     <color name="colorPink">#F06292</color>
     <color name="colorCyan">#4DD0E1</color>
     <color name="colorYellowLight">#FFF59D</color>
+    <color name="commonEditBackground">#F5F5F5</color>
 </resources>
