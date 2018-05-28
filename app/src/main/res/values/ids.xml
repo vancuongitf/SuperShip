@@ -50,5 +50,6 @@
     <item name="shipperActivityContainer" type="id" />
     <item name="recyclerStaff" type="id" />
     <item name="staffActivityContainer" type="id" />
+    <item name="recyclerViewRatings" type="id" />
 
 </resources>

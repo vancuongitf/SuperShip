@@ -161,7 +161,7 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
 
                     toolbar {
                         setContentInsetsAbsolute(0, 0)
-                        backgroundColorResource = R.color.colorWhite
+                        backgroundColorResource = R.color.colorGrayLight
 
                         verticalLayout {
                             linearLayout {
@@ -230,10 +230,6 @@ class DrinkFragmentUI(options: MutableList<DrinkOption>, private val isFromOrder
                                 }.lparams(dimen(R.dimen.toolBarHeight), dimen(R.dimen.toolBarHeight))
 
                             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
-
-                            view {
-                                backgroundResource = R.color.colorGrayVeryLight
-                            }.lparams(matchParent, dip(1))
 
                         }.lparams(matchParent, wrapContent)
                     }.lparams(matchParent, wrapContent) {

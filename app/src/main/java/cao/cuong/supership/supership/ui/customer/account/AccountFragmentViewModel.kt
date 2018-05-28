@@ -20,6 +20,8 @@ class AccountFragmentViewModel(context: Context) {
 
     internal fun getUserInfo() = userRepository.getUserInfo(localRepository.getAccessToken())
 
+    internal fun getLocalUserInfo() = localRepository.getUserInfo()
+
     internal fun saveUserInfo(userInfo: UserInfo) = localRepository.saveUserInfo(userInfo)
 
     internal fun logOut() {

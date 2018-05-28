@@ -21,7 +21,7 @@ interface UserDataSource {
 
     fun getUserInfo(token: String): Single<UserInfo>
 
-    fun login(user: String, pass: String): Single<AccessToken>
+    fun login(user: String, pass: String): Single<UserInfo>
 
     fun changePassword(oldPass: String, newPass: String, token: String): Single<MessageResponse>
 

@@ -2,10 +2,12 @@ package cao.cuong.supership.supership.ui.customer.user.login
 
 import android.content.Context
 import cao.cuong.supership.supership.data.model.AccessToken
+import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.ShipperRepository
 import cao.cuong.supership.supership.data.source.StaffRepository
 import cao.cuong.supership.supership.data.source.UserRepository
+import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
@@ -77,8 +79,20 @@ class LoginFragmentViewModel(private val context: Context) {
 
     internal fun removeModule() = localRepository.chooseModule(-1)
 
+    private fun saveAccessToken(userInfo: UserInfo) {
+        if (userInfo.token.isNotEmpty()) {
+            ApiClient.getInstance(null).token = userInfo.token
+            localRepository.saveAccessToken(userInfo.token)
+            localRepository.saveUserInfo(userInfo)
+            loginStatusObserver.onNext(Notification.createOnNext(AccessToken(userInfo.token)))
+        } else {
+            loginStatusObserver.onError(ApiException(678, "Xãy ra lỗi! Vui lòng thử lại"))
+        }
+    }
+
     private fun saveAccessToken(token: AccessToken) {
         if (token.token.isNotEmpty()) {
+            ApiClient.getInstance(null).token = token.token
             localRepository.saveAccessToken(token.token)
             loginStatusObserver.onNext(Notification.createOnNext(token))
         } else {

@@ -28,7 +28,7 @@ class AddDrinkOptionFragmentUI(items: MutableList<DrinkOptionItemBody>) : AnkoCo
             isClickable = true
 
             toolbar {
-
+                backgroundColorResource = R.color.colorGrayLight
                 setContentInsetsAbsolute(0, 0)
 
                 linearLayout {

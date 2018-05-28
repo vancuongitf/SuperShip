@@ -36,8 +36,8 @@ class AccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        RxBus.listen(UpdateAccountUI::class.java).observeOnUiThread().subscribe(this::updateUI)
-        updateUI(UpdateAccountUI())
+        RxBus.listen(UpdateAccountUI::class.java).observeOnUiThread().subscribe({ updateUI(it, false) })
+        updateUI(UpdateAccountUI(), true)
     }
 
     override fun onBindViewModel() {
@@ -76,14 +76,19 @@ class AccountFragment : BaseFragment() {
         updateUI(UpdateAccountUI())
     }
 
-    private fun updateUI(event: UpdateAccountUI) {
+    private fun updateUI(event: UpdateAccountUI, getNewData: Boolean = false) {
         if (viewModel.isLogin()) {
-            ui.llNonLogin.visibility = View.GONE
-            ui.llLogin.visibility = View.GONE
-            ui.tvReload.visibility = View.GONE
-            viewModel.getUserInfo()
-                    .observeOnUiThread()
-                    .subscribe(this::handleGetUserInfo, this::handleApiGetInfoError)
+            val localUserInfo = viewModel.getLocalUserInfo()
+            if (localUserInfo == null || getNewData) {
+                ui.llNonLogin.visibility = View.GONE
+                ui.llLogin.visibility = View.GONE
+                ui.tvReload.visibility = View.GONE
+                viewModel.getUserInfo()
+                        .observeOnUiThread()
+                        .subscribe(this::handleGetUserInfo, this::handleApiGetInfoError)
+            } else {
+                handleGetUserInfo(localUserInfo)
+            }
         } else {
             ui.tvReload.visibility = View.GONE
             ui.llNonLogin.visibility = View.VISIBLE

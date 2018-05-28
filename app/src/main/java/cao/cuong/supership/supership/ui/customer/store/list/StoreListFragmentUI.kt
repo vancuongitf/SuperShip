@@ -31,6 +31,7 @@ class StoreListFragmentUI(private val stores: MutableList<StoreInfoExpress>) : A
 
             toolbar {
 
+                backgroundColorResource = R.color.colorGrayLight
                 setContentInsetsAbsolute(0, 0)
 
                 linearLayout {

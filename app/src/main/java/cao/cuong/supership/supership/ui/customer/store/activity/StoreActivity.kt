@@ -8,6 +8,7 @@ import cao.cuong.supership.supership.extension.addFragment
 import cao.cuong.supership.supership.extension.animRightToLeft
 import cao.cuong.supership.supership.extension.replaceFragment
 import cao.cuong.supership.supership.ui.customer.store.BaseStoreInfoActivity
+import cao.cuong.supership.supership.ui.customer.store.comment.StoreCommentFragment
 import cao.cuong.supership.supership.ui.customer.store.drink.create.CreateDrinkFragment
 import cao.cuong.supership.supership.ui.customer.store.drink.info.DrinkFragment
 import cao.cuong.supership.supership.ui.customer.store.edit.EditStoreInfoFragment
@@ -84,5 +85,9 @@ class StoreActivity : BaseStoreInfoActivity() {
 
     internal fun openEditStoreInfoFragment() {
         addFragment(R.id.storeActivityContainer, EditStoreInfoFragment(), { it.animRightToLeft() }, EditStoreInfoFragment::class.java.simpleName)
+    }
+
+    internal fun openCommentFragment(storeId: Long) {
+        addFragment(R.id.storeActivityContainer, StoreCommentFragment.getNewInstance(storeId), { it.animRightToLeft() }, StoreCommentFragment::class.java.simpleName)
     }
 }

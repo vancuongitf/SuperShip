@@ -50,6 +50,10 @@ abstract class BaseFragment : Fragment() {
         subscription.clear()
     }
 
+    internal open fun loadMore(index: Int) {
+
+    }
+
     protected fun addDisposables(vararg ds: Disposable) {
         ds.forEach { subscription.add(it) }
     }
@@ -82,7 +86,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    protected fun handleUpdateProgressDialogStatus(status: Boolean) {
+    protected open fun handleUpdateProgressDialogStatus(status: Boolean) {
         if (status) {
             progressDialog.show()
         } else {

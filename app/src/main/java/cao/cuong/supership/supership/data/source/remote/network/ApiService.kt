@@ -19,7 +19,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("api/v1/user/login.php")
-    fun login(@Field("user") user: String, @Field("pass") pass: String): Single<AccessToken>
+    fun login(@Field("user") user: String, @Field("pass") pass: String): Single<UserInfo>
 
     @FormUrlEncoded
     @POST("api/v1/user/password/change/index.php")
@@ -43,6 +43,18 @@ interface ApiService {
 
     @GET("api/v1/store/store.php")
     fun getStoreInfo(@Query("store_id") storeId: Long): Single<Store>
+
+    @FormUrlEncoded
+    @POST("api/v1/store/rating/comments.php")
+    fun getStoreComments(@Field("user_id") userId: Long, @Field("store_id") storeId: Long, @Field("page") page: Int): CustomCall<StoreCommentResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/store/rating/rating.php")
+    fun storeRating(@Field("user_id") userId: Long, @Field("store_id") storeId: Long, @Field("rate") rate: Int): Single<List<Rating>>
+
+    @FormUrlEncoded
+    @POST("api/v1/store/rating/comment.php")
+    fun storeComment(@Field("user_id") userId: Long, @Field("store_id") storeId: Long, @Field("comment") comment: String): Single<StoreCommentResponse>
 
     @POST("api/v1/store/update.php")
     fun editStoreInfo(@Body editStoreBody: EditStoreBody): Single<MessageResponse>

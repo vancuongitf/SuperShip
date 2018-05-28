@@ -32,7 +32,7 @@ class EditStoreInfoFragmentUI : AnkoComponent<EditStoreInfoFragment> {
 
             toolbar {
 
-                backgroundColorResource = R.color.colorWhite
+                backgroundColorResource = R.color.colorGrayLight
                 setContentInsetsAbsolute(0, 0)
 
                 linearLayout {
@@ -223,7 +223,7 @@ class EditStoreInfoFragmentUI : AnkoComponent<EditStoreInfoFragment> {
                         }
 
                         tvOpenTime = textView {
-                            textColorResource = R.color.colorWhite
+                            textColorResource = R.color.colorBlack
                         }.lparams {
                             leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                         }
@@ -247,7 +247,7 @@ class EditStoreInfoFragmentUI : AnkoComponent<EditStoreInfoFragment> {
                         }
 
                         tvCloseTime = textView {
-                            textColorResource = R.color.colorWhite
+                            textColorResource = R.color.colorBlack
                         }.lparams {
                             leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                         }

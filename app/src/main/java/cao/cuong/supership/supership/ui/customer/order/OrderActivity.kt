@@ -12,6 +12,7 @@ import cao.cuong.supership.supership.extension.replaceFragment
 import cao.cuong.supership.supership.ui.customer.order.cart.CartFragment
 import cao.cuong.supership.supership.ui.customer.order.drink.item.OrderedDrinkFragment
 import cao.cuong.supership.supership.ui.customer.store.BaseStoreInfoActivity
+import cao.cuong.supership.supership.ui.customer.store.comment.StoreCommentFragment
 import cao.cuong.supership.supership.ui.customer.store.drink.info.DrinkFragment
 import cao.cuong.supership.supership.ui.customer.store.info.StoreInfoFragment
 import org.jetbrains.anko.setContentView
@@ -50,8 +51,8 @@ class OrderActivity : BaseStoreInfoActivity() {
         }
     }
 
-    internal fun openCartDrinkFragment() {
-
+    internal fun openCommentFragment(storeId: Long) {
+        addFragment(R.id.orderActivityContainer, StoreCommentFragment.getNewInstance(storeId), { it.animRightToLeft() }, StoreCommentFragment::class.java.simpleName)
     }
 
     internal fun drinkOrder(orderedDrink: OrderedDrink) {
@@ -74,4 +75,5 @@ class OrderActivity : BaseStoreInfoActivity() {
     }
 
     internal fun getCartPrice() = orderedDrinks.sumBy { it.price * it.count }
+
 }

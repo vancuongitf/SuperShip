@@ -52,4 +52,8 @@
     <dimen name="drinkOptionItemButton">20dp</dimen>
     <dimen name="orderedDrinkTextSize">14dp</dimen>
     <dimen name="billInfoButtonShowShipRoad">20dp</dimen>
+
+    <!-- Rating Item -->
+    <dimen name="ratingItemTextSize">14dp</dimen>
+    <dimen name="ratingItemStarSize">20dp</dimen>
 </resources>
