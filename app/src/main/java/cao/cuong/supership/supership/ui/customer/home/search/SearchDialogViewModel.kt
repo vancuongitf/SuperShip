@@ -1,7 +1,6 @@
 package cao.cuong.supership.supership.ui.customer.home.search
 
 import android.content.Context
-import android.util.Log
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.StoreRepository
@@ -9,7 +8,6 @@ import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.network.CustomCallback
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 import cao.cuong.supership.supership.extension.observeOnUiThread
-import com.google.gson.Gson
 import io.reactivex.Notification
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -75,12 +73,10 @@ class SearchDialogViewModel(private val context: Context) {
         localRepository.getSearchHistory()
                 .observeOnUiThread()
                 .subscribe({
-                    Log.i("tag11",Gson().toJson(it))
                     stores.clear()
                     stores.addAll(it.storeList)
                     result.onNext(Notification.createOnNext(false))
                 }, {
-                    Log.i("tag11", Gson().toJson(it))
                     result.onError(it)
                 })
         return result
@@ -100,7 +96,14 @@ class SearchDialogViewModel(private val context: Context) {
                         stores.clear()
                         stores.addAll(data.storeList)
                     } else {
-                        stores.addAll(data.storeList)
+                        data.storeList.forEach {
+                            val newStore = it
+                            if (!stores.any {
+                                        it.storeId == newStore.storeId
+                                    }) {
+                                stores.add(newStore)
+                            }
+                        }
                     }
                     result.onNext(Notification.createOnNext(data.nextPageFlag))
                 } else {

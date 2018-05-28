@@ -211,7 +211,7 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
                         textView(R.string.openTime) {
                             gravity = Gravity.CENTER_HORIZONTAL
                             backgroundColorResource = R.color.colorBlue
-                            textColorResource = R.color.colorWhite
+                            textColorResource = R.color.colorBlack
                             padding = dimen(R.dimen.accountFragmentLoginPadding)
                             enableHighLightWhenClicked()
                             onClick {
@@ -222,7 +222,7 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
                         }
 
                         tvOpenTime = textView {
-                            textColorResource = R.color.colorWhite
+                            textColorResource = R.color.colorBlack
                         }.lparams {
                             leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                         }
@@ -235,7 +235,7 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
                         textView(R.string.closeTime) {
                             gravity = Gravity.CENTER_HORIZONTAL
                             backgroundColorResource = R.color.colorBlue
-                            textColorResource = R.color.colorWhite
+                            textColorResource = R.color.colorBlack
                             padding = dimen(R.dimen.accountFragmentLoginPadding)
                             enableHighLightWhenClicked()
                             onClick {
@@ -246,7 +246,7 @@ class CreateStoreFragmentUI : AnkoComponent<CreateStoreFragment> {
                         }
 
                         tvCloseTime = textView {
-                            textColorResource = R.color.colorWhite
+                            textColorResource = R.color.colorBlack
                         }.lparams {
                             leftMargin = dimen(R.dimen.accountFragmentLoginPadding)
                         }

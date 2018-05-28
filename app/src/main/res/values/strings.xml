@@ -131,4 +131,7 @@
     <string name="banConfirm">Bạn chắc chắn muốn khóa tài khoản này?</string>
     <string name="activeConfirm">Bạn chắc chắn muốn kích hoạt tài khoản này.</string>
     <string name="shipperInfo">Thông tin shipper</string>
+    <string name="comment">Bình luận</string>
+    <string name="ratingMessage">Bạn cảm thấy chất lượng phục vụ của cửa hàng này như thế nào?</string>
+    <string name="leaveCommentConfirm">Bạn chưa hoàn thành bình luận. Bạn chắc chắn muốn rời khỏi trang này?</string>
 </resources>

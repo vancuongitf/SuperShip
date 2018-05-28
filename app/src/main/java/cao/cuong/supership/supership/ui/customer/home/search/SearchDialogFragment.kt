@@ -1,5 +1,6 @@
 package cao.cuong.supership.supership.ui.customer.home.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.base.BaseFragment
+import cao.cuong.supership.supership.ui.customer.order.OrderActivity
+import cao.cuong.supership.supership.ui.customer.store.info.StoreInfoFragment
 import io.reactivex.Notification
 import org.jetbrains.anko.AnkoContext
 
@@ -22,6 +25,7 @@ class SearchDialogFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = SearchDialogViewModel(context)
         ui = SearchDialogFragmentUI(viewModel.stores)
+        ui.storeAdapter.onItemClicked = this::adapterItemClick
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -42,10 +46,6 @@ class SearchDialogFragment : BaseFragment() {
         viewModel.search(query)
     }
 
-    internal fun onItemClick(item: StoreInfoExpress) {
-        viewModel.saveHistory(item)
-    }
-
     private fun handleUpdateStoreList(notification: Notification<Boolean>) {
         if (notification.isOnNext) {
             if (notification.value != null) {
@@ -55,5 +55,14 @@ class SearchDialogFragment : BaseFragment() {
             }
             ui.storeAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun adapterItemClick(store: StoreInfoExpress) {
+        viewModel.saveHistory(store)
+        val intent = Intent(context, OrderActivity::class.java)
+        intent.putExtras(Bundle().apply {
+            putLong(StoreInfoFragment.KEY_STORE_ID, store.storeId)
+        })
+        context.startActivity(intent)
     }
 }

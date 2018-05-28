@@ -9,10 +9,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.Drink
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
+import cao.cuong.supership.supership.extension.enableHighLightWhenClickedForListItem
 import cao.cuong.supership.supership.extension.getWidthScreen
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
@@ -37,6 +39,7 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
     internal lateinit var tvStarRate: TextView
     internal lateinit var tvCartCount: TextView
     internal lateinit var imgCart: ImageView
+    internal lateinit var rlEditInfo: RelativeLayout
     internal val drinkAdapter = DrinkAdapter(drinks)
 
     override fun createView(ui: AnkoContext<StoreInfoFragment>) = with(ui) {
@@ -74,6 +77,12 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
 
                             linearLayout {
                                 gravity = Gravity.CENTER_VERTICAL
+                                enableHighLightWhenClickedForListItem()
+
+                                onClick {
+                                    owner.onCommentClicked()
+                                }
+
                                 imageView(R.drawable.ic_star_gold)
                                         .lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
                                             rightMargin = dimen(R.dimen.storeItemUITvAddressTopMargin)
@@ -94,7 +103,7 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
 
                     toolbar {
                         setContentInsetsAbsolute(0, 0)
-                        backgroundColorResource = R.color.colorWhite
+                        backgroundColorResource = R.color.colorGrayLight
 
                         verticalLayout {
                             linearLayout {
@@ -122,24 +131,22 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                                     weight = 1f
                                 }
 
-                                relativeLayout {
+                                rlEditInfo = relativeLayout {
+                                    visibility = View.GONE
+                                    relativeLayout {
 
-                                    gravity = Gravity.CENTER_VERTICAL
-                                    visibility = if (orderCase) {
-                                        View.GONE
-                                    } else {
-                                        View.VISIBLE
-                                    }
-                                    enableHighLightWhenClicked()
-                                    onClick {
-                                        owner.onEditInfoClicked()
-                                    }
+                                        gravity = Gravity.CENTER_VERTICAL
+                                        enableHighLightWhenClicked()
+                                        onClick {
+                                            owner.onEditInfoClicked()
+                                        }
 
-                                    imageView(R.drawable.ic_edit_note) {
-                                    }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                                        horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                                    }
-                                }.lparams(wrapContent, matchParent)
+                                        imageView(R.drawable.ic_edit_note) {
+                                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                                        }
+                                    }.lparams(wrapContent, matchParent)
+                                }
 
                                 relativeLayout {
 
@@ -192,10 +199,6 @@ class StoreInfoFragmentUI(drinks: MutableList<Drink>, private val orderCase: Boo
                                 }.lparams(dimen(R.dimen.toolBarHeight), dimen(R.dimen.toolBarHeight))
 
                             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
-
-                            view {
-                                backgroundResource = R.color.colorGrayVeryLight
-                            }.lparams(matchParent, dip(1))
 
                         }.lparams(matchParent, wrapContent)
                     }.lparams(matchParent, wrapContent) {

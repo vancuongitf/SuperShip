@@ -24,6 +24,7 @@ class OptionalFragmentUI(options: MutableList<DrinkOption>) : AnkoComponent<Opti
 
             toolbar {
 
+                backgroundColorResource = R.color.colorGrayLight
                 setContentInsetsAbsolute(0, 0)
 
                 linearLayout {

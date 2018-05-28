@@ -82,33 +82,6 @@ class StoreInfoFragment : BaseFragment() {
         (activity as? StoreActivity)?.openCreateDrinkFragment(storeId)
     }
 
-    private fun handleGetStoreInfoSuccess(store: Store) {
-        (activity as? BaseStoreInfoActivity)?.updateStore(store)
-        val option = RequestOptions()
-                .placeholder(R.drawable.glide_place_holder)
-        Glide.with(context)
-                .applyDefaultRequestOptions(option)
-                .asBitmap()
-                .load(BuildConfig.BASE_IMAGE_URL + store.image)
-                .into(ui.imgStoreAvatar)
-        ui.tvStoreNameTitle.text = store.name
-        ui.tvStoreName.text = store.name
-        ui.tvAddress.text = store.address
-        drinks.clear()
-        drinks.addAll(store.menu)
-        ui.drinkAdapter.notifyDataSetChanged()
-        if (store.rate.rateCount == 0) {
-            ui.tvStarRate.textResource = R.string.not_rate_yet
-        } else {
-            ui.tvStarRate.text = context.getString(R.string.store_rate, store.rate.rate.toString(), store.rate.rateCount.toString())
-        }
-        if (store.status) {
-            ui.imgChangeStoreStatus.setImageResource(R.drawable.ic_close)
-        } else {
-            ui.imgChangeStoreStatus.setImageResource(R.drawable.ic_open)
-        }
-    }
-
     internal fun onCartClicked() {
         (activity as? OrderActivity)?.openCartFragment()
     }
@@ -136,6 +109,41 @@ class StoreInfoFragment : BaseFragment() {
                     changeStoreStatus(1)
                 }
             }
+        }
+    }
+
+    fun onCommentClicked() {
+        (activity as? StoreActivity)?.openCommentFragment(storeId)
+        (activity as? OrderActivity)?.openCommentFragment(storeId)
+    }
+
+    private fun handleGetStoreInfoSuccess(store: Store) {
+        (activity as? BaseStoreInfoActivity)?.updateStore(store)
+        val option = RequestOptions()
+                .placeholder(R.drawable.glide_place_holder)
+        Glide.with(context)
+                .applyDefaultRequestOptions(option)
+                .asBitmap()
+                .load(BuildConfig.BASE_IMAGE_URL + store.image)
+                .into(ui.imgStoreAvatar)
+        ui.tvStoreNameTitle.text = store.name
+        ui.tvStoreName.text = store.name
+        ui.tvAddress.text = store.address
+        drinks.clear()
+        drinks.addAll(store.menu)
+        ui.drinkAdapter.notifyDataSetChanged()
+        if (store.rate.rateCount == 0) {
+            ui.tvStarRate.textResource = R.string.not_rate_yet
+        } else {
+            ui.tvStarRate.text = context.getString(R.string.store_rate, store.rate.rate.toString(), store.rate.rateCount.toString())
+        }
+        if (!orderCase) {
+            ui.rlEditInfo.visibility = View.VISIBLE
+        }
+        if (store.status) {
+            ui.imgChangeStoreStatus.setImageResource(R.drawable.ic_close)
+        } else {
+            ui.imgChangeStoreStatus.setImageResource(R.drawable.ic_open)
         }
     }
 

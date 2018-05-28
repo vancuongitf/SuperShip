@@ -1,10 +1,10 @@
 package cao.cuong.supership.supership.data.source.remote
 
-import cao.cuong.supership.supership.data.model.BillLocation
 import cao.cuong.supership.supership.data.source.datasource.StoreDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.request.*
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
+import cao.cuong.supership.supership.data.source.remote.response.StoreCommentResponse
 import cao.cuong.supership.supership.extension.unAccent
 import io.reactivex.Single
 import okhttp3.MediaType
@@ -27,6 +27,12 @@ class StoreRemoteDataSource : StoreDataSource {
     override fun changeStoreStatus(updateStoreStatusBody: UpdateStoreStatusBody) = apiService.updateStoreStatus(updateStoreStatusBody)
 
     override fun getStoreInfo(storeId: Long) = apiService.getStoreInfo(storeId)
+
+    override fun storeRating(userId: Long, storeId: Long, rate: Int) = apiService.storeRating(userId, storeId, rate)
+
+    override fun getStoreComments(userId: Long, storeId: Long, page: Int) = apiService.getStoreComments(userId, storeId, page)
+
+    override fun storeComment(userId: Long, storeId: Long, comment: String) = apiService.storeComment(userId, storeId, comment)
 
     override fun getStoreExpressList(advanceParam: Int, page: Int, lat: Double?, lng: Double?) = apiService.getExpressStore(advanceParam, page, lat, lng)
 

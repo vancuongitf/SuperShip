@@ -1,11 +1,13 @@
 package cao.cuong.supership.supership.data.source.datasource
 
 import cao.cuong.supership.supership.data.model.BillLocation
+import cao.cuong.supership.supership.data.model.Rating
 import cao.cuong.supership.supership.data.model.Store
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
 import cao.cuong.supership.supership.data.source.remote.request.*
 import cao.cuong.supership.supership.data.source.remote.response.CreateDrinkOptionResponse
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
+import cao.cuong.supership.supership.data.source.remote.response.StoreCommentResponse
 import cao.cuong.supership.supership.data.source.remote.response.StoreExpressResponse
 import io.reactivex.Single
 import java.io.File
@@ -23,6 +25,12 @@ interface StoreDataSource {
     fun changeStoreStatus(updateStoreStatusBody: UpdateStoreStatusBody): Single<MessageResponse>
 
     fun getStoreInfo(storeId: Long): Single<Store>
+
+    fun storeRating(userId: Long, storeId: Long, rate: Int): Single<List<Rating>>
+
+    fun getStoreComments(userId: Long, storeId: Long, page: Int): CustomCall<StoreCommentResponse>
+
+    fun storeComment(userId: Long, storeId: Long, comment: String): Single<StoreCommentResponse>
 
     fun getStoreExpressList(advanceParam: Int, page: Int, lat: Double? = null, lng: Double? = null): Single<StoreExpressResponse>
 
