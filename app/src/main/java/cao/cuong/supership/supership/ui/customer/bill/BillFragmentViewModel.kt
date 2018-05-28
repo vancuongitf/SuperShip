@@ -18,7 +18,7 @@ class BillFragmentViewModel(context: Context) {
     private var currentPage = 1
     private var nextPageFlag = false
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun getOrders() {
         if (isLogin()) {

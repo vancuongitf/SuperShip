@@ -25,7 +25,7 @@ class StaffShipperFragmentViewModel(context: Context) {
     private val staffRepository = StaffRepository()
     private var currentCall: CustomCall<ExpressShipperResponse>? = null
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun getShipper(search: String) {
         if (currentCall != null) {

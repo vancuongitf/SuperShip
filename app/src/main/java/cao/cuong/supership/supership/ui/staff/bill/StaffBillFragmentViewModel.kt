@@ -24,7 +24,7 @@ class StaffBillFragmentViewModel(context: Context) {
     private val staffRepository = StaffRepository()
     private var currentCall: CustomCall<BillExpressResponse>? = null
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun getBills(id: String) {
         if (currentCall != null) {

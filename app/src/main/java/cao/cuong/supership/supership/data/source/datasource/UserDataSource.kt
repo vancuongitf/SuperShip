@@ -21,13 +21,15 @@ interface UserDataSource {
 
     fun getUserInfo(token: String): Single<UserInfo>
 
+    fun updateUserInfo(userId: Long, name: String, phone: String): Single<MessageResponse>
+
     fun login(user: String, pass: String): Single<UserInfo>
 
     fun changePassword(oldPass: String, newPass: String, token: String): Single<MessageResponse>
 
     fun requestResetPassword(email: String): Single<RequestResetPassResponse>
 
-    fun resetPassword(userId: Int, pass: String, otpCode: Int): Single<AccessToken>
+    fun resetPassword(userId: Long, pass: String, otpCode: Int): Single<AccessToken>
 
     fun getStoreList(token: String, page: Int): Single<StoreExpressResponse>
 

@@ -27,6 +27,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
     internal lateinit var billAddressAdapter: BillAddressAdapter
     internal lateinit var tvReload: TextView
     internal lateinit var rlEditInfo: RelativeLayout
+    internal lateinit var rlSubmitNewInfo: RelativeLayout
 
     override fun createView(ui: AnkoContext<AccountFragment>) = with(ui) {
 
@@ -59,6 +60,7 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
 
                             enableHighLightWhenClicked()
                             onClick {
+                                owner.onEditButtonClicked()
                             }
 
                             imageView(R.drawable.ic_edit_note) {
@@ -67,6 +69,25 @@ class AccountFragmentUI : AnkoComponent<AccountFragment> {
                             }
                         }.lparams(wrapContent, matchParent)
                     }
+
+                    rlSubmitNewInfo = relativeLayout {
+                        visibility = View.GONE
+
+                        relativeLayout {
+                            gravity = Gravity.CENTER_VERTICAL
+
+                            enableHighLightWhenClicked()
+                            onClick {
+                                owner.onSubmitNewInfoClicked()
+                            }
+
+                            imageView(R.drawable.ic_check_button) {
+                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                            }
+                        }.lparams(wrapContent, matchParent)
+                    }
+
 
                 }.lparams(matchParent, wrapContent)
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))

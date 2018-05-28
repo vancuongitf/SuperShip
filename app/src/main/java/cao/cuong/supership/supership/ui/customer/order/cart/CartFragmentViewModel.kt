@@ -29,5 +29,5 @@ class CartFragmentViewModel(context: Context) {
 
     fun getUserInfo() = localRepository.getUserInfo()
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 }

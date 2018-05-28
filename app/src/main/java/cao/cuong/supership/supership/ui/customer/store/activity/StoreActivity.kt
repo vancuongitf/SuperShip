@@ -20,7 +20,6 @@ import org.jetbrains.anko.setContentView
 
 class StoreActivity : BaseStoreInfoActivity() {
 
-    internal var popSkip = 0
     private lateinit var ui: StoreActivityUI
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +45,6 @@ class StoreActivity : BaseStoreInfoActivity() {
     }
 
     override fun onBindViewModel() = Unit
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        while (popSkip > 0) {
-            popSkip--
-            supportFragmentManager.popBackStackImmediate()
-        }
-    }
 
     internal fun openStoreInfoFragment(storeId: Long) {
         addFragment(R.id.storeActivityContainer, StoreInfoFragment.getNewInstance(storeId), { it.animRightToLeft() }, StoreInfoFragment::class.java.simpleName)

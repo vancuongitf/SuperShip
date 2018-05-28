@@ -7,5 +7,5 @@ class UserActivityViewModel(context: Context) {
 
     private val localRepository = LocalRepository(context)
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.extension.*
+import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import org.jetbrains.anko.AnkoContext
 
@@ -21,26 +22,24 @@ class ResetPasswordFragment : BaseFragment() {
         private const val KEY_USER_ID = "user_id"
         private const val KEY_USER_NAME = "user_name"
 
-        internal fun getNewInstance(userId: Int, userName: String): ResetPasswordFragment {
+        internal fun getNewInstance(userId: Long, userName: String): ResetPasswordFragment {
             val instance = ResetPasswordFragment()
             instance.arguments = Bundle().apply {
-                putInt(KEY_USER_ID, userId)
+                putLong(KEY_USER_ID, userId)
                 putString(KEY_USER_NAME, userName)
             }
             return instance
         }
     }
 
-    internal var onResetSuccess: (accessToken: AccessToken) -> Unit = {}
-
     private lateinit var ui: ResetPasswordFragmentUI
-    private lateinit var viewModel: ResetPassworFragmentViewModel
-    private var userId: Int = -1
+    private lateinit var viewModel: ResetPasswordFragmentViewModel
+    private var userId = -1L
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ResetPassworFragmentViewModel()
+        viewModel = ResetPasswordFragmentViewModel()
         ui = ResetPasswordFragmentUI(arguments.getString(KEY_USER_NAME))
-        userId = arguments.getInt(KEY_USER_ID)
+        userId = arguments.getLong(KEY_USER_ID)
         return ui.createView(AnkoContext.Companion.create(context, this))
     }
 
@@ -48,6 +47,7 @@ class ResetPasswordFragment : BaseFragment() {
     }
 
     internal fun eventResetButtonClicked() {
+        hideKeyboard()
         var pass = ui.edtPassword.text.toString()
         val rePass = ui.edtRetypePassword.text.toString()
         val otp = ui.edtOTPCode.text.toString()
@@ -69,7 +69,10 @@ class ResetPasswordFragment : BaseFragment() {
 
     private fun handleResetSuccess(accessToken: AccessToken) {
         context.showOkAlert(R.string.notification, R.string.resetPasswordSuccess) {
-            onResetSuccess(accessToken)
+            (activity as? BaseActivity)?.let {
+                it.popSkip = 1
+                it.onBackPressed()
+            }
         }
     }
 }

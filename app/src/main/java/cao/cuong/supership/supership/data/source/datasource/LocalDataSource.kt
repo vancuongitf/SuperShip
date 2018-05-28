@@ -24,6 +24,8 @@ interface LocalDataSource {
 
     fun getAccessToken(): String
 
+    fun isLogin(): Boolean
+
     fun clearAccessToken()
 
     fun saveUserInfo(userInfo: UserInfo)

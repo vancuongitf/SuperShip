@@ -6,9 +6,9 @@ import cao.cuong.supership.supership.data.source.UserRepository
  *
  * @author at-cuongcao.
  */
-class ResetPassworFragmentViewModel {
+class ResetPasswordFragmentViewModel {
 
     private val userRepository = UserRepository()
 
-    internal fun resetPassword(userId: Int, pass: String, otpCode: Int) = userRepository.resetPassword(userId, pass, otpCode)
+    internal fun resetPassword(userId: Long, pass: String, otpCode: Int) = userRepository.resetPassword(userId, pass, otpCode)
 }

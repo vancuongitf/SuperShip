@@ -19,9 +19,11 @@ class UserRemoteDataSource : UserDataSource {
 
     override fun getUserInfo(token: String) = apiService.getUserInfo(token)
 
+    override fun updateUserInfo(userId: Long, name: String, phone: String) = apiService.updateUserInfo(userId, name, phone)
+
     override fun requestResetPassword(email: String) = apiService.requestResetPassword(email)
 
-    override fun resetPassword(userId: Int, pass: String, otpCode: Int) = apiService.resetPassword(userId, pass, otpCode)
+    override fun resetPassword(userId: Long, pass: String, otpCode: Int) = apiService.resetPassword(userId, pass, otpCode)
 
     override fun createUser(user: CreateUserBody) = apiService.createUser(user)
 

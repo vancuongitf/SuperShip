@@ -12,7 +12,7 @@ class StoreRatingDialogViewModel(context: Context) {
     private val localRepository = LocalRepository(context)
     private val storeRepository = StoreRepository()
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun storeRating(storeId: Long, rate: Int) = storeRepository
             .storeRating(localRepository.getUserInfo()?.id ?: -1, storeId, rate)

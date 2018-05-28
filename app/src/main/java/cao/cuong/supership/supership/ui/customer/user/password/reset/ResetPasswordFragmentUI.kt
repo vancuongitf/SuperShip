@@ -26,6 +26,7 @@ class ResetPasswordFragmentUI(private val userName: String) : AnkoComponent<Rese
             lparams(context.getWidthScreen(), context.getHeightScreen())
             backgroundColorResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
+            isClickable = true
 
             relativeLayout {
                 gravity = Gravity.CENTER

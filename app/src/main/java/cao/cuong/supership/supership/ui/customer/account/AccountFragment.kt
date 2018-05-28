@@ -6,11 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.BillAddress
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
+import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
+import cao.cuong.supership.supership.extension.isValidateFullName
+import cao.cuong.supership.supership.extension.isValidatePhoneNumber
 import cao.cuong.supership.supership.extension.observeOnUiThread
+import cao.cuong.supership.supership.extension.showOkAlert
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.customer.store.activity.StoreActivity
 import cao.cuong.supership.supership.ui.customer.user.UserActivity
@@ -26,6 +31,7 @@ class AccountFragment : BaseFragment() {
     private lateinit var viewModel: AccountFragmentViewModel
     private val billAddresses = mutableListOf<BillAddress>()
     private var userId = -1L
+    private lateinit var userInfo: UserInfo
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         ui = AccountFragmentUI()
@@ -38,6 +44,9 @@ class AccountFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         RxBus.listen(UpdateAccountUI::class.java).observeOnUiThread().subscribe({ updateUI(it, false) })
         updateUI(UpdateAccountUI(), true)
+        viewModel.updateProgressDialogStatus
+                .observeOnUiThread()
+                .subscribe(this::handleUpdateProgressDialogStatus)
     }
 
     override fun onBindViewModel() {
@@ -76,6 +85,41 @@ class AccountFragment : BaseFragment() {
         updateUI(UpdateAccountUI())
     }
 
+    internal fun onEditButtonClicked() {
+        ui.rlEditInfo.visibility = View.GONE
+        ui.rlSubmitNewInfo.visibility = View.VISIBLE
+        ui.edtFullName.editText.isEnabled = true
+        ui.edtPhoneNumber.editText.isEnabled = true
+    }
+
+    internal fun onSubmitNewInfoClicked() {
+        hideKeyboard()
+        val newName = ui.edtFullName.editText.text.toString().trim()
+        val newPhone = ui.edtPhoneNumber.editText.text.toString().trim()
+        if (newName == userInfo.fullName && newPhone == userInfo.phoneNumber) {
+            ui.edtFullName.editText.isEnabled = false
+            ui.edtPhoneNumber.editText.isEnabled = false
+            ui.rlSubmitNewInfo.visibility = View.GONE
+            ui.rlEditInfo.visibility = View.VISIBLE
+        } else {
+            var message = ""
+            if (newName.isValidateFullName()) {
+                if (newPhone.isValidatePhoneNumber()) {
+                    viewModel.updateInfo(userId, newName, newPhone)
+                            .observeOnUiThread()
+                            .subscribe(this::handleUpdateUserInfoSuccess, this::handleApiGetInfoError)
+                } else {
+                    message = "Vui lòng nhập số điện thoại hợp lệ."
+                }
+            } else {
+                message = "Vui lòng nhập tên hợp lệ."
+            }
+            if (message.isNotEmpty()) {
+                context.showOkAlert(Throwable(message))
+            }
+        }
+    }
+
     private fun updateUI(event: UpdateAccountUI, getNewData: Boolean = false) {
         if (viewModel.isLogin()) {
             val localUserInfo = viewModel.getLocalUserInfo()
@@ -98,6 +142,9 @@ class AccountFragment : BaseFragment() {
 
     private fun handleGetUserInfo(userInfo: UserInfo) {
         userId = userInfo.id
+        this.userInfo = userInfo
+        ui.edtFullName.editText.isEnabled = false
+        ui.edtPhoneNumber.editText.isEnabled = false
         ui.edtFullName.editText.setText(userInfo.fullName)
         ui.edtEmail.editText.setText(userInfo.email)
         ui.edtPhoneNumber.editText.setText(userInfo.phoneNumber)
@@ -105,6 +152,7 @@ class AccountFragment : BaseFragment() {
         ui.llLogin.visibility = View.VISIBLE
         ui.tvReload.visibility = View.GONE
         ui.rlEditInfo.visibility = View.VISIBLE
+        ui.rlSubmitNewInfo.visibility = View.GONE
         viewModel.saveUserInfo(userInfo)
     }
 
@@ -113,5 +161,14 @@ class AccountFragment : BaseFragment() {
         ui.llLogin.visibility = View.GONE
         ui.tvReload.visibility = View.VISIBLE
         handleApiError(throwable)
+    }
+
+    private fun handleUpdateUserInfoSuccess(messageResponse: MessageResponse) {
+        userInfo.fullName = ui.edtFullName.editText.text.toString().trim()
+        userInfo.phoneNumber = ui.edtPhoneNumber.editText.text.toString().trim()
+        ui.edtFullName.editText.isEnabled = false
+        ui.edtPhoneNumber.editText.isEnabled = false
+        viewModel.saveUserInfo(userInfo)
+        context.showOkAlert(R.string.notification, messageResponse.message)
     }
 }

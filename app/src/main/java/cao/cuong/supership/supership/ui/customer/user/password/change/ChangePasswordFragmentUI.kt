@@ -19,6 +19,7 @@ class ChangePasswordFragmentUI : AnkoComponent<ChangePasswordFragment> {
             lparams(matchParent, matchParent)
             backgroundColorResource = R.color.colorWhite
             padding = dimen(R.dimen.accountFragmentLoginPadding)
+            isClickable = true
 
             view {
 

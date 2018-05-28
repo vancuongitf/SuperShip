@@ -19,9 +19,11 @@ class UserRepository : UserDataSource {
 
     override fun getUserInfo(token: String) = userRemoteDataSource.getUserInfo(token)
 
+    override fun updateUserInfo(userId: Long, name: String, phone: String) = userRemoteDataSource.updateUserInfo(userId, name, phone)
+
     override fun requestResetPassword(email: String) = userRemoteDataSource.requestResetPassword(email)
 
-    override fun resetPassword(userId: Int, pass: String, otpCode: Int) = userRemoteDataSource.resetPassword(userId, pass, otpCode)
+    override fun resetPassword(userId: Long, pass: String, otpCode: Int) = userRemoteDataSource.resetPassword(userId, pass, otpCode)
 
     override fun createUser(user: CreateUserBody) = userRemoteDataSource.createUser(user)
 

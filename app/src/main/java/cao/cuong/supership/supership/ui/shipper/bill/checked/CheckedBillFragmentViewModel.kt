@@ -41,5 +41,5 @@ class CheckedBillFragmentViewModel(context: Context) {
                 })
     }
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 }

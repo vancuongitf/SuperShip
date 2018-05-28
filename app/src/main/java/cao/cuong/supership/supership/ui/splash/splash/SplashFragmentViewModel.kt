@@ -9,7 +9,5 @@ class SplashFragmentViewModel(context: Context) {
 
     internal fun getModule() = localRepository.getModule()
 
-    internal fun isLogin(): Boolean {
-        return localRepository.getAccessToken().isNotEmpty()
-    }
+    internal fun isLogin() = localRepository.isLogin()
 }

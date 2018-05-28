@@ -31,12 +31,16 @@ interface ApiService {
     @POST("api/v1/user/user_info.php")
     fun getUserInfo(@Field("token") token: String): Single<UserInfo>
 
+    @FormUrlEncoded
+    @POST("api/v1/user/info/edit.php")
+    fun updateUserInfo(@Field("user_id") userId: Long, @Field("name") name: String, @Field("phone") phone: String): Single<MessageResponse>
+
     @GET("api/v1/user/requestresetpass.php")
     fun requestResetPassword(@Query("email") email: String): Single<RequestResetPassResponse>
 
     @FormUrlEncoded
     @POST("api/v1/user/resetpassword.php")
-    fun resetPassword(@Field("user_id") userId: Int, @Field("pass") pass: String, @Field("otp_code") code: Int): Single<AccessToken>
+    fun resetPassword(@Field("user_id") userId: Long, @Field("pass") pass: String, @Field("otp_code") code: Int): Single<AccessToken>
 
     @GET("api/v1/user/store/express")
     fun getStoreListOfUser(@Query("token") token: String, @Query("page") page: Int): Single<StoreExpressResponse>

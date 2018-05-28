@@ -1,7 +1,6 @@
 package cao.cuong.supership.supership.data.source
 
 import android.content.Context
-import android.util.Log
 import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
@@ -90,6 +89,11 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         val token = pref.getString(SHARED_KEY_ACCESS_TOKEN, "") ?: ""
         ApiClient.getInstance(null).token = token
         return token
+    }
+
+    override fun isLogin(): Boolean {
+        ApiClient.getInstance(null).token = getAccessToken()
+        return getAccessToken().isNotEmpty()
     }
 
     override fun clearAccessToken() {

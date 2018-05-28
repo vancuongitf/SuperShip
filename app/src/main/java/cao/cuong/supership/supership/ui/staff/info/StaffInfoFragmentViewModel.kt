@@ -13,7 +13,7 @@ class StaffInfoFragmentViewModel(context: Context) {
     private val staffRepository = StaffRepository()
 
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun getStaffInfo() = staffRepository.getInfo(localRepository.getAccessToken())
             .observeOnUiThread()

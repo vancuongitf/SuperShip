@@ -49,5 +49,5 @@ class ReceiveBillFragmentViewModel(context: Context) {
         getCheckedBills()
     }
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 }

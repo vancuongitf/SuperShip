@@ -12,7 +12,7 @@ class ShipperInfoFragmentViewModel(context: Context) {
     private val localRepository = LocalRepository(context)
     private val shipperRepository = ShipperRepository()
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun getShipperInfo() = shipperRepository.getShipperInfo(localRepository.getAccessToken())
 

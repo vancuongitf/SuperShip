@@ -24,7 +24,7 @@ class StoreCommentFragmentViewModel(context: Context) {
     private val storeRepository = StoreRepository()
     private var currentCall: CustomCall<StoreCommentResponse>? = null
 
-    internal fun isLogin() = localRepository.getAccessToken().isNotEmpty()
+    internal fun isLogin() = localRepository.isLogin()
 
     internal fun getStoreComment(storeId: Long) {
         if (currentCall != null) {
