@@ -1,6 +1,5 @@
 package cao.cuong.supership.supership.data.source.datasource
 
-import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.model.BillInfo
 import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.source.remote.network.CustomCall
@@ -13,7 +12,9 @@ interface ShipperDataSource {
 
     fun createShipper(createShipperBody: CreateShipperBody): Single<MessageResponse>
 
-    fun login(account: String, pass: String): Single<AccessToken>
+    fun login(account: String, pass: String): Single<Shipper>
+
+    fun changeShipperPassword(shipperId: Long, oldPass: String, newPass: String): Single<MessageResponse>
 
     fun getShipperInfo(token: String): Single<Shipper>
 

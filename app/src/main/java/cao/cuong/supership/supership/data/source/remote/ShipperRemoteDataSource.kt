@@ -1,11 +1,8 @@
 package cao.cuong.supership.supership.data.source.remote
 
-import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.source.datasource.ShipperDataSource
 import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.request.*
-import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
-import io.reactivex.Single
 
 class ShipperRemoteDataSource : ShipperDataSource {
 
@@ -14,6 +11,8 @@ class ShipperRemoteDataSource : ShipperDataSource {
     override fun createShipper(createShipperBody: CreateShipperBody) = apiService.createShipper(createShipperBody)
 
     override fun login(account: String, pass: String) = apiService.loginShipper(account, pass)
+
+    override fun changeShipperPassword(shipperId: Long, oldPass: String, newPass: String) = apiService.changeShipperPassword(shipperId, oldPass, newPass)
 
     override fun getShipperInfo(token: String) = apiService.getShipperInfo(token)
 

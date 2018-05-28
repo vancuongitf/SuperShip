@@ -29,10 +29,10 @@ class ShipperInfoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateUi(UpdateAccountUI())
+        updateUi(UpdateAccountUI(), true)
         RxBus.listen(UpdateAccountUI::class.java)
                 .observeOnUiThread()
-                .subscribe(this::updateUi)
+                .subscribe({ updateUi(UpdateAccountUI(), false) })
     }
 
     override fun onBindViewModel() {
@@ -59,6 +59,8 @@ class ShipperInfoFragment : BaseFragment() {
     }
 
     internal fun eventChangePasswordButtonClicked() {
+        val intent = Intent(context, UserActivity::class.java)
+        startActivity(intent)
     }
 
     internal fun logOutClick() {
@@ -68,14 +70,19 @@ class ShipperInfoFragment : BaseFragment() {
         ui.tvReload.visibility = View.GONE
     }
 
-    private fun updateUi(event: UpdateAccountUI) {
+    private fun updateUi(event: UpdateAccountUI, getNewData: Boolean = false) {
         if (viewModel.isLogin()) {
             ui.llNonLogin.visibility = View.GONE
             ui.llLogin.visibility = View.GONE
             ui.tvReload.visibility = View.GONE
-            viewModel.getShipperInfo()
-                    .observeOnUiThread()
-                    .subscribe(this::handleGetShipperInfoSuccess, {})
+            val localShipper = viewModel.getLocalShipperInfo()
+            if (localShipper == null || getNewData) {
+                viewModel.getShipperInfo()
+                        .observeOnUiThread()
+                        .subscribe(this::handleGetShipperInfoSuccess, {})
+            } else {
+                handleGetShipperInfoSuccess(localShipper)
+            }
         } else {
             ui.tvReload.visibility = View.GONE
             ui.llNonLogin.visibility = View.VISIBLE

@@ -122,7 +122,11 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("api/v1/shipper/login.php")
-    fun loginShipper(@Field("user") account: String, @Field("pass") pass: String): Single<AccessToken>
+    fun loginShipper(@Field("user") account: String, @Field("pass") pass: String): Single<Shipper>
+
+    @FormUrlEncoded
+    @POST("api/v1/shipper/password/change.php")
+    fun changeShipperPassword(@Field("shipper_id") shipperId: Long, @Field("old_pass") oldPass: String, @Field("new_pass") newPass: String): Single<MessageResponse>
 
     @FormUrlEncoded
     @POST("api/v1/shipper/info.php")

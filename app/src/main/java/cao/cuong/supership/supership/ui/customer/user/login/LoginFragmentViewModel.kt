@@ -2,6 +2,7 @@ package cao.cuong.supership.supership.ui.customer.user.login
 
 import android.content.Context
 import cao.cuong.supership.supership.data.model.AccessToken
+import cao.cuong.supership.supership.data.model.Shipper
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.ShipperRepository
@@ -85,6 +86,17 @@ class LoginFragmentViewModel(private val context: Context) {
             localRepository.saveAccessToken(userInfo.token)
             localRepository.saveUserInfo(userInfo)
             loginStatusObserver.onNext(Notification.createOnNext(AccessToken(userInfo.token)))
+        } else {
+            loginStatusObserver.onError(ApiException(678, "Xãy ra lỗi! Vui lòng thử lại"))
+        }
+    }
+
+    private fun saveAccessToken(shipper: Shipper) {
+        if (shipper.token.isNotEmpty()) {
+            ApiClient.getInstance(null).token = shipper.token
+            localRepository.saveAccessToken(shipper.token)
+            localRepository.saveShipperInfo(shipper)
+            loginStatusObserver.onNext(Notification.createOnNext(AccessToken(shipper.token)))
         } else {
             loginStatusObserver.onError(ApiException(678, "Xãy ra lỗi! Vui lòng thử lại"))
         }

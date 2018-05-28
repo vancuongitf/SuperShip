@@ -12,6 +12,8 @@ class ShipperRepository : ShipperDataSource {
 
     override fun login(account: String, pass: String) = shipperRemoteDataSource.login(account, pass)
 
+    override fun changeShipperPassword(shipperId: Long, oldPass: String, newPass: String) = shipperRemoteDataSource.changeShipperPassword(shipperId, oldPass, newPass)
+
     override fun getShipperInfo(token: String) = shipperRemoteDataSource.getShipperInfo(token)
 
     override fun getCheckedBills(token: String, page: Int) = shipperRemoteDataSource.getCheckedBills(token, page)

@@ -18,6 +18,8 @@ class ShipperInfoFragmentViewModel(context: Context) {
 
     internal fun saveShipperInfo(shipperInfo: Shipper) = localRepository.saveShipperInfo(shipperInfo)
 
+    internal fun getLocalShipperInfo() = localRepository.getShipperInfo()
+
     internal fun logOut() {
         localRepository.clearAccessToken()
     }
