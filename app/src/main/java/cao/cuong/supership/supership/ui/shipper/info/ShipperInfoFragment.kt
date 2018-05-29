@@ -38,7 +38,10 @@ class ShipperInfoFragment : BaseFragment() {
     override fun onBindViewModel() {
     }
 
-    internal fun eventEditInfoClicked() {
+    internal fun onEditInfoClicked() {
+    }
+
+    internal fun onSubmitNewInfoClicked() {
 
     }
 

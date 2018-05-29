@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.ui.shipper.info
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import cao.cuong.supership.supership.R
@@ -24,6 +25,8 @@ class ShipperInfoFragmentUI : AnkoComponent<ShipperInfoFragment> {
     internal lateinit var edtBirthDay: CommonEditTextWithEditButton
     internal lateinit var edtAddress: CommonEditTextWithEditButton
     internal lateinit var edtDeposit: CommonEditTextWithEditButton
+    internal lateinit var rlEditInfo: RelativeLayout
+    internal lateinit var rlSubmitNewInfo: RelativeLayout
 
     override fun createView(ui: AnkoContext<ShipperInfoFragment>) = with(ui) {
 
@@ -48,18 +51,42 @@ class ShipperInfoFragmentUI : AnkoComponent<ShipperInfoFragment> {
                         weight = 1f
                     }
 
-                    relativeLayout {
-                        gravity = Gravity.CENTER_VERTICAL
+                    rlEditInfo = relativeLayout {
+                        visibility = View.GONE
 
-                        enableHighLightWhenClicked()
-                        onClick {
-                        }
+                        relativeLayout {
+                            gravity = Gravity.CENTER_VERTICAL
 
-                        imageView(R.drawable.ic_edit_note) {
-                        }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
-                            horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                        }
-                    }.lparams(wrapContent, matchParent)
+                            enableHighLightWhenClicked()
+                            onClick {
+                                owner.onEditInfoClicked()
+                            }
+
+                            imageView(R.drawable.ic_edit_note) {
+                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                            }
+                        }.lparams(wrapContent, matchParent)
+                    }
+
+                    rlSubmitNewInfo = relativeLayout {
+                        visibility = View.GONE
+
+                        relativeLayout {
+                            gravity = Gravity.CENTER_VERTICAL
+
+                            enableHighLightWhenClicked()
+                            onClick {
+                                owner.onSubmitNewInfoClicked()
+                            }
+
+                            imageView(R.drawable.ic_check_button) {
+                            }.lparams(dimen(R.dimen.backButtonSize), dimen(R.dimen.backButtonSize)) {
+                                horizontalMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                            }
+                        }.lparams(wrapContent, matchParent)
+                    }
+
 
                 }.lparams(matchParent, wrapContent)
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
