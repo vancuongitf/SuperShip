@@ -13,6 +13,7 @@ import android.widget.TextView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.data.model.OrderedDrink
 import cao.cuong.supership.supership.extension.enableHighLightWhenClicked
+import cao.cuong.supership.supership.extension.enableHighLightWhenClickedForListItem
 import cao.cuong.supership.supership.extension.getHeightScreen
 import cao.cuong.supership.supership.extension.getWidthScreen
 import cao.cuong.supership.supership.ui.customer.order.cart.BillDrinkAdapter
@@ -164,6 +165,12 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
 
 
                             linearLayout {
+
+                                enableHighLightWhenClickedForListItem()
+                                onClick {
+                                    owner.onRatingClicked()
+                                }
+
                                 gravity = Gravity.CENTER_VERTICAL
                                 imageView(R.drawable.ic_star_gold)
                                         .lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
@@ -231,7 +238,7 @@ class BillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoComponen
                                         }
                                     }.lparams(wrapContent, matchParent)
 
-                                }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
+                                }.lparams(wrapContent, dimen(R.dimen.toolBarHeight))
                             }
 
                             view {

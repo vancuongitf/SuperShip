@@ -167,23 +167,6 @@ class ShipperBillInfoFragmentUI(orderedDrink: MutableList<OrderedDrink>) : AnkoC
                                 verticalMargin = dimen(R.dimen.accountFragmentLoginPadding)
                             }
 
-
-
-                            linearLayout {
-                                gravity = Gravity.CENTER_VERTICAL
-                                imageView(R.drawable.ic_star_gold)
-                                        .lparams(dimen(R.dimen.storeItemUIStarIconSize), dimen(R.dimen.storeItemUIStarIconSize)) {
-                                            rightMargin = dimen(R.dimen.storeItemUITvAddressTopMargin)
-                                        }
-
-                                textView(R.string.rate) {
-                                    textSizeDimen = R.dimen.secondaryTextSize
-                                    textColorResource = R.color.colorBlue
-                                }
-                            }.lparams(matchParent, wrapContent) {
-                                bottomMargin = dimen(R.dimen.accountFragmentLoginPadding)
-                            }
-
                         }.lparams(matchParent, wrapContent)
                     }.lparams(matchParent, wrapContent) {
                         topMargin = dimen(R.dimen.toolBarHeight)

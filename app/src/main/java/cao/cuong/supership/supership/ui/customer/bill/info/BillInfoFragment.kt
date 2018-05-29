@@ -127,6 +127,12 @@ class BillInfoFragment : BaseFragment() {
         }
     }
 
+    internal fun onRatingClicked() {
+        bill?.let {
+            (activity as? BillActivity)?.openStoreCommentFragment(it.store.id)
+        }
+    }
+
     private fun handleGetInfoSuccess(bill: BillInfo) {
         this.bill = bill
         (activity as? BillActivity)?.billInfo = bill

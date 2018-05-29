@@ -12,6 +12,7 @@ import cao.cuong.supership.supership.ui.base.BaseActivity
 import cao.cuong.supership.supership.ui.customer.bill.info.BillInfoFragment
 import cao.cuong.supership.supership.ui.customer.bill.ship.BillShipRoadFragment
 import cao.cuong.supership.supership.ui.customer.order.drink.item.OrderedDrinkFragment
+import cao.cuong.supership.supership.ui.customer.store.comment.StoreCommentFragment
 import cao.cuong.supership.supership.ui.shipper.bill.complete.ShipperBillCompleteFragment
 import cao.cuong.supership.supership.ui.shipper.bill.info.ShipperBillInfoFragment
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
@@ -68,5 +69,9 @@ class BillActivity : BaseActivity() {
 
     internal fun openOrderedDrinkFragment(position: Int) {
         addFragment(R.id.billActivityContainer, OrderedDrinkFragment.getNewInstance(position), { it.animRightToLeft() }, "Bill-" + OrderedDrinkFragment::class.java.simpleName)
+    }
+
+    internal fun openStoreCommentFragment(id: Long) {
+        addFragment(R.id.billActivityContainer, StoreCommentFragment.getNewInstance(id), { it.animRightToLeft() }, "Bill-" + StoreCommentFragment::class.java.simpleName)
     }
 }
