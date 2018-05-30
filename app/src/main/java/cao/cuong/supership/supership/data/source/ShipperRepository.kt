@@ -14,6 +14,10 @@ class ShipperRepository : ShipperDataSource {
 
     override fun changeShipperPassword(shipperId: Long, oldPass: String, newPass: String) = shipperRemoteDataSource.changeShipperPassword(shipperId, oldPass, newPass)
 
+    override fun requestResetPassword(email: String) = shipperRemoteDataSource.requestResetPassword(email)
+
+    override fun resetShipperPassword(shipperId: Long, pass: String, otpCode: Int) = shipperRemoteDataSource.resetShipperPassword(shipperId, pass, otpCode)
+
     override fun getShipperInfo(token: String) = shipperRemoteDataSource.getShipperInfo(token)
 
     override fun updateShipperInfo(shipperId: Long, phone: String) = shipperRemoteDataSource.updateShipperInfo(shipperId, phone)

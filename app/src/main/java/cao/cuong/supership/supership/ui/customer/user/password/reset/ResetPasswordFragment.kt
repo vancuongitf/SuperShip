@@ -37,7 +37,7 @@ class ResetPasswordFragment : BaseFragment() {
     private var userId = -1L
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ResetPasswordFragmentViewModel()
+        viewModel = ResetPasswordFragmentViewModel(context)
         ui = ResetPasswordFragmentUI(arguments.getString(KEY_USER_NAME))
         userId = arguments.getLong(KEY_USER_ID)
         return ui.createView(AnkoContext.Companion.create(context, this))

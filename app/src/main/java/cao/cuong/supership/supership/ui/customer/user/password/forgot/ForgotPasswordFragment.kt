@@ -24,7 +24,7 @@ class ForgotPasswordFragment : BaseFragment() {
     private lateinit var viewModel: ForgotPasswordFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ForgotPasswordFragmentViewModel()
+        viewModel = ForgotPasswordFragmentViewModel(context)
         ui = ForgotPasswordFragmentUI()
         return ui.createView(AnkoContext.Companion.create(context, this))
     }

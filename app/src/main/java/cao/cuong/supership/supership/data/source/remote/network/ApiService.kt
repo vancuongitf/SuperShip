@@ -158,6 +158,13 @@ interface ApiService {
     @POST("api/v1/shipper/verifycash.php")
     fun verifyCash(@Body verifyCashBody: VerifyCashBody): Single<MessageResponse>
 
+    @GET("api/v1/shipper/password/request.php")
+    fun requestResetShipperPassword(@Query("email") email: String): Single<RequestResetPassResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/shipper/password/reset.php")
+    fun resetShipperPassword(@Field("shipper_id") shipperId: Long, @Field("pass") pass: String, @Field("otp_code") code: Int): Single<AccessToken>
+
     // Staff
     @FormUrlEncoded
     @POST("api/v1/staff/login.php")
