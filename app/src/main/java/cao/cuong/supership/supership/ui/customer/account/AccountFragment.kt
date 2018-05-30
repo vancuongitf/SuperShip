@@ -136,6 +136,8 @@ class AccountFragment : BaseFragment() {
             ui.tvReload.visibility = View.GONE
             ui.llNonLogin.visibility = View.VISIBLE
             ui.llLogin.visibility = View.GONE
+            ui.rlEditInfo.visibility = View.GONE
+            ui.rlSubmitNewInfo.visibility = View.GONE
         }
     }
 
