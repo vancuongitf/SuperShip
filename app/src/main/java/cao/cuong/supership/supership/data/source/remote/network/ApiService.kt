@@ -117,6 +117,7 @@ interface ApiService {
     @POST("api/v1/store/option/delete.php")
     fun deleteDrinkOption(@Field("token") token: String, @Field("id") id: Long): Single<MessageResponse>
 
+    // Shipper
     @POST("api/v1/shipper/create.php")
     fun createShipper(@Body createShipperBody: CreateShipperBody): Single<MessageResponse>
 
@@ -131,6 +132,10 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/v1/shipper/info.php")
     fun getShipperInfo(@Field("token") token: String): Single<Shipper>
+
+    @FormUrlEncoded
+    @POST("api/v1/shipper/info/change.php")
+    fun updateShipperInfo(@Field("shipper_id") shipperId: Long, @Field("phone") phone: String): Single<MessageResponse>
 
     @GET("api/v1/shipper/checkedbill.php")
     fun getCheckedBills(@Query("token") token: String, @Query("page") page: Int): Single<BillExpressResponse>

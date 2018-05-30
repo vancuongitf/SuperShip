@@ -18,6 +18,8 @@ interface ShipperDataSource {
 
     fun getShipperInfo(token: String): Single<Shipper>
 
+    fun updateShipperInfo(shipperId: Long, phone: String): Single<MessageResponse>
+
     fun getCheckedBills(token: String, page: Int): Single<BillExpressResponse>
 
     fun getBillInfo(token: String, id: Long): Single<BillInfo>

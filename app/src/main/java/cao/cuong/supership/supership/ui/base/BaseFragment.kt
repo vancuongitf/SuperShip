@@ -58,7 +58,7 @@ abstract class BaseFragment : Fragment() {
         ds.forEach { subscription.add(it) }
     }
 
-    protected fun handleApiError(throwable: Throwable?) {
+    protected open fun handleApiError(throwable: Throwable?) {
         if (throwable is ApiException) {
             if (throwable.code == HttpsURLConnection.HTTP_UNAUTHORIZED) {
                 if (this !is AccountFragment && this !is BillFragment && this !is CheckedBillFragment && this !is ReceiveBillFragment && this !is ShipperInfoFragment && this.activity !is StaffMainActivity) {

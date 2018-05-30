@@ -16,6 +16,8 @@ class ShipperRepository : ShipperDataSource {
 
     override fun getShipperInfo(token: String) = shipperRemoteDataSource.getShipperInfo(token)
 
+    override fun updateShipperInfo(shipperId: Long, phone: String) = shipperRemoteDataSource.updateShipperInfo(shipperId, phone)
+
     override fun getCheckedBills(token: String, page: Int) = shipperRemoteDataSource.getCheckedBills(token, page)
 
     override fun getBillInfo(token: String, id: Long) = shipperRemoteDataSource.getBillInfo(token, id)

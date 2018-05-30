@@ -12,10 +12,7 @@ import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.model.rxevent.UpdateAccountUI
 import cao.cuong.supership.supership.data.source.remote.network.RxBus
 import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
-import cao.cuong.supership.supership.extension.isValidateFullName
-import cao.cuong.supership.supership.extension.isValidatePhoneNumber
-import cao.cuong.supership.supership.extension.observeOnUiThread
-import cao.cuong.supership.supership.extension.showOkAlert
+import cao.cuong.supership.supership.extension.*
 import cao.cuong.supership.supership.ui.base.BaseFragment
 import cao.cuong.supership.supership.ui.customer.store.activity.StoreActivity
 import cao.cuong.supership.supership.ui.customer.user.UserActivity
@@ -105,9 +102,11 @@ class AccountFragment : BaseFragment() {
             var message = ""
             if (newName.isValidateFullName()) {
                 if (newPhone.isValidatePhoneNumber()) {
-                    viewModel.updateInfo(userId, newName, newPhone)
-                            .observeOnUiThread()
-                            .subscribe(this::handleUpdateUserInfoSuccess, this::handleApiGetInfoError)
+                    context.showConfirmAlert(R.string.updateInfoConfirm) {
+                        viewModel.updateInfo(userId, newName, newPhone)
+                                .observeOnUiThread()
+                                .subscribe(this::handleUpdateUserInfoSuccess, this::handleApiGetInfoError)
+                    }
                 } else {
                     message = "Vui lòng nhập số điện thoại hợp lệ."
                 }

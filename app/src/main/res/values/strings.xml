@@ -134,4 +134,5 @@
     <string name="comment">Bình luận</string>
     <string name="ratingMessage">Bạn cảm thấy chất lượng phục vụ của cửa hàng này như thế nào?</string>
     <string name="leaveCommentConfirm">Bạn chưa hoàn thành bình luận. Bạn chắc chắn muốn rời khỏi trang này?</string>
+    <string name="updateInfoConfirm">Bạn muốn cập nhật thông tin cá nhân?</string>
 </resources>

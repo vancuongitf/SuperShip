@@ -19,6 +19,7 @@ class ShipperInfoFragmentUI : AnkoComponent<ShipperInfoFragment> {
     internal lateinit var llNonLogin: LinearLayout
     internal lateinit var llLogin: ScrollView
     internal lateinit var edtFullName: CommonEditTextWithEditButton
+    internal lateinit var edtPersonalId: CommonEditTextWithEditButton
     internal lateinit var edtPhoneNumber: CommonEditTextWithEditButton
     internal lateinit var edtEmail: CommonEditTextWithEditButton
     internal lateinit var tvReload: TextView
@@ -144,6 +145,11 @@ class ShipperInfoFragmentUI : AnkoComponent<ShipperInfoFragment> {
                         isClickable = true
                         backgroundColorResource = R.color.colorWhite
                         edtFullName = commonEditTextWithEditButton(R.drawable.ic_user, {
+                        }) {}.lparams(matchParent, wrapContent) {
+                            topMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
+
+                        edtPersonalId = commonEditTextWithEditButton(R.drawable.ic_personal_id, {
                         }) {}.lparams(matchParent, wrapContent) {
                             topMargin = dimen(R.dimen.accountFragmentLoginPadding)
                         }
