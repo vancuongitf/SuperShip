@@ -2,7 +2,8 @@ package cao.cuong.supership.supership.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Staff(@SerializedName("id") val id: Long,
+data class Staff(@SerializedName("token") val token: String,
+                 @SerializedName("id") val id: Long,
                  @SerializedName("account") val account: String,
                  @SerializedName("full_name") val fullName: String,
                  @SerializedName("email") val email: String,

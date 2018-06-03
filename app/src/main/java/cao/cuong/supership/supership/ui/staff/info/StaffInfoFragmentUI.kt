@@ -70,7 +70,7 @@ class StaffInfoFragmentUI : AnkoComponent<StaffInfoFragment> {
             relativeLayout {
 
                 backgroundResource = R.color.colorWhite
-                padding = dimen(R.dimen.accountFragmentLoginPadding)
+                horizontalPadding = dimen(R.dimen.accountFragmentLoginPadding)
 
                 tvReload = textView(R.string.reload) {
                     visibility = View.GONE
@@ -179,7 +179,9 @@ class StaffInfoFragmentUI : AnkoComponent<StaffInfoFragment> {
                             onClick {
                                 owner.logOutClick()
                             }
-                        }.lparams(matchParent, wrapContent)
+                        }.lparams(matchParent, wrapContent) {
+                            bottomMargin = dimen(R.dimen.accountFragmentLoginPadding)
+                        }
                     }
                 }.lparams(matchParent, matchParent)
             }.lparams(matchParent, matchParent)

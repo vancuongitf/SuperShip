@@ -2,8 +2,6 @@ package cao.cuong.supership.supership.data.source
 
 import cao.cuong.supership.supership.data.source.datasource.StaffDataSource
 import cao.cuong.supership.supership.data.source.remote.StaffRemoteDataSource
-import cao.cuong.supership.supership.data.source.remote.response.MessageResponse
-import io.reactivex.Single
 
 class StaffRepository : StaffDataSource {
 
@@ -12,6 +10,12 @@ class StaffRepository : StaffDataSource {
     override fun login(account: String, pass: String) = staffRemoteDataSource.login(account, pass)
 
     override fun getInfo(token: String) = staffRemoteDataSource.getInfo(token)
+
+    override fun changePass(staffId: Long, oldPass: String, newPass: String) = staffRemoteDataSource.changePass(staffId, oldPass, newPass)
+
+    override fun requestResetPassword(email: String) = staffRemoteDataSource.requestResetPassword(email)
+
+    override fun resetPassword(staffId: Long, pass: String, otpCode: Int) = staffRemoteDataSource.resetPassword(staffId, pass, otpCode)
 
     override fun getBills(token: String, status: Int, id: String, page: Int) = staffRemoteDataSource.getBills(token, status, id, page)
 

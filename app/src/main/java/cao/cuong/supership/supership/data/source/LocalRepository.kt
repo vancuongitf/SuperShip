@@ -3,6 +3,7 @@ package cao.cuong.supership.supership.data.source
 import android.content.Context
 import cao.cuong.supership.supership.BuildConfig
 import cao.cuong.supership.supership.data.model.Shipper
+import cao.cuong.supership.supership.data.model.Staff
 import cao.cuong.supership.supership.data.model.StoreInfoExpress
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.datasource.LocalDataSource
@@ -28,6 +29,7 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         internal const val SHARED_KEY_USER_INFO = "user_info"
         internal const val SHARED_KEY_MODULE = "key_module"
         internal const val SHARED_KEY_SHIPPER_INFO = "key_shipper_info"
+        internal const val SHARED_KEY_STAFF_INFO = "key_staff_info"
     }
 
     private val pref by lazy {
@@ -132,6 +134,19 @@ class LocalRepository(private val context: Context) : LocalDataSource {
         val shipperString = pref.getString(SHARED_KEY_SHIPPER_INFO, "")
         return try {
             Gson().fromJson<Shipper>(shipperString, Shipper::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    override fun saveStaffInfo(staff: Staff) {
+        pref.edit().putString(SHARED_KEY_STAFF_INFO, Gson().toJson(staff).toString()).apply()
+    }
+
+    override fun getStaffInfo(): Staff? {
+        val staffString = pref.getString(SHARED_KEY_STAFF_INFO, "")
+        return try {
+            Gson().fromJson<Staff>(staffString, Staff::class.java)
         } catch (e: Exception) {
             null
         }

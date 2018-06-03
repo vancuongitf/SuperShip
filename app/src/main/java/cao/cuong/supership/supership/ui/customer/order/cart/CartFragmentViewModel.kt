@@ -16,7 +16,7 @@ class CartFragmentViewModel(context: Context) {
     private val storeRepository = StoreRepository()
 
     internal fun submitOrder(billBody: BillBody): Single<MessageResponse> {
-        billBody.userToken = localRepository.getAccessToken()
+        billBody.userId = localRepository.getUserInfo()?.id ?: -1
         return storeRepository.orderDrink(billBody)
                 .observeOnUiThread()
                 .doOnSubscribe {

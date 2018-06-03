@@ -91,7 +91,7 @@ class CartFragment:BaseFragment(){
                         for (i in 1 until s.size) {
                             shipRoad = shipRoad + "\\\\" + s[i]
                         }
-                        val billBody = BillBody(orderActivity.store.id, "", ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), shipRoad, orderActivity.orderedDrinks)
+                        val billBody = BillBody(orderActivity.store.id, -1, ui.edtCustomerName.text.toString(), ui.edtPhone.text.toString(), StoreAddress(shipAddress!!.address, shipAddress!!.latLng), shipAddress!!.distance.getShipFee().toInt(), shipRoad, orderActivity.orderedDrinks)
                         if (viewModel.isLogin()) {
                             viewModel.submitOrder(billBody)
                                     .observeOnUiThread()

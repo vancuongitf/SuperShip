@@ -45,4 +45,10 @@ class StaffMainTab(val itemType: TabItemType) {
         TabItemType.ITEM_BILL -> shipperFragment
         TabItemType.ITEM_ACCOUNT -> accountFragment
     }
+
+    fun getLabel() = when (itemType) {
+        TabItemType.ITEM_HOME -> "Đơn hàng"
+        TabItemType.ITEM_BILL -> "Shipper"
+        TabItemType.ITEM_ACCOUNT -> "Cá nhân"
+    }
 }

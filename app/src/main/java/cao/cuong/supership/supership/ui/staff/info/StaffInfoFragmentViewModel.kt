@@ -1,6 +1,7 @@
 package cao.cuong.supership.supership.ui.staff.info
 
 import android.content.Context
+import cao.cuong.supership.supership.data.model.Staff
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.StaffRepository
 import cao.cuong.supership.supership.extension.observeOnUiThread
@@ -23,6 +24,10 @@ class StaffInfoFragmentViewModel(context: Context) {
             .doFinally {
                 updateProgressStatusObservable.onNext(false)
             }
+
+    internal fun getLocalStaffInfo() = localRepository.getStaffInfo()
+
+    internal fun saveStaffInfo(staff: Staff) = localRepository.saveStaffInfo(staff)
 
     internal fun logOut() = localRepository.clearAccessToken()
 }

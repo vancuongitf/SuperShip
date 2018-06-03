@@ -22,7 +22,6 @@ class StaffActivity : BaseActivity() {
         ui.setContentView(this)
         val screen = intent.extras.getInt(KEY_SCREEN)
         when (screen) {
-
             SHIPPER_SCREEN -> {
                 val shipperId = intent.extras.getLong(StaffShipperInfoFragment.KEY_SHIPPER_ID)
                 replaceFragment(R.id.staffActivityContainer, StaffShipperInfoFragment.getNewInstance(shipperId))

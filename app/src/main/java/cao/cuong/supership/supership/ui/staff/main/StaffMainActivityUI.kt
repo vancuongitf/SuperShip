@@ -1,8 +1,7 @@
 package cao.cuong.supership.supership.ui.staff.main
 
+import android.graphics.Color
 import android.support.design.widget.TabLayout
-import android.view.Gravity
-import android.view.ViewManager
 import android.widget.ImageView
 import cao.cuong.supership.supership.R
 import cao.cuong.supership.supership.ui.base.widget.NonSwipeAbleViewPager
@@ -49,39 +48,27 @@ class StaffMainActivityUI(val mainTabs: List<StaffMainTab>) : AnkoComponent<Staf
                 setupWithViewPager(viewPager)
                 setSelectedTabIndicatorHeight(0)
                 backgroundColorResource = R.color.colorWhite
-                addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                    override fun onTabReselected(tab: TabLayout.Tab?) {
-                    }
-
-                    override fun onTabUnselected(tab: TabLayout.Tab?) {
-                        tab?.let {
-                            listIcon[it.position].setImageResource(mainTabs[it.position].itemType.icon)
-                        }
-                    }
-
-                    override fun onTabSelected(tab: TabLayout.Tab?) {
-                        tab?.let {
-                            listIcon[it.position].setImageResource(mainTabs[it.position].itemType.iconRed)
-                        }
-                    }
-                })
+                setTabTextColors(Color.BLACK, Color.RED)
             }.lparams(matchParent, dimen(R.dimen.toolBarHeight))
 
             mainTabs.withIndex().forEach {
+                val mainTab = it
                 val tab = tabLayout.getTabAt(it.index)
-                tab?.customView = tabItem(it.index)
+                tab?.let {
+                    it.text = mainTab.value.getLabel()
+                }
             }
         }
     }
 
-    private fun ViewManager.tabItem(pos: Int) = relativeLayout {
-        gravity = Gravity.CENTER
-        lparams(matchParent, matchParent)
-        backgroundDrawable = null
-        if (mainTabs[pos].itemType.isSelected) {
-            listIcon.add(pos, imageView(mainTabs[pos].itemType.iconRed).lparams(dimen(R.dimen.tabLayoutItemWidth), dimen(R.dimen.tabLayoutItemWidth)))
-        } else {
-            listIcon.add(pos, imageView(mainTabs[pos].itemType.icon).lparams(dimen(R.dimen.tabLayoutItemWidth), dimen(R.dimen.tabLayoutItemWidth)))
-        }
-    }
+//    private fun ViewManager.tabItem(pos: Int) = relativeLayout {
+//        gravity = Gravity.CENTER
+//        lparams(matchParent, matchParent)
+//        backgroundDrawable = null
+//        if (mainTabs[pos].itemType.isSelected) {
+//            listIcon.add(pos, imageView(mainTabs[pos].itemType.iconRed).lparams(dimen(R.dimen.tabLayoutItemWidth), dimen(R.dimen.tabLayoutItemWidth)))
+//        } else {
+//            listIcon.add(pos, imageView(mainTabs[pos].itemType.icon).lparams(dimen(R.dimen.tabLayoutItemWidth), dimen(R.dimen.tabLayoutItemWidth)))
+//        }
+//    }
 }

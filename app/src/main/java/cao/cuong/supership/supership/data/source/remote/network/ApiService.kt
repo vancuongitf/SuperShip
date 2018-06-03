@@ -168,7 +168,18 @@ interface ApiService {
     // Staff
     @FormUrlEncoded
     @POST("api/v1/staff/login.php")
-    fun staffLogin(@Field("user") user: String, @Field("pass") pass: String): Single<AccessToken>
+    fun staffLogin(@Field("user") user: String, @Field("pass") pass: String): Single<Staff>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/password/change.php")
+    fun changeStaffPassword(@Field("staff_id") staffId: Long, @Field("old_pass") oldPass: String, @Field("new_pass") newPass: String): Single<MessageResponse>
+
+    @GET("api/v1/staff/password/request.php")
+    fun requestResetStaffPassword(@Query("email") email: String): Single<RequestResetPassResponse>
+
+    @FormUrlEncoded
+    @POST("api/v1/staff/password/reset.php")
+    fun resetStaffPassword(@Field("staff_id") staffId: Long, @Field("pass") pass: String, @Field("otp_code") code: Int): Single<AccessToken>
 
     @FormUrlEncoded
     @POST("api/v1/staff/info.php")

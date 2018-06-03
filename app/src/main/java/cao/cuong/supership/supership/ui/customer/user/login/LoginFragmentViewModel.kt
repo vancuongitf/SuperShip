@@ -1,8 +1,10 @@
 package cao.cuong.supership.supership.ui.customer.user.login
 
 import android.content.Context
+import android.util.Log
 import cao.cuong.supership.supership.data.model.AccessToken
 import cao.cuong.supership.supership.data.model.Shipper
+import cao.cuong.supership.supership.data.model.Staff
 import cao.cuong.supership.supership.data.model.UserInfo
 import cao.cuong.supership.supership.data.source.LocalRepository
 import cao.cuong.supership.supership.data.source.ShipperRepository
@@ -12,6 +14,7 @@ import cao.cuong.supership.supership.data.source.remote.network.ApiClient
 import cao.cuong.supership.supership.data.source.remote.network.ApiException
 import cao.cuong.supership.supership.extension.observeOnUiThread
 import cao.cuong.supership.supership.ui.splash.splash.SplashFragment
+import com.google.gson.Gson
 import io.reactivex.Notification
 import io.reactivex.subjects.PublishSubject
 
@@ -102,11 +105,13 @@ class LoginFragmentViewModel(private val context: Context) {
         }
     }
 
-    private fun saveAccessToken(token: AccessToken) {
-        if (token.token.isNotEmpty()) {
-            ApiClient.getInstance(null).token = token.token
-            localRepository.saveAccessToken(token.token)
-            loginStatusObserver.onNext(Notification.createOnNext(token))
+    private fun saveAccessToken(staff: Staff) {
+        if (staff.token.isNotEmpty()) {
+            ApiClient.getInstance(null).token = staff.token
+            localRepository.saveAccessToken(staff.token)
+            Log.i("tag11", Gson().toJson(staff))
+            localRepository.saveStaffInfo(staff)
+            loginStatusObserver.onNext(Notification.createOnNext(AccessToken(staff.token)))
         } else {
             loginStatusObserver.onError(ApiException(678, "Xãy ra lỗi! Vui lòng thử lại"))
         }
